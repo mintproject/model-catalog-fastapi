@@ -17,6 +17,9 @@ from fastapi import (  # noqa: F401
 )
 
 from openapi_server.models.extra_models import TokenModel  # noqa: F401
+from openapi_server.utils.vars import CONSTRAINT_TYPE_NAME, CONSTRAINT_TYPE_URI
+from openapi_server.connector import query_manager
+
 from openapi_server.models.constraint import Constraint
 from openapi_server.security_api import get_token_BearerAuth
 
@@ -39,7 +42,15 @@ async def constraints_get(
     per_page: int = Query(100, description="Items per page", ge=1, le=200),
 ) -> List[Constraint]:
     """Gets a list of all instances of Constraint (more information in https://w3id.org/okn/o/sd#Constraint)"""
-    ...
+    return query_manager.get_resource(
+        
+        username=username,label=label,page=page,per_page=per_page,
+        
+        rdf_type_uri=CONSTRAINT_TYPE_URI,
+        rdf_type_name=CONSTRAINT_TYPE_NAME, 
+        kls=Constraint
+        )
+        
 
 
 @router.delete(
@@ -60,7 +71,15 @@ async def constraints_id_delete(
     ),
 ) -> None:
     """Delete an existing Constraint (more information in https://w3id.org/okn/o/sd#Constraint)"""
-    ...
+    return query_manager.delete_resource(
+        id=id,
+        user=user,
+        
+        rdf_type_uri=CONSTRAINT_TYPE_URI,
+        rdf_type_name=CONSTRAINT_TYPE_NAME, 
+        kls=Constraint
+        )
+        
 
 
 @router.get(
@@ -77,7 +96,15 @@ async def constraints_id_get(
     username: str = Query(None, description="Name of the user graph to query"),
 ) -> Constraint:
     """Gets the details of a given Constraint (more information in https://w3id.org/okn/o/sd#Constraint)"""
-    ...
+    return query_manager.get_resource(
+        id=id,
+        username=username,
+        
+        rdf_type_uri=CONSTRAINT_TYPE_URI,
+        rdf_type_name=CONSTRAINT_TYPE_NAME, 
+        kls=Constraint
+        )
+        
 
 
 @router.put(
@@ -99,7 +126,15 @@ async def constraints_id_put(
     ),
 ) -> Constraint:
     """Updates an existing Constraint (more information in https://w3id.org/okn/o/sd#Constraint)"""
-    ...
+    return query_manager.put_resource(
+        id=id,
+        user=user,
+        body=constraint,
+        rdf_type_uri=CONSTRAINT_TYPE_URI,
+        rdf_type_name=CONSTRAINT_TYPE_NAME, 
+        kls=Constraint
+        )
+        
 
 
 @router.post(
@@ -119,4 +154,12 @@ async def constraints_post(
     ),
 ) -> Constraint:
     """Create a new instance of Constraint (more information in https://w3id.org/okn/o/sd#Constraint)"""
-    ...
+    return query_manager.post_resource(
+        
+        user=user,
+        body=constraint,
+        rdf_type_uri=CONSTRAINT_TYPE_URI,
+        rdf_type_name=CONSTRAINT_TYPE_NAME, 
+        kls=Constraint
+        )
+        

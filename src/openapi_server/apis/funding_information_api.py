@@ -17,6 +17,9 @@ from fastapi import (  # noqa: F401
 )
 
 from openapi_server.models.extra_models import TokenModel  # noqa: F401
+from openapi_server.utils.vars import FUNDINGINFORMATION_TYPE_NAME, FUNDINGINFORMATION_TYPE_URI
+from openapi_server.connector import query_manager
+
 from openapi_server.models.funding_information import FundingInformation
 from openapi_server.security_api import get_token_BearerAuth
 
@@ -39,7 +42,15 @@ async def fundinginformations_get(
     per_page: int = Query(100, description="Items per page", ge=1, le=200),
 ) -> List[FundingInformation]:
     """Gets a list of all instances of FundingInformation (more information in https://w3id.org/okn/o/sd#FundingInformation)"""
-    ...
+    return query_manager.get_resource(
+        
+        username=username,label=label,page=page,per_page=per_page,
+        
+        rdf_type_uri=FUNDINGINFORMATION_TYPE_URI,
+        rdf_type_name=FUNDINGINFORMATION_TYPE_NAME, 
+        kls=FundingInformation
+        )
+        
 
 
 @router.delete(
@@ -60,7 +71,15 @@ async def fundinginformations_id_delete(
     ),
 ) -> None:
     """Delete an existing FundingInformation (more information in https://w3id.org/okn/o/sd#FundingInformation)"""
-    ...
+    return query_manager.delete_resource(
+        id=id,
+        user=user,
+        
+        rdf_type_uri=FUNDINGINFORMATION_TYPE_URI,
+        rdf_type_name=FUNDINGINFORMATION_TYPE_NAME, 
+        kls=FundingInformation
+        )
+        
 
 
 @router.get(
@@ -77,7 +96,15 @@ async def fundinginformations_id_get(
     username: str = Query(None, description="Name of the user graph to query"),
 ) -> FundingInformation:
     """Gets the details of a given FundingInformation (more information in https://w3id.org/okn/o/sd#FundingInformation)"""
-    ...
+    return query_manager.get_resource(
+        id=id,
+        username=username,
+        
+        rdf_type_uri=FUNDINGINFORMATION_TYPE_URI,
+        rdf_type_name=FUNDINGINFORMATION_TYPE_NAME, 
+        kls=FundingInformation
+        )
+        
 
 
 @router.put(
@@ -99,7 +126,15 @@ async def fundinginformations_id_put(
     ),
 ) -> FundingInformation:
     """Updates an existing FundingInformation (more information in https://w3id.org/okn/o/sd#FundingInformation)"""
-    ...
+    return query_manager.put_resource(
+        id=id,
+        user=user,
+        body=funding_information,
+        rdf_type_uri=FUNDINGINFORMATION_TYPE_URI,
+        rdf_type_name=FUNDINGINFORMATION_TYPE_NAME, 
+        kls=FundingInformation
+        )
+        
 
 
 @router.post(
@@ -119,4 +154,12 @@ async def fundinginformations_post(
     ),
 ) -> FundingInformation:
     """Create a new instance of FundingInformation (more information in https://w3id.org/okn/o/sd#FundingInformation)"""
-    ...
+    return query_manager.post_resource(
+        
+        user=user,
+        body=funding_information,
+        rdf_type_uri=FUNDINGINFORMATION_TYPE_URI,
+        rdf_type_name=FUNDINGINFORMATION_TYPE_NAME, 
+        kls=FundingInformation
+        )
+        

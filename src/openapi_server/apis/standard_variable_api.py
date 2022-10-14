@@ -17,6 +17,9 @@ from fastapi import (  # noqa: F401
 )
 
 from openapi_server.models.extra_models import TokenModel  # noqa: F401
+from openapi_server.utils.vars import STANDARDVARIABLE_TYPE_NAME, STANDARDVARIABLE_TYPE_URI
+from openapi_server.connector import query_manager
+
 from openapi_server.models.standard_variable import StandardVariable
 from openapi_server.security_api import get_token_BearerAuth
 
@@ -39,7 +42,15 @@ async def standardvariables_get(
     per_page: int = Query(100, description="Items per page", ge=1, le=200),
 ) -> List[StandardVariable]:
     """Gets a list of all instances of StandardVariable (more information in https://w3id.org/okn/o/sd#StandardVariable)"""
-    ...
+    return query_manager.get_resource(
+        
+        username=username,label=label,page=page,per_page=per_page,
+        
+        rdf_type_uri=STANDARDVARIABLE_TYPE_URI,
+        rdf_type_name=STANDARDVARIABLE_TYPE_NAME, 
+        kls=StandardVariable
+        )
+        
 
 
 @router.delete(
@@ -60,7 +71,15 @@ async def standardvariables_id_delete(
     ),
 ) -> None:
     """Delete an existing StandardVariable (more information in https://w3id.org/okn/o/sd#StandardVariable)"""
-    ...
+    return query_manager.delete_resource(
+        id=id,
+        user=user,
+        
+        rdf_type_uri=STANDARDVARIABLE_TYPE_URI,
+        rdf_type_name=STANDARDVARIABLE_TYPE_NAME, 
+        kls=StandardVariable
+        )
+        
 
 
 @router.get(
@@ -77,7 +96,15 @@ async def standardvariables_id_get(
     username: str = Query(None, description="Name of the user graph to query"),
 ) -> StandardVariable:
     """Gets the details of a given StandardVariable (more information in https://w3id.org/okn/o/sd#StandardVariable)"""
-    ...
+    return query_manager.get_resource(
+        id=id,
+        username=username,
+        
+        rdf_type_uri=STANDARDVARIABLE_TYPE_URI,
+        rdf_type_name=STANDARDVARIABLE_TYPE_NAME, 
+        kls=StandardVariable
+        )
+        
 
 
 @router.put(
@@ -99,7 +126,15 @@ async def standardvariables_id_put(
     ),
 ) -> StandardVariable:
     """Updates an existing StandardVariable (more information in https://w3id.org/okn/o/sd#StandardVariable)"""
-    ...
+    return query_manager.put_resource(
+        id=id,
+        user=user,
+        body=standard_variable,
+        rdf_type_uri=STANDARDVARIABLE_TYPE_URI,
+        rdf_type_name=STANDARDVARIABLE_TYPE_NAME, 
+        kls=StandardVariable
+        )
+        
 
 
 @router.post(
@@ -119,4 +154,12 @@ async def standardvariables_post(
     ),
 ) -> StandardVariable:
     """Create a new instance of StandardVariable (more information in https://w3id.org/okn/o/sd#StandardVariable)"""
-    ...
+    return query_manager.post_resource(
+        
+        user=user,
+        body=standard_variable,
+        rdf_type_uri=STANDARDVARIABLE_TYPE_URI,
+        rdf_type_name=STANDARDVARIABLE_TYPE_NAME, 
+        kls=StandardVariable
+        )
+        

@@ -17,6 +17,9 @@ from fastapi import (  # noqa: F401
 )
 
 from openapi_server.models.extra_models import TokenModel  # noqa: F401
+from openapi_server.utils.vars import PARAMETER_TYPE_NAME, PARAMETER_TYPE_URI
+from openapi_server.connector import query_manager
+
 from openapi_server.models.parameter import Parameter
 from openapi_server.security_api import get_token_BearerAuth
 
@@ -39,7 +42,15 @@ async def parameters_get(
     per_page: int = Query(100, description="Items per page", ge=1, le=200),
 ) -> List[Parameter]:
     """Gets a list of all instances of Parameter (more information in https://w3id.org/okn/o/sd#Parameter)"""
-    ...
+    return query_manager.get_resource(
+        
+        username=username,label=label,page=page,per_page=per_page,
+        
+        rdf_type_uri=PARAMETER_TYPE_URI,
+        rdf_type_name=PARAMETER_TYPE_NAME, 
+        kls=Parameter
+        )
+        
 
 
 @router.delete(
@@ -60,7 +71,15 @@ async def parameters_id_delete(
     ),
 ) -> None:
     """Delete an existing Parameter (more information in https://w3id.org/okn/o/sd#Parameter)"""
-    ...
+    return query_manager.delete_resource(
+        id=id,
+        user=user,
+        
+        rdf_type_uri=PARAMETER_TYPE_URI,
+        rdf_type_name=PARAMETER_TYPE_NAME, 
+        kls=Parameter
+        )
+        
 
 
 @router.get(
@@ -77,7 +96,15 @@ async def parameters_id_get(
     username: str = Query(None, description="Name of the user graph to query"),
 ) -> Parameter:
     """Gets the details of a given Parameter (more information in https://w3id.org/okn/o/sd#Parameter)"""
-    ...
+    return query_manager.get_resource(
+        id=id,
+        username=username,
+        
+        rdf_type_uri=PARAMETER_TYPE_URI,
+        rdf_type_name=PARAMETER_TYPE_NAME, 
+        kls=Parameter
+        )
+        
 
 
 @router.put(
@@ -99,7 +126,15 @@ async def parameters_id_put(
     ),
 ) -> Parameter:
     """Updates an existing Parameter (more information in https://w3id.org/okn/o/sd#Parameter)"""
-    ...
+    return query_manager.put_resource(
+        id=id,
+        user=user,
+        body=parameter,
+        rdf_type_uri=PARAMETER_TYPE_URI,
+        rdf_type_name=PARAMETER_TYPE_NAME, 
+        kls=Parameter
+        )
+        
 
 
 @router.post(
@@ -119,4 +154,12 @@ async def parameters_post(
     ),
 ) -> Parameter:
     """Create a new instance of Parameter (more information in https://w3id.org/okn/o/sd#Parameter)"""
-    ...
+    return query_manager.post_resource(
+        
+        user=user,
+        body=parameter,
+        rdf_type_uri=PARAMETER_TYPE_URI,
+        rdf_type_name=PARAMETER_TYPE_NAME, 
+        kls=Parameter
+        )
+        

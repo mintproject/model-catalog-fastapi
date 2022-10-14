@@ -17,6 +17,9 @@ from fastapi import (  # noqa: F401
 )
 
 from openapi_server.models.extra_models import TokenModel  # noqa: F401
+from openapi_server.utils.vars import SOFTWAREIMAGE_TYPE_NAME, SOFTWAREIMAGE_TYPE_URI
+from openapi_server.connector import query_manager
+
 from openapi_server.models.software_image import SoftwareImage
 from openapi_server.security_api import get_token_BearerAuth
 
@@ -39,7 +42,15 @@ async def softwareimages_get(
     per_page: int = Query(100, description="Items per page", ge=1, le=200),
 ) -> List[SoftwareImage]:
     """Gets a list of all instances of SoftwareImage (more information in https://w3id.org/okn/o/sd#SoftwareImage)"""
-    ...
+    return query_manager.get_resource(
+        
+        username=username,label=label,page=page,per_page=per_page,
+        
+        rdf_type_uri=SOFTWAREIMAGE_TYPE_URI,
+        rdf_type_name=SOFTWAREIMAGE_TYPE_NAME, 
+        kls=SoftwareImage
+        )
+        
 
 
 @router.delete(
@@ -60,7 +71,15 @@ async def softwareimages_id_delete(
     ),
 ) -> None:
     """Delete an existing SoftwareImage (more information in https://w3id.org/okn/o/sd#SoftwareImage)"""
-    ...
+    return query_manager.delete_resource(
+        id=id,
+        user=user,
+        
+        rdf_type_uri=SOFTWAREIMAGE_TYPE_URI,
+        rdf_type_name=SOFTWAREIMAGE_TYPE_NAME, 
+        kls=SoftwareImage
+        )
+        
 
 
 @router.get(
@@ -77,7 +96,15 @@ async def softwareimages_id_get(
     username: str = Query(None, description="Name of the user graph to query"),
 ) -> SoftwareImage:
     """Gets the details of a given SoftwareImage (more information in https://w3id.org/okn/o/sd#SoftwareImage)"""
-    ...
+    return query_manager.get_resource(
+        id=id,
+        username=username,
+        
+        rdf_type_uri=SOFTWAREIMAGE_TYPE_URI,
+        rdf_type_name=SOFTWAREIMAGE_TYPE_NAME, 
+        kls=SoftwareImage
+        )
+        
 
 
 @router.put(
@@ -99,7 +126,15 @@ async def softwareimages_id_put(
     ),
 ) -> SoftwareImage:
     """Updates an existing SoftwareImage (more information in https://w3id.org/okn/o/sd#SoftwareImage)"""
-    ...
+    return query_manager.put_resource(
+        id=id,
+        user=user,
+        body=software_image,
+        rdf_type_uri=SOFTWAREIMAGE_TYPE_URI,
+        rdf_type_name=SOFTWAREIMAGE_TYPE_NAME, 
+        kls=SoftwareImage
+        )
+        
 
 
 @router.post(
@@ -119,4 +154,12 @@ async def softwareimages_post(
     ),
 ) -> SoftwareImage:
     """Create a new instance of SoftwareImage (more information in https://w3id.org/okn/o/sd#SoftwareImage)"""
-    ...
+    return query_manager.post_resource(
+        
+        user=user,
+        body=software_image,
+        rdf_type_uri=SOFTWAREIMAGE_TYPE_URI,
+        rdf_type_name=SOFTWAREIMAGE_TYPE_NAME, 
+        kls=SoftwareImage
+        )
+        

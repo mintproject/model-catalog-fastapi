@@ -1,5 +1,5 @@
 from obasparql import QueryManager
-from openapi_server.settings import LOGGING_FILE, ENDPOINT, ENDPOINT_GRAPH_BASE, \
+from openapi_server.settings import ENDPOINT, ENDPOINT_GRAPH_BASE, \
     ENDPOINT_PASSWORD, ENDPOINT_RESOURCE_PREFIX, ENDPOINT_USERNAME, \
     CONTEXT_DIRECTORY, QUERY_DIRECTORY
 

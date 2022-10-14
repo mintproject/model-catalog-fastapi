@@ -115,7 +115,7 @@ class CoupledModel(BaseModel):
     screenshot: Optional[List[Image]] = Field(alias="screenshot", default=None)
     uses_model: Optional[List[Model]] = Field(alias="usesModel", default=None)
     has_model_category: Optional[List[ModelCategory]] = Field(alias="hasModelCategory", default=None)
-    had_primary_source: Optional[List[BaseModel]] = Field(alias="hadPrimarySource", default=None)
+    had_primary_source: Optional[List[object]] = Field(alias="hadPrimarySource", default=None)
     issue_tracker: Optional[List[str]] = Field(alias="issueTracker", default=None)
     date_created: Optional[List[str]] = Field(alias="dateCreated", default=None)
     contributor: Optional[List[Person]] = Field(alias="contributor", default=None)

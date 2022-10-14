@@ -17,6 +17,9 @@ from fastapi import (  # noqa: F401
 )
 
 from openapi_server.models.extra_models import TokenModel  # noqa: F401
+from openapi_server.utils.vars import THEORY_GUIDEDMODEL_TYPE_NAME, THEORY_GUIDEDMODEL_TYPE_URI
+from openapi_server.connector import query_manager
+
 from openapi_server.models.theory_guided_model import TheoryGuidedModel
 from openapi_server.security_api import get_token_BearerAuth
 
@@ -39,7 +42,15 @@ async def theory_guidedmodels_get(
     per_page: int = Query(100, description="Items per page", ge=1, le=200),
 ) -> List[TheoryGuidedModel]:
     """Gets a list of all instances of Theory-GuidedModel (more information in https://w3id.org/okn/o/sdm#Theory-GuidedModel)"""
-    ...
+    return query_manager.get_resource(
+        
+        username=username,label=label,page=page,per_page=per_page,
+        
+        rdf_type_uri=THEORY_GUIDEDMODEL_TYPE_URI,
+        rdf_type_name=THEORY_GUIDEDMODEL_TYPE_NAME, 
+        kls=Theory_GuidedModel
+        )
+        
 
 
 @router.delete(
@@ -60,7 +71,15 @@ async def theory_guidedmodels_id_delete(
     ),
 ) -> None:
     """Delete an existing Theory-GuidedModel (more information in https://w3id.org/okn/o/sdm#Theory-GuidedModel)"""
-    ...
+    return query_manager.delete_resource(
+        id=id,
+        user=user,
+        
+        rdf_type_uri=THEORY_GUIDEDMODEL_TYPE_URI,
+        rdf_type_name=THEORY_GUIDEDMODEL_TYPE_NAME, 
+        kls=Theory_GuidedModel
+        )
+        
 
 
 @router.get(
@@ -77,7 +96,15 @@ async def theory_guidedmodels_id_get(
     username: str = Query(None, description="Name of the user graph to query"),
 ) -> TheoryGuidedModel:
     """Gets the details of a given Theory-GuidedModel (more information in https://w3id.org/okn/o/sdm#Theory-GuidedModel)"""
-    ...
+    return query_manager.get_resource(
+        id=id,
+        username=username,
+        
+        rdf_type_uri=THEORY_GUIDEDMODEL_TYPE_URI,
+        rdf_type_name=THEORY_GUIDEDMODEL_TYPE_NAME, 
+        kls=Theory_GuidedModel
+        )
+        
 
 
 @router.put(
@@ -99,7 +126,15 @@ async def theory_guidedmodels_id_put(
     ),
 ) -> TheoryGuidedModel:
     """Updates an existing Theory-GuidedModel (more information in https://w3id.org/okn/o/sdm#Theory-GuidedModel)"""
-    ...
+    return query_manager.put_resource(
+        id=id,
+        user=user,
+        body=theory_guided_model,
+        rdf_type_uri=THEORY_GUIDEDMODEL_TYPE_URI,
+        rdf_type_name=THEORY_GUIDEDMODEL_TYPE_NAME, 
+        kls=Theory_GuidedModel
+        )
+        
 
 
 @router.post(
@@ -119,4 +154,12 @@ async def theory_guidedmodels_post(
     ),
 ) -> TheoryGuidedModel:
     """Create a new instance of Theory-GuidedModel (more information in https://w3id.org/okn/o/sdm#Theory-GuidedModel)"""
-    ...
+    return query_manager.post_resource(
+        
+        user=user,
+        body=theory_guided_model,
+        rdf_type_uri=THEORY_GUIDEDMODEL_TYPE_URI,
+        rdf_type_name=THEORY_GUIDEDMODEL_TYPE_NAME, 
+        kls=Theory_GuidedModel
+        )
+        

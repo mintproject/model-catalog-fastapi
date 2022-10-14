@@ -17,6 +17,9 @@ from fastapi import (  # noqa: F401
 )
 
 from openapi_server.models.extra_models import TokenModel  # noqa: F401
+from openapi_server.utils.vars import SAMPLERESOURCE_TYPE_NAME, SAMPLERESOURCE_TYPE_URI
+from openapi_server.connector import query_manager
+
 from openapi_server.models.sample_resource import SampleResource
 from openapi_server.security_api import get_token_BearerAuth
 
@@ -39,7 +42,15 @@ async def sampleresources_get(
     per_page: int = Query(100, description="Items per page", ge=1, le=200),
 ) -> List[SampleResource]:
     """Gets a list of all instances of SampleResource (more information in https://w3id.org/okn/o/sd#SampleResource)"""
-    ...
+    return query_manager.get_resource(
+        
+        username=username,label=label,page=page,per_page=per_page,
+        
+        rdf_type_uri=SAMPLERESOURCE_TYPE_URI,
+        rdf_type_name=SAMPLERESOURCE_TYPE_NAME, 
+        kls=SampleResource
+        )
+        
 
 
 @router.delete(
@@ -60,7 +71,15 @@ async def sampleresources_id_delete(
     ),
 ) -> None:
     """Delete an existing SampleResource (more information in https://w3id.org/okn/o/sd#SampleResource)"""
-    ...
+    return query_manager.delete_resource(
+        id=id,
+        user=user,
+        
+        rdf_type_uri=SAMPLERESOURCE_TYPE_URI,
+        rdf_type_name=SAMPLERESOURCE_TYPE_NAME, 
+        kls=SampleResource
+        )
+        
 
 
 @router.get(
@@ -77,7 +96,15 @@ async def sampleresources_id_get(
     username: str = Query(None, description="Name of the user graph to query"),
 ) -> SampleResource:
     """Gets the details of a given SampleResource (more information in https://w3id.org/okn/o/sd#SampleResource)"""
-    ...
+    return query_manager.get_resource(
+        id=id,
+        username=username,
+        
+        rdf_type_uri=SAMPLERESOURCE_TYPE_URI,
+        rdf_type_name=SAMPLERESOURCE_TYPE_NAME, 
+        kls=SampleResource
+        )
+        
 
 
 @router.put(
@@ -99,7 +126,15 @@ async def sampleresources_id_put(
     ),
 ) -> SampleResource:
     """Updates an existing SampleResource (more information in https://w3id.org/okn/o/sd#SampleResource)"""
-    ...
+    return query_manager.put_resource(
+        id=id,
+        user=user,
+        body=sample_resource,
+        rdf_type_uri=SAMPLERESOURCE_TYPE_URI,
+        rdf_type_name=SAMPLERESOURCE_TYPE_NAME, 
+        kls=SampleResource
+        )
+        
 
 
 @router.post(
@@ -119,4 +154,12 @@ async def sampleresources_post(
     ),
 ) -> SampleResource:
     """Create a new instance of SampleResource (more information in https://w3id.org/okn/o/sd#SampleResource)"""
-    ...
+    return query_manager.post_resource(
+        
+        user=user,
+        body=sample_resource,
+        rdf_type_uri=SAMPLERESOURCE_TYPE_URI,
+        rdf_type_name=SAMPLERESOURCE_TYPE_NAME, 
+        kls=SampleResource
+        )
+        

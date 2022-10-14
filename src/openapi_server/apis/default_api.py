@@ -37,3 +37,4 @@ async def user_login_post(
 ) -> str:
     """Login the user"""
     ...
+        

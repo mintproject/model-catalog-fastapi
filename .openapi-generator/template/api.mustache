@@ -57,14 +57,17 @@ async def {{operationId}}(
     ),
     {{/authMethods}}
     {{/hasAuthMethods}}
-) -> {{baseName}}{{^returnType}}None{{/returnType}}:
+) -> {{returnType}}{{^returnType}}None{{/returnType}}:
     {{#notes}}"""{{.}}"""
-    return query_manager.{{#lambda.lowercase}}{{httpMethod}}_resource{{/lambda.lowercase}}({{#pathParams}}{{paramName}}={{paramName}}{{#hasMore}},{{/hasMore}}{{#-last}},{{/-last}}{{/pathParams}}{{#queryParams}}
-    {{paramName}}={{paramName}}{{#hasMore}},{{/hasMore}}{{#-last}},{{/-last}}{{/queryParams}}{{#bodyParams}}
-    body={{paramName}}{{#hasMore}},{{/hasMore}}{{#-last}},{{/-last}}{{/bodyParams}}
-    rdf_type_uri={{#lambda.uppercase}}{{baseName}}_type_uri{{/lambda.uppercase}},
-    rdf_type_name={{#lambda.uppercase}}{{baseName}}_type_name{{/lambda.uppercase}}, 
-    kls={{baseName}}){{/notes}}{{^notes}}...{{/notes}}
+    return query_manager.{{#lambda.lowercase}}{{httpMethod}}_resource{{/lambda.lowercase}}(
+        {{#pathParams}}{{paramName}}={{paramName}},{{/pathParams}}
+        {{#queryParams}}{{paramName}}={{paramName}},{{/queryParams}}
+        {{#bodyParams}}body={{paramName}},{{/bodyParams}}
+        rdf_type_uri={{#lambda.uppercase}}{{baseName}}_type_uri{{/lambda.uppercase}},
+        rdf_type_name={{#lambda.uppercase}}{{baseName}}_type_name{{/lambda.uppercase}}, 
+        kls={{baseName}}
+        )
+        {{/notes}}{{^notes}}...{{/notes}}
 {{^-last}}
 
 

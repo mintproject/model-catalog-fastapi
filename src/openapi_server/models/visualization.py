@@ -26,7 +26,7 @@ class Visualization(BaseModel):
     """
 
     has_format: Optional[List[str]] = Field(alias="hasFormat", default=None)
-    had_primary_source: Optional[List[BaseModel]] = Field(alias="hadPrimarySource", default=None)
+    had_primary_source: Optional[List[object]] = Field(alias="hadPrimarySource", default=None)
     was_derived_from_software: Optional[List[Software]] = Field(alias="wasDerivedFromSoftware", default=None)
     description: Optional[List[str]] = Field(alias="description", default=None)
     id: Optional[str] = Field(alias="id", default=None)

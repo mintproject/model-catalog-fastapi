@@ -17,6 +17,9 @@ from fastapi import (  # noqa: F401
 )
 
 from openapi_server.models.extra_models import TokenModel  # noqa: F401
+from openapi_server.utils.vars import GEOCOORDINATES_TYPE_NAME, GEOCOORDINATES_TYPE_URI
+from openapi_server.connector import query_manager
+
 from openapi_server.models.geo_coordinates import GeoCoordinates
 from openapi_server.security_api import get_token_BearerAuth
 
@@ -39,7 +42,15 @@ async def geocoordinatess_get(
     per_page: int = Query(100, description="Items per page", ge=1, le=200),
 ) -> List[GeoCoordinates]:
     """Gets a list of all instances of GeoCoordinates (more information in https://w3id.org/okn/o/sdm#GeoCoordinates)"""
-    ...
+    return query_manager.get_resource(
+        
+        username=username,label=label,page=page,per_page=per_page,
+        
+        rdf_type_uri=GEOCOORDINATES_TYPE_URI,
+        rdf_type_name=GEOCOORDINATES_TYPE_NAME, 
+        kls=GeoCoordinates
+        )
+        
 
 
 @router.delete(
@@ -60,7 +71,15 @@ async def geocoordinatess_id_delete(
     ),
 ) -> None:
     """Delete an existing GeoCoordinates (more information in https://w3id.org/okn/o/sdm#GeoCoordinates)"""
-    ...
+    return query_manager.delete_resource(
+        id=id,
+        user=user,
+        
+        rdf_type_uri=GEOCOORDINATES_TYPE_URI,
+        rdf_type_name=GEOCOORDINATES_TYPE_NAME, 
+        kls=GeoCoordinates
+        )
+        
 
 
 @router.get(
@@ -77,7 +96,15 @@ async def geocoordinatess_id_get(
     username: str = Query(None, description="Name of the user graph to query"),
 ) -> GeoCoordinates:
     """Gets the details of a given GeoCoordinates (more information in https://w3id.org/okn/o/sdm#GeoCoordinates)"""
-    ...
+    return query_manager.get_resource(
+        id=id,
+        username=username,
+        
+        rdf_type_uri=GEOCOORDINATES_TYPE_URI,
+        rdf_type_name=GEOCOORDINATES_TYPE_NAME, 
+        kls=GeoCoordinates
+        )
+        
 
 
 @router.put(
@@ -99,7 +126,15 @@ async def geocoordinatess_id_put(
     ),
 ) -> GeoCoordinates:
     """Updates an existing GeoCoordinates (more information in https://w3id.org/okn/o/sdm#GeoCoordinates)"""
-    ...
+    return query_manager.put_resource(
+        id=id,
+        user=user,
+        body=geo_coordinates,
+        rdf_type_uri=GEOCOORDINATES_TYPE_URI,
+        rdf_type_name=GEOCOORDINATES_TYPE_NAME, 
+        kls=GeoCoordinates
+        )
+        
 
 
 @router.post(
@@ -119,4 +154,12 @@ async def geocoordinatess_post(
     ),
 ) -> GeoCoordinates:
     """Create a new instance of GeoCoordinates (more information in https://w3id.org/okn/o/sdm#GeoCoordinates)"""
-    ...
+    return query_manager.post_resource(
+        
+        user=user,
+        body=geo_coordinates,
+        rdf_type_uri=GEOCOORDINATES_TYPE_URI,
+        rdf_type_name=GEOCOORDINATES_TYPE_NAME, 
+        kls=GeoCoordinates
+        )
+        

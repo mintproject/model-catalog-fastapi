@@ -17,6 +17,9 @@ from fastapi import (  # noqa: F401
 )
 
 from openapi_server.models.extra_models import TokenModel  # noqa: F401
+from openapi_server.utils.vars import CONFIGURATIONSETUP_TYPE_NAME, CONFIGURATIONSETUP_TYPE_URI
+from openapi_server.connector import query_manager
+
 from openapi_server.models.configuration_setup import ConfigurationSetup
 from openapi_server.models.model_configuration_setup import ModelConfigurationSetup
 from openapi_server.security_api import get_token_BearerAuth
@@ -40,7 +43,15 @@ async def configurationsetups_get(
     per_page: int = Query(100, description="Items per page", ge=1, le=200),
 ) -> List[ConfigurationSetup]:
     """Gets a list of all instances of ConfigurationSetup (more information in https://w3id.org/okn/o/sd#ConfigurationSetup)"""
-    ...
+    return query_manager.get_resource(
+        
+        username=username,label=label,page=page,per_page=per_page,
+        
+        rdf_type_uri=CONFIGURATIONSETUP_TYPE_URI,
+        rdf_type_name=CONFIGURATIONSETUP_TYPE_NAME, 
+        kls=ConfigurationSetup
+        )
+        
 
 
 @router.delete(
@@ -61,7 +72,15 @@ async def configurationsetups_id_delete(
     ),
 ) -> None:
     """Delete an existing ConfigurationSetup (more information in https://w3id.org/okn/o/sd#ConfigurationSetup)"""
-    ...
+    return query_manager.delete_resource(
+        id=id,
+        user=user,
+        
+        rdf_type_uri=CONFIGURATIONSETUP_TYPE_URI,
+        rdf_type_name=CONFIGURATIONSETUP_TYPE_NAME, 
+        kls=ConfigurationSetup
+        )
+        
 
 
 @router.get(
@@ -78,7 +97,15 @@ async def configurationsetups_id_get(
     username: str = Query(None, description="Name of the user graph to query"),
 ) -> ConfigurationSetup:
     """Gets the details of a given ConfigurationSetup (more information in https://w3id.org/okn/o/sd#ConfigurationSetup)"""
-    ...
+    return query_manager.get_resource(
+        id=id,
+        username=username,
+        
+        rdf_type_uri=CONFIGURATIONSETUP_TYPE_URI,
+        rdf_type_name=CONFIGURATIONSETUP_TYPE_NAME, 
+        kls=ConfigurationSetup
+        )
+        
 
 
 @router.put(
@@ -100,7 +127,15 @@ async def configurationsetups_id_put(
     ),
 ) -> ConfigurationSetup:
     """Updates an existing ConfigurationSetup (more information in https://w3id.org/okn/o/sd#ConfigurationSetup)"""
-    ...
+    return query_manager.put_resource(
+        id=id,
+        user=user,
+        body=configuration_setup,
+        rdf_type_uri=CONFIGURATIONSETUP_TYPE_URI,
+        rdf_type_name=CONFIGURATIONSETUP_TYPE_NAME, 
+        kls=ConfigurationSetup
+        )
+        
 
 
 @router.post(
@@ -120,7 +155,15 @@ async def configurationsetups_post(
     ),
 ) -> ConfigurationSetup:
     """Create a new instance of ConfigurationSetup (more information in https://w3id.org/okn/o/sd#ConfigurationSetup)"""
-    ...
+    return query_manager.post_resource(
+        
+        user=user,
+        body=configuration_setup,
+        rdf_type_uri=CONFIGURATIONSETUP_TYPE_URI,
+        rdf_type_name=CONFIGURATIONSETUP_TYPE_NAME, 
+        kls=ConfigurationSetup
+        )
+        
 
 
 @router.get(
@@ -138,4 +181,12 @@ async def custom_configurationsetups_id_get(
     custom_query_name: str = Query("custom_configurationsetups", description="Name of the custom query"),
 ) -> ModelConfigurationSetup:
     """Gets the details of a single instance of a ModelConfigurationSetup"""
-    ...
+    return query_manager.get_resource(
+        id=id,
+        username=username,custom_query_name=custom_query_name,
+        
+        rdf_type_uri=CONFIGURATIONSETUP_TYPE_URI,
+        rdf_type_name=CONFIGURATIONSETUP_TYPE_NAME, 
+        kls=ConfigurationSetup
+        )
+        

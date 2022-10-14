@@ -17,6 +17,9 @@ from fastapi import (  # noqa: F401
 )
 
 from openapi_server.models.extra_models import TokenModel  # noqa: F401
+from openapi_server.utils.vars import IMAGE_TYPE_NAME, IMAGE_TYPE_URI
+from openapi_server.connector import query_manager
+
 from openapi_server.models.image import Image
 from openapi_server.security_api import get_token_BearerAuth
 
@@ -39,7 +42,15 @@ async def images_get(
     per_page: int = Query(100, description="Items per page", ge=1, le=200),
 ) -> List[Image]:
     """Gets a list of all instances of Image (more information in https://w3id.org/okn/o/sd#Image)"""
-    ...
+    return query_manager.get_resource(
+        
+        username=username,label=label,page=page,per_page=per_page,
+        
+        rdf_type_uri=IMAGE_TYPE_URI,
+        rdf_type_name=IMAGE_TYPE_NAME, 
+        kls=Image
+        )
+        
 
 
 @router.delete(
@@ -60,7 +71,15 @@ async def images_id_delete(
     ),
 ) -> None:
     """Delete an existing Image (more information in https://w3id.org/okn/o/sd#Image)"""
-    ...
+    return query_manager.delete_resource(
+        id=id,
+        user=user,
+        
+        rdf_type_uri=IMAGE_TYPE_URI,
+        rdf_type_name=IMAGE_TYPE_NAME, 
+        kls=Image
+        )
+        
 
 
 @router.get(
@@ -77,7 +96,15 @@ async def images_id_get(
     username: str = Query(None, description="Name of the user graph to query"),
 ) -> Image:
     """Gets the details of a given Image (more information in https://w3id.org/okn/o/sd#Image)"""
-    ...
+    return query_manager.get_resource(
+        id=id,
+        username=username,
+        
+        rdf_type_uri=IMAGE_TYPE_URI,
+        rdf_type_name=IMAGE_TYPE_NAME, 
+        kls=Image
+        )
+        
 
 
 @router.put(
@@ -99,7 +126,15 @@ async def images_id_put(
     ),
 ) -> Image:
     """Updates an existing Image (more information in https://w3id.org/okn/o/sd#Image)"""
-    ...
+    return query_manager.put_resource(
+        id=id,
+        user=user,
+        body=image,
+        rdf_type_uri=IMAGE_TYPE_URI,
+        rdf_type_name=IMAGE_TYPE_NAME, 
+        kls=Image
+        )
+        
 
 
 @router.post(
@@ -119,4 +154,12 @@ async def images_post(
     ),
 ) -> Image:
     """Create a new instance of Image (more information in https://w3id.org/okn/o/sd#Image)"""
-    ...
+    return query_manager.post_resource(
+        
+        user=user,
+        body=image,
+        rdf_type_uri=IMAGE_TYPE_URI,
+        rdf_type_name=IMAGE_TYPE_NAME, 
+        kls=Image
+        )
+        

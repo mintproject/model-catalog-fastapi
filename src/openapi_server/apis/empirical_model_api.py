@@ -17,6 +17,9 @@ from fastapi import (  # noqa: F401
 )
 
 from openapi_server.models.extra_models import TokenModel  # noqa: F401
+from openapi_server.utils.vars import EMPIRICALMODEL_TYPE_NAME, EMPIRICALMODEL_TYPE_URI
+from openapi_server.connector import query_manager
+
 from openapi_server.models.empirical_model import EmpiricalModel
 from openapi_server.security_api import get_token_BearerAuth
 
@@ -39,7 +42,15 @@ async def empiricalmodels_get(
     per_page: int = Query(100, description="Items per page", ge=1, le=200),
 ) -> List[EmpiricalModel]:
     """Gets a list of all instances of EmpiricalModel (more information in https://w3id.org/okn/o/sdm#EmpiricalModel)"""
-    ...
+    return query_manager.get_resource(
+        
+        username=username,label=label,page=page,per_page=per_page,
+        
+        rdf_type_uri=EMPIRICALMODEL_TYPE_URI,
+        rdf_type_name=EMPIRICALMODEL_TYPE_NAME, 
+        kls=EmpiricalModel
+        )
+        
 
 
 @router.delete(
@@ -60,7 +71,15 @@ async def empiricalmodels_id_delete(
     ),
 ) -> None:
     """Delete an existing EmpiricalModel (more information in https://w3id.org/okn/o/sdm#EmpiricalModel)"""
-    ...
+    return query_manager.delete_resource(
+        id=id,
+        user=user,
+        
+        rdf_type_uri=EMPIRICALMODEL_TYPE_URI,
+        rdf_type_name=EMPIRICALMODEL_TYPE_NAME, 
+        kls=EmpiricalModel
+        )
+        
 
 
 @router.get(
@@ -77,7 +96,15 @@ async def empiricalmodels_id_get(
     username: str = Query(None, description="Name of the user graph to query"),
 ) -> EmpiricalModel:
     """Gets the details of a given EmpiricalModel (more information in https://w3id.org/okn/o/sdm#EmpiricalModel)"""
-    ...
+    return query_manager.get_resource(
+        id=id,
+        username=username,
+        
+        rdf_type_uri=EMPIRICALMODEL_TYPE_URI,
+        rdf_type_name=EMPIRICALMODEL_TYPE_NAME, 
+        kls=EmpiricalModel
+        )
+        
 
 
 @router.put(
@@ -99,7 +126,15 @@ async def empiricalmodels_id_put(
     ),
 ) -> EmpiricalModel:
     """Updates an existing EmpiricalModel (more information in https://w3id.org/okn/o/sdm#EmpiricalModel)"""
-    ...
+    return query_manager.put_resource(
+        id=id,
+        user=user,
+        body=empirical_model,
+        rdf_type_uri=EMPIRICALMODEL_TYPE_URI,
+        rdf_type_name=EMPIRICALMODEL_TYPE_NAME, 
+        kls=EmpiricalModel
+        )
+        
 
 
 @router.post(
@@ -119,4 +154,12 @@ async def empiricalmodels_post(
     ),
 ) -> EmpiricalModel:
     """Create a new instance of EmpiricalModel (more information in https://w3id.org/okn/o/sdm#EmpiricalModel)"""
-    ...
+    return query_manager.post_resource(
+        
+        user=user,
+        body=empirical_model,
+        rdf_type_uri=EMPIRICALMODEL_TYPE_URI,
+        rdf_type_name=EMPIRICALMODEL_TYPE_NAME, 
+        kls=EmpiricalModel
+        )
+        

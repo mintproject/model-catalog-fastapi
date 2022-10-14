@@ -17,6 +17,9 @@ from fastapi import (  # noqa: F401
 )
 
 from openapi_server.models.extra_models import TokenModel  # noqa: F401
+from openapi_server.utils.vars import PROCESS_TYPE_NAME, PROCESS_TYPE_URI
+from openapi_server.connector import query_manager
+
 from openapi_server.models.process import Process
 from openapi_server.security_api import get_token_BearerAuth
 
@@ -39,7 +42,15 @@ async def processs_get(
     per_page: int = Query(100, description="Items per page", ge=1, le=200),
 ) -> List[Process]:
     """Gets a list of all instances of Process (more information in https://w3id.org/okn/o/sdm#Process)"""
-    ...
+    return query_manager.get_resource(
+        
+        username=username,label=label,page=page,per_page=per_page,
+        
+        rdf_type_uri=PROCESS_TYPE_URI,
+        rdf_type_name=PROCESS_TYPE_NAME, 
+        kls=Process
+        )
+        
 
 
 @router.delete(
@@ -60,7 +71,15 @@ async def processs_id_delete(
     ),
 ) -> None:
     """Delete an existing Process (more information in https://w3id.org/okn/o/sdm#Process)"""
-    ...
+    return query_manager.delete_resource(
+        id=id,
+        user=user,
+        
+        rdf_type_uri=PROCESS_TYPE_URI,
+        rdf_type_name=PROCESS_TYPE_NAME, 
+        kls=Process
+        )
+        
 
 
 @router.get(
@@ -77,7 +96,15 @@ async def processs_id_get(
     username: str = Query(None, description="Name of the user graph to query"),
 ) -> Process:
     """Gets the details of a given Process (more information in https://w3id.org/okn/o/sdm#Process)"""
-    ...
+    return query_manager.get_resource(
+        id=id,
+        username=username,
+        
+        rdf_type_uri=PROCESS_TYPE_URI,
+        rdf_type_name=PROCESS_TYPE_NAME, 
+        kls=Process
+        )
+        
 
 
 @router.put(
@@ -99,7 +126,15 @@ async def processs_id_put(
     ),
 ) -> Process:
     """Updates an existing Process (more information in https://w3id.org/okn/o/sdm#Process)"""
-    ...
+    return query_manager.put_resource(
+        id=id,
+        user=user,
+        body=process,
+        rdf_type_uri=PROCESS_TYPE_URI,
+        rdf_type_name=PROCESS_TYPE_NAME, 
+        kls=Process
+        )
+        
 
 
 @router.post(
@@ -119,4 +154,12 @@ async def processs_post(
     ),
 ) -> Process:
     """Create a new instance of Process (more information in https://w3id.org/okn/o/sdm#Process)"""
-    ...
+    return query_manager.post_resource(
+        
+        user=user,
+        body=process,
+        rdf_type_uri=PROCESS_TYPE_URI,
+        rdf_type_name=PROCESS_TYPE_NAME, 
+        kls=Process
+        )
+        

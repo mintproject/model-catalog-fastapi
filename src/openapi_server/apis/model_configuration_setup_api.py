@@ -17,6 +17,9 @@ from fastapi import (  # noqa: F401
 )
 
 from openapi_server.models.extra_models import TokenModel  # noqa: F401
+from openapi_server.utils.vars import MODELCONFIGURATIONSETUP_TYPE_NAME, MODELCONFIGURATIONSETUP_TYPE_URI
+from openapi_server.connector import query_manager
+
 from openapi_server.models.model_configuration_setup import ModelConfigurationSetup
 from openapi_server.security_api import get_token_BearerAuth
 
@@ -38,7 +41,15 @@ async def custom_modelconfigurationsetups_id_get(
     custom_query_name: str = Query("custom_modelconfigurationsetups", description="Name of the custom query"),
 ) -> ModelConfigurationSetup:
     """Gets the details of a single instance of a ModelConfigurationSetup"""
-    ...
+    return query_manager.get_resource(
+        id=id,
+        username=username,custom_query_name=custom_query_name,
+        
+        rdf_type_uri=MODELCONFIGURATIONSETUP_TYPE_URI,
+        rdf_type_name=MODELCONFIGURATIONSETUP_TYPE_NAME, 
+        kls=ModelConfigurationSetup
+        )
+        
 
 
 @router.get(
@@ -56,7 +67,15 @@ async def custom_modelconfigurationsetups_variable_get(
     username: str = Query(None, description="Username to query"),
 ) -> List[ModelConfigurationSetup]:
     """Get model configurations by variable name"""
-    ...
+    return query_manager.get_resource(
+        
+        custom_query_name=custom_query_name,username=username,label=label,
+        
+        rdf_type_uri=MODELCONFIGURATIONSETUP_TYPE_URI,
+        rdf_type_name=MODELCONFIGURATIONSETUP_TYPE_NAME, 
+        kls=ModelConfigurationSetup
+        )
+        
 
 
 @router.get(
@@ -75,7 +94,15 @@ async def modelconfigurationsetups_get(
     per_page: int = Query(100, description="Items per page", ge=1, le=200),
 ) -> List[ModelConfigurationSetup]:
     """Gets a list of all instances of ModelConfigurationSetup (more information in https://w3id.org/okn/o/sdm#ModelConfigurationSetup)"""
-    ...
+    return query_manager.get_resource(
+        
+        username=username,label=label,page=page,per_page=per_page,
+        
+        rdf_type_uri=MODELCONFIGURATIONSETUP_TYPE_URI,
+        rdf_type_name=MODELCONFIGURATIONSETUP_TYPE_NAME, 
+        kls=ModelConfigurationSetup
+        )
+        
 
 
 @router.delete(
@@ -96,7 +123,15 @@ async def modelconfigurationsetups_id_delete(
     ),
 ) -> None:
     """Delete an existing ModelConfigurationSetup (more information in https://w3id.org/okn/o/sdm#ModelConfigurationSetup)"""
-    ...
+    return query_manager.delete_resource(
+        id=id,
+        user=user,
+        
+        rdf_type_uri=MODELCONFIGURATIONSETUP_TYPE_URI,
+        rdf_type_name=MODELCONFIGURATIONSETUP_TYPE_NAME, 
+        kls=ModelConfigurationSetup
+        )
+        
 
 
 @router.get(
@@ -113,7 +148,15 @@ async def modelconfigurationsetups_id_get(
     username: str = Query(None, description="Name of the user graph to query"),
 ) -> ModelConfigurationSetup:
     """Gets the details of a given ModelConfigurationSetup (more information in https://w3id.org/okn/o/sdm#ModelConfigurationSetup)"""
-    ...
+    return query_manager.get_resource(
+        id=id,
+        username=username,
+        
+        rdf_type_uri=MODELCONFIGURATIONSETUP_TYPE_URI,
+        rdf_type_name=MODELCONFIGURATIONSETUP_TYPE_NAME, 
+        kls=ModelConfigurationSetup
+        )
+        
 
 
 @router.put(
@@ -135,7 +178,15 @@ async def modelconfigurationsetups_id_put(
     ),
 ) -> ModelConfigurationSetup:
     """Updates an existing ModelConfigurationSetup (more information in https://w3id.org/okn/o/sdm#ModelConfigurationSetup)"""
-    ...
+    return query_manager.put_resource(
+        id=id,
+        user=user,
+        body=model_configuration_setup,
+        rdf_type_uri=MODELCONFIGURATIONSETUP_TYPE_URI,
+        rdf_type_name=MODELCONFIGURATIONSETUP_TYPE_NAME, 
+        kls=ModelConfigurationSetup
+        )
+        
 
 
 @router.post(
@@ -155,4 +206,12 @@ async def modelconfigurationsetups_post(
     ),
 ) -> ModelConfigurationSetup:
     """Create a new instance of ModelConfigurationSetup (more information in https://w3id.org/okn/o/sdm#ModelConfigurationSetup)"""
-    ...
+    return query_manager.post_resource(
+        
+        user=user,
+        body=model_configuration_setup,
+        rdf_type_uri=MODELCONFIGURATIONSETUP_TYPE_URI,
+        rdf_type_name=MODELCONFIGURATIONSETUP_TYPE_NAME, 
+        kls=ModelConfigurationSetup
+        )
+        

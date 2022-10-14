@@ -17,6 +17,9 @@ from fastapi import (  # noqa: F401
 )
 
 from openapi_server.models.extra_models import TokenModel  # noqa: F401
+from openapi_server.utils.vars import REGION_TYPE_NAME, REGION_TYPE_URI
+from openapi_server.connector import query_manager
+
 from openapi_server.models.region import Region
 from openapi_server.security_api import get_token_BearerAuth
 
@@ -39,7 +42,15 @@ async def regions_get(
     per_page: int = Query(100, description="Items per page", ge=1, le=200),
 ) -> List[Region]:
     """Gets a list of all instances of Region (more information in https://w3id.org/okn/o/sdm#Region)"""
-    ...
+    return query_manager.get_resource(
+        
+        username=username,label=label,page=page,per_page=per_page,
+        
+        rdf_type_uri=REGION_TYPE_URI,
+        rdf_type_name=REGION_TYPE_NAME, 
+        kls=Region
+        )
+        
 
 
 @router.delete(
@@ -60,7 +71,15 @@ async def regions_id_delete(
     ),
 ) -> None:
     """Delete an existing Region (more information in https://w3id.org/okn/o/sdm#Region)"""
-    ...
+    return query_manager.delete_resource(
+        id=id,
+        user=user,
+        
+        rdf_type_uri=REGION_TYPE_URI,
+        rdf_type_name=REGION_TYPE_NAME, 
+        kls=Region
+        )
+        
 
 
 @router.get(
@@ -77,7 +96,15 @@ async def regions_id_get(
     username: str = Query(None, description="Name of the user graph to query"),
 ) -> Region:
     """Gets the details of a given Region (more information in https://w3id.org/okn/o/sdm#Region)"""
-    ...
+    return query_manager.get_resource(
+        id=id,
+        username=username,
+        
+        rdf_type_uri=REGION_TYPE_URI,
+        rdf_type_name=REGION_TYPE_NAME, 
+        kls=Region
+        )
+        
 
 
 @router.put(
@@ -99,7 +126,15 @@ async def regions_id_put(
     ),
 ) -> Region:
     """Updates an existing Region (more information in https://w3id.org/okn/o/sdm#Region)"""
-    ...
+    return query_manager.put_resource(
+        id=id,
+        user=user,
+        body=region,
+        rdf_type_uri=REGION_TYPE_URI,
+        rdf_type_name=REGION_TYPE_NAME, 
+        kls=Region
+        )
+        
 
 
 @router.post(
@@ -119,4 +154,12 @@ async def regions_post(
     ),
 ) -> Region:
     """Create a new instance of Region (more information in https://w3id.org/okn/o/sdm#Region)"""
-    ...
+    return query_manager.post_resource(
+        
+        user=user,
+        body=region,
+        rdf_type_uri=REGION_TYPE_URI,
+        rdf_type_name=REGION_TYPE_NAME, 
+        kls=Region
+        )
+        

@@ -38,7 +38,7 @@ class PointBasedGrid(BaseModel):
     has_dimensionality: Optional[List[int]] = Field(alias="hasDimensionality", default=None)
     has_format: Optional[List[str]] = Field(alias="hasFormat", default=None)
     path_location: Optional[List[str]] = Field(alias="pathLocation", default=None)
-    has_file_structure: Optional[List[BaseModel]] = Field(alias="hasFileStructure", default=None)
+    has_file_structure: Optional[List[object]] = Field(alias="hasFileStructure", default=None)
     description: Optional[List[str]] = Field(alias="description", default=None)
     has_data_transformation: Optional[List[DataTransformation]] = Field(alias="hasDataTransformation", default=None)
     has_presentation: Optional[List[VariablePresentation]] = Field(alias="hasPresentation", default=None)

@@ -17,6 +17,9 @@ from fastapi import (  # noqa: F401
 )
 
 from openapi_server.models.extra_models import TokenModel  # noqa: F401
+from openapi_server.utils.vars import SAMPLECOLLECTION_TYPE_NAME, SAMPLECOLLECTION_TYPE_URI
+from openapi_server.connector import query_manager
+
 from openapi_server.models.sample_collection import SampleCollection
 from openapi_server.security_api import get_token_BearerAuth
 
@@ -39,7 +42,15 @@ async def samplecollections_get(
     per_page: int = Query(100, description="Items per page", ge=1, le=200),
 ) -> List[SampleCollection]:
     """Gets a list of all instances of SampleCollection (more information in https://w3id.org/okn/o/sd#SampleCollection)"""
-    ...
+    return query_manager.get_resource(
+        
+        username=username,label=label,page=page,per_page=per_page,
+        
+        rdf_type_uri=SAMPLECOLLECTION_TYPE_URI,
+        rdf_type_name=SAMPLECOLLECTION_TYPE_NAME, 
+        kls=SampleCollection
+        )
+        
 
 
 @router.delete(
@@ -60,7 +71,15 @@ async def samplecollections_id_delete(
     ),
 ) -> None:
     """Delete an existing SampleCollection (more information in https://w3id.org/okn/o/sd#SampleCollection)"""
-    ...
+    return query_manager.delete_resource(
+        id=id,
+        user=user,
+        
+        rdf_type_uri=SAMPLECOLLECTION_TYPE_URI,
+        rdf_type_name=SAMPLECOLLECTION_TYPE_NAME, 
+        kls=SampleCollection
+        )
+        
 
 
 @router.get(
@@ -77,7 +96,15 @@ async def samplecollections_id_get(
     username: str = Query(None, description="Name of the user graph to query"),
 ) -> SampleCollection:
     """Gets the details of a given SampleCollection (more information in https://w3id.org/okn/o/sd#SampleCollection)"""
-    ...
+    return query_manager.get_resource(
+        id=id,
+        username=username,
+        
+        rdf_type_uri=SAMPLECOLLECTION_TYPE_URI,
+        rdf_type_name=SAMPLECOLLECTION_TYPE_NAME, 
+        kls=SampleCollection
+        )
+        
 
 
 @router.put(
@@ -99,7 +126,15 @@ async def samplecollections_id_put(
     ),
 ) -> SampleCollection:
     """Updates an existing SampleCollection (more information in https://w3id.org/okn/o/sd#SampleCollection)"""
-    ...
+    return query_manager.put_resource(
+        id=id,
+        user=user,
+        body=sample_collection,
+        rdf_type_uri=SAMPLECOLLECTION_TYPE_URI,
+        rdf_type_name=SAMPLECOLLECTION_TYPE_NAME, 
+        kls=SampleCollection
+        )
+        
 
 
 @router.post(
@@ -119,4 +154,12 @@ async def samplecollections_post(
     ),
 ) -> SampleCollection:
     """Create a new instance of SampleCollection (more information in https://w3id.org/okn/o/sd#SampleCollection)"""
-    ...
+    return query_manager.post_resource(
+        
+        user=user,
+        body=sample_collection,
+        rdf_type_uri=SAMPLECOLLECTION_TYPE_URI,
+        rdf_type_name=SAMPLECOLLECTION_TYPE_NAME, 
+        kls=SampleCollection
+        )
+        

@@ -17,6 +17,9 @@ from fastapi import (  # noqa: F401
 )
 
 from openapi_server.models.extra_models import TokenModel  # noqa: F401
+from openapi_server.utils.vars import SOFTWAREVERSION_TYPE_NAME, SOFTWAREVERSION_TYPE_URI
+from openapi_server.connector import query_manager
+
 from openapi_server.models.software_version import SoftwareVersion
 from openapi_server.security_api import get_token_BearerAuth
 
@@ -39,7 +42,15 @@ async def softwareversions_get(
     per_page: int = Query(100, description="Items per page", ge=1, le=200),
 ) -> List[SoftwareVersion]:
     """Gets a list of all instances of SoftwareVersion (more information in https://w3id.org/okn/o/sd#SoftwareVersion)"""
-    ...
+    return query_manager.get_resource(
+        
+        username=username,label=label,page=page,per_page=per_page,
+        
+        rdf_type_uri=SOFTWAREVERSION_TYPE_URI,
+        rdf_type_name=SOFTWAREVERSION_TYPE_NAME, 
+        kls=SoftwareVersion
+        )
+        
 
 
 @router.delete(
@@ -60,7 +71,15 @@ async def softwareversions_id_delete(
     ),
 ) -> None:
     """Delete an existing SoftwareVersion (more information in https://w3id.org/okn/o/sd#SoftwareVersion)"""
-    ...
+    return query_manager.delete_resource(
+        id=id,
+        user=user,
+        
+        rdf_type_uri=SOFTWAREVERSION_TYPE_URI,
+        rdf_type_name=SOFTWAREVERSION_TYPE_NAME, 
+        kls=SoftwareVersion
+        )
+        
 
 
 @router.get(
@@ -77,7 +96,15 @@ async def softwareversions_id_get(
     username: str = Query(None, description="Name of the user graph to query"),
 ) -> SoftwareVersion:
     """Gets the details of a given SoftwareVersion (more information in https://w3id.org/okn/o/sd#SoftwareVersion)"""
-    ...
+    return query_manager.get_resource(
+        id=id,
+        username=username,
+        
+        rdf_type_uri=SOFTWAREVERSION_TYPE_URI,
+        rdf_type_name=SOFTWAREVERSION_TYPE_NAME, 
+        kls=SoftwareVersion
+        )
+        
 
 
 @router.put(
@@ -99,7 +126,15 @@ async def softwareversions_id_put(
     ),
 ) -> SoftwareVersion:
     """Updates an existing SoftwareVersion (more information in https://w3id.org/okn/o/sd#SoftwareVersion)"""
-    ...
+    return query_manager.put_resource(
+        id=id,
+        user=user,
+        body=software_version,
+        rdf_type_uri=SOFTWAREVERSION_TYPE_URI,
+        rdf_type_name=SOFTWAREVERSION_TYPE_NAME, 
+        kls=SoftwareVersion
+        )
+        
 
 
 @router.post(
@@ -119,4 +154,12 @@ async def softwareversions_post(
     ),
 ) -> SoftwareVersion:
     """Create a new instance of SoftwareVersion (more information in https://w3id.org/okn/o/sd#SoftwareVersion)"""
-    ...
+    return query_manager.post_resource(
+        
+        user=user,
+        body=software_version,
+        rdf_type_uri=SOFTWAREVERSION_TYPE_URI,
+        rdf_type_name=SOFTWAREVERSION_TYPE_NAME, 
+        kls=SoftwareVersion
+        )
+        

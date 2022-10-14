@@ -17,6 +17,9 @@ from fastapi import (  # noqa: F401
 )
 
 from openapi_server.models.extra_models import TokenModel  # noqa: F401
+from openapi_server.utils.vars import INTERVENTION_TYPE_NAME, INTERVENTION_TYPE_URI
+from openapi_server.connector import query_manager
+
 from openapi_server.models.intervention import Intervention
 from openapi_server.security_api import get_token_BearerAuth
 
@@ -39,7 +42,15 @@ async def interventions_get(
     per_page: int = Query(100, description="Items per page", ge=1, le=200),
 ) -> List[Intervention]:
     """Gets a list of all instances of Intervention (more information in https://w3id.org/okn/o/sdm#Intervention)"""
-    ...
+    return query_manager.get_resource(
+        
+        username=username,label=label,page=page,per_page=per_page,
+        
+        rdf_type_uri=INTERVENTION_TYPE_URI,
+        rdf_type_name=INTERVENTION_TYPE_NAME, 
+        kls=Intervention
+        )
+        
 
 
 @router.delete(
@@ -60,7 +71,15 @@ async def interventions_id_delete(
     ),
 ) -> None:
     """Delete an existing Intervention (more information in https://w3id.org/okn/o/sdm#Intervention)"""
-    ...
+    return query_manager.delete_resource(
+        id=id,
+        user=user,
+        
+        rdf_type_uri=INTERVENTION_TYPE_URI,
+        rdf_type_name=INTERVENTION_TYPE_NAME, 
+        kls=Intervention
+        )
+        
 
 
 @router.get(
@@ -77,7 +96,15 @@ async def interventions_id_get(
     username: str = Query(None, description="Name of the user graph to query"),
 ) -> Intervention:
     """Gets the details of a given Intervention (more information in https://w3id.org/okn/o/sdm#Intervention)"""
-    ...
+    return query_manager.get_resource(
+        id=id,
+        username=username,
+        
+        rdf_type_uri=INTERVENTION_TYPE_URI,
+        rdf_type_name=INTERVENTION_TYPE_NAME, 
+        kls=Intervention
+        )
+        
 
 
 @router.put(
@@ -99,7 +126,15 @@ async def interventions_id_put(
     ),
 ) -> Intervention:
     """Updates an existing Intervention (more information in https://w3id.org/okn/o/sdm#Intervention)"""
-    ...
+    return query_manager.put_resource(
+        id=id,
+        user=user,
+        body=intervention,
+        rdf_type_uri=INTERVENTION_TYPE_URI,
+        rdf_type_name=INTERVENTION_TYPE_NAME, 
+        kls=Intervention
+        )
+        
 
 
 @router.post(
@@ -119,4 +154,12 @@ async def interventions_post(
     ),
 ) -> Intervention:
     """Create a new instance of Intervention (more information in https://w3id.org/okn/o/sdm#Intervention)"""
-    ...
+    return query_manager.post_resource(
+        
+        user=user,
+        body=intervention,
+        rdf_type_uri=INTERVENTION_TYPE_URI,
+        rdf_type_name=INTERVENTION_TYPE_NAME, 
+        kls=Intervention
+        )
+        

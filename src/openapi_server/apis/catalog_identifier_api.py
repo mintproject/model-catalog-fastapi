@@ -17,6 +17,9 @@ from fastapi import (  # noqa: F401
 )
 
 from openapi_server.models.extra_models import TokenModel  # noqa: F401
+from openapi_server.utils.vars import CATALOGIDENTIFIER_TYPE_NAME, CATALOGIDENTIFIER_TYPE_URI
+from openapi_server.connector import query_manager
+
 from openapi_server.models.catalog_identifier import CatalogIdentifier
 from openapi_server.security_api import get_token_BearerAuth
 
@@ -39,7 +42,15 @@ async def catalogidentifiers_get(
     per_page: int = Query(100, description="Items per page", ge=1, le=200),
 ) -> List[CatalogIdentifier]:
     """Gets a list of all instances of CatalogIdentifier (more information in https://w3id.org/okn/o/sd#CatalogIdentifier)"""
-    ...
+    return query_manager.get_resource(
+        
+        username=username,label=label,page=page,per_page=per_page,
+        
+        rdf_type_uri=CATALOGIDENTIFIER_TYPE_URI,
+        rdf_type_name=CATALOGIDENTIFIER_TYPE_NAME, 
+        kls=CatalogIdentifier
+        )
+        
 
 
 @router.delete(
@@ -60,7 +71,15 @@ async def catalogidentifiers_id_delete(
     ),
 ) -> None:
     """Delete an existing CatalogIdentifier (more information in https://w3id.org/okn/o/sd#CatalogIdentifier)"""
-    ...
+    return query_manager.delete_resource(
+        id=id,
+        user=user,
+        
+        rdf_type_uri=CATALOGIDENTIFIER_TYPE_URI,
+        rdf_type_name=CATALOGIDENTIFIER_TYPE_NAME, 
+        kls=CatalogIdentifier
+        )
+        
 
 
 @router.get(
@@ -77,7 +96,15 @@ async def catalogidentifiers_id_get(
     username: str = Query(None, description="Name of the user graph to query"),
 ) -> CatalogIdentifier:
     """Gets the details of a given CatalogIdentifier (more information in https://w3id.org/okn/o/sd#CatalogIdentifier)"""
-    ...
+    return query_manager.get_resource(
+        id=id,
+        username=username,
+        
+        rdf_type_uri=CATALOGIDENTIFIER_TYPE_URI,
+        rdf_type_name=CATALOGIDENTIFIER_TYPE_NAME, 
+        kls=CatalogIdentifier
+        )
+        
 
 
 @router.put(
@@ -99,7 +126,15 @@ async def catalogidentifiers_id_put(
     ),
 ) -> CatalogIdentifier:
     """Updates an existing CatalogIdentifier (more information in https://w3id.org/okn/o/sd#CatalogIdentifier)"""
-    ...
+    return query_manager.put_resource(
+        id=id,
+        user=user,
+        body=catalog_identifier,
+        rdf_type_uri=CATALOGIDENTIFIER_TYPE_URI,
+        rdf_type_name=CATALOGIDENTIFIER_TYPE_NAME, 
+        kls=CatalogIdentifier
+        )
+        
 
 
 @router.post(
@@ -119,4 +154,12 @@ async def catalogidentifiers_post(
     ),
 ) -> CatalogIdentifier:
     """Create a new instance of CatalogIdentifier (more information in https://w3id.org/okn/o/sd#CatalogIdentifier)"""
-    ...
+    return query_manager.post_resource(
+        
+        user=user,
+        body=catalog_identifier,
+        rdf_type_uri=CATALOGIDENTIFIER_TYPE_URI,
+        rdf_type_name=CATALOGIDENTIFIER_TYPE_NAME, 
+        kls=CatalogIdentifier
+        )
+        
