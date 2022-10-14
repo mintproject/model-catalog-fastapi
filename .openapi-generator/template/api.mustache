@@ -18,6 +18,7 @@ from fastapi import (  # noqa: F401
 
 from {{modelPackage}}.extra_models import TokenModel  # noqa: F401
 from openapi_server.utils.vars import {{#lambda.uppercase}}{{baseName}}_type_name{{/lambda.uppercase}}, {{#lambda.uppercase}}{{baseName}}_type_uri{{/lambda.uppercase}}
+from openapi_server.connector import query_manager
 
 {{#imports}}
 {{import}}
@@ -58,7 +59,7 @@ async def {{operationId}}(
     {{/hasAuthMethods}}
 ) -> {{baseName}}{{^returnType}}None{{/returnType}}:
     {{#notes}}"""{{.}}"""
-    return {{#lambda.lowercase}}{{httpMethod}}_resource{{/lambda.lowercase}}({{#pathParams}}{{paramName}}={{paramName}}{{#hasMore}},{{/hasMore}}{{#-last}},{{/-last}}{{/pathParams}}{{#queryParams}}
+    return query_manager.{{#lambda.lowercase}}{{httpMethod}}_resource{{/lambda.lowercase}}({{#pathParams}}{{paramName}}={{paramName}}{{#hasMore}},{{/hasMore}}{{#-last}},{{/-last}}{{/pathParams}}{{#queryParams}}
     {{paramName}}={{paramName}}{{#hasMore}},{{/hasMore}}{{#-last}},{{/-last}}{{/queryParams}}{{#bodyParams}}
     body={{paramName}}{{#hasMore}},{{/hasMore}}{{#-last}},{{/-last}}{{/bodyParams}}
     rdf_type_uri={{#lambda.uppercase}}{{baseName}}_type_uri{{/lambda.uppercase}},
