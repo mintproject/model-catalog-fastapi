@@ -135,7 +135,7 @@ async def configurationsetups_post(
 async def custom_configurationsetups_id_get(
     id: str = Path(None, description="The ID of the resource"),
     username: str = Query(None, description="Username to query"),
-    custom_query_name: str = Query(&#39;custom_configurationsetups&#39;, description="Name of the custom query"),
+    custom_query_name: str = Query("custom_configurationsetups", description="Name of the custom query"),
 ) -> ModelConfigurationSetup:
     """Gets the details of a single instance of a ModelConfigurationSetup"""
     ...

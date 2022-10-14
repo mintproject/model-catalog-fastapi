@@ -35,7 +35,7 @@ router = APIRouter()
 async def custom_modelconfigurations_id_get(
     id: str = Path(None, description="The ID of the resource"),
     username: str = Query(None, description="Username to query"),
-    custom_query_name: str = Query(&#39;custom_modelconfigurations&#39;, description="Name of the custom query"),
+    custom_query_name: str = Query("custom_modelconfigurations", description="Name of the custom query"),
 ) -> ModelConfiguration:
     """Gets the details of a single instance of a ModelConfiguration"""
     ...

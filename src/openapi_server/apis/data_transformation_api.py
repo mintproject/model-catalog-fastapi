@@ -34,7 +34,7 @@ router = APIRouter()
 )
 async def custom_datasetspecifications_id_datatransformations_get(
     id: str = Path(None, description="The ID of the dataspecification"),
-    custom_query_name: str = Query(&#39;custom_datatransformations&#39;, description="Name of the custom query"),
+    custom_query_name: str = Query("custom_datatransformations", description="Name of the custom query"),
     username: str = Query(None, description="Username to query"),
 ) -> List[DataTransformation]:
     """Gets a list of data transformations related a dataset"""

@@ -35,7 +35,7 @@ router = APIRouter()
 async def custom_configuration_id_inputs_get(
     id: str = Path(None, description="The ID of the resource"),
     username: str = Query(None, description="Username to query"),
-    custom_query_name: str = Query(&#39;search_datasetspecification_by_configurationid&#39;, description="Name of the custom query"),
+    custom_query_name: str = Query("search_datasetspecification_by_configurationid", description="Name of the custom query"),
 ) -> List[DatasetSpecification]:
     """Gets all inputs of a configuration"""
     ...
@@ -53,7 +53,7 @@ async def custom_configuration_id_inputs_get(
 async def custom_datasetspecifications_get(
     configurationid: str = Query(None, description="The ID of the configuration"),
     username: str = Query(None, description="Username to query"),
-    custom_query_name: str = Query(&#39;custom_allinputs&#39;, description="Name of the custom query"),
+    custom_query_name: str = Query("custom_allinputs", description="Name of the custom query"),
 ) -> List[DatasetSpecification]:
     """Gets all inputs of a configuration"""
     ...
