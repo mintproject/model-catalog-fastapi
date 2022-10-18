@@ -58,8 +58,14 @@ from openapi_server.apis.unit_api import router as UnitApiRouter
 from openapi_server.apis.variable_api import router as VariableApiRouter
 from openapi_server.apis.variable_presentation_api import router as VariablePresentationApiRouter
 from openapi_server.apis.visualization_api import router as VisualizationApiRouter
-from openapi_server.apis.default_api import router as DefaultApiRouter
+
+from fastapi_cache import FastAPICache
+from fastapi_cache.backends.redis import RedisBackend
+from fastapi_cache.decorator import cache
+from redis import asyncio as aioredis
+
 from fastapi.middleware.cors import CORSMiddleware
+
 from openapi_server.settings import REDIS_ADDRESS
 
 app = FastAPI(
@@ -127,7 +133,6 @@ app.include_router(UnitApiRouter)
 app.include_router(VariableApiRouter)
 app.include_router(VariablePresentationApiRouter)
 app.include_router(VisualizationApiRouter)
-app.include_router(DefaultApiRouter)
 
 
 @cache()
@@ -136,5 +141,5 @@ async def get_cache():
 
 @app.on_event("startup")
 async def startup():
-    redis = aioredis.from_url("redis://localhost", encoding="utf8", decode_responses=True)
+    redis = aioredis.from_url(f"redis://{REDIS_ADDRESS}", encoding="utf8", decode_responses=True)
     FastAPICache.init(RedisBackend(redis), prefix="fastapi-cache")

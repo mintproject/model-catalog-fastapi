@@ -26,4 +26,4 @@ UPDATE_ENDPOINT = f'{ENDPOINT}/update'
 QUERY_ENDPOINT = f'{ENDPOINT}/query'
 
 QUERIES_TYPES = ["get_all", "get_all_related", "get_all_related_user", "get_all_user", "get_one", "get_one_user"]
-
+REDIS_ADDRESS = os.environ.get('REDIS_ADDRESS')
