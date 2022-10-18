@@ -19,6 +19,7 @@ from fastapi import (  # noqa: F401
 from {{modelPackage}}.extra_models import TokenModel  # noqa: F401
 from openapi_server.utils.vars import {{#lambda.uppercase}}{{baseName}}_type_name{{/lambda.uppercase}}, {{#lambda.uppercase}}{{baseName}}_type_uri{{/lambda.uppercase}}
 from openapi_server.connector import query_manager
+from fastapi_cache.decorator import cache
 
 {{#imports}}
 {{import}}
