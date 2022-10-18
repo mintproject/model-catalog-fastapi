@@ -59,11 +59,26 @@ from openapi_server.apis.variable_api import router as VariableApiRouter
 from openapi_server.apis.variable_presentation_api import router as VariablePresentationApiRouter
 from openapi_server.apis.visualization_api import router as VisualizationApiRouter
 from openapi_server.apis.default_api import router as DefaultApiRouter
+from fastapi.middleware.cors import CORSMiddleware
+from openapi_server.settings import REDIS_ADDRESS
 
 app = FastAPI(
     title="Model Catalog",
     description="This is the API of the Software Description Ontology at [https://w3id.org/okn/o/sdm](https://w3id.org/okn/o/sdm)",
     version="v1.8.0",
+)
+
+origins = [
+    "http://localhost",
+    "http://localhost:8080",
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
 app.include_router(CatalogIdentifierApiRouter)
@@ -113,3 +128,13 @@ app.include_router(VariableApiRouter)
 app.include_router(VariablePresentationApiRouter)
 app.include_router(VisualizationApiRouter)
 app.include_router(DefaultApiRouter)
+
+
+@cache()
+async def get_cache():
+    return 1
+
+@app.on_event("startup")
+async def startup():
+    redis = aioredis.from_url("redis://localhost", encoding="utf8", decode_responses=True)
+    FastAPICache.init(RedisBackend(redis), prefix="fastapi-cache")
