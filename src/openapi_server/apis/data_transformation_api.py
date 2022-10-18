@@ -27,6 +27,7 @@ from openapi_server.security_api import get_token_BearerAuth
 router = APIRouter()
 
 
+@cache(expire=60)
 @router.get(
     "/custom/datasetspecifications/{id}/datatransformations",
     responses={
@@ -53,6 +54,7 @@ async def custom_datasetspecifications_id_datatransformations_get(
         
 
 
+@cache(expire=60)
 @router.get(
     "/datatransformations",
     responses={
@@ -109,6 +111,7 @@ async def datatransformations_id_delete(
         
 
 
+@cache(expire=60)
 @router.get(
     "/datatransformations/{id}",
     responses={

@@ -27,6 +27,7 @@ from openapi_server.security_api import get_token_BearerAuth
 router = APIRouter()
 
 
+@cache(expire=60)
 @router.get(
     "/sampleexecutions",
     responses={
@@ -83,6 +84,7 @@ async def sampleexecutions_id_delete(
         
 
 
+@cache(expire=60)
 @router.get(
     "/sampleexecutions/{id}",
     responses={

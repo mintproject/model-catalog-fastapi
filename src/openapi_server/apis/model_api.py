@@ -27,6 +27,7 @@ from openapi_server.security_api import get_token_BearerAuth
 router = APIRouter()
 
 
+@cache(expire=60)
 @router.get(
     "/custom/model/index",
     responses={
@@ -53,6 +54,7 @@ async def custom_model_index_get(
         
 
 
+@cache(expire=60)
 @router.get(
     "/custom/model/intervention",
     responses={
@@ -79,6 +81,7 @@ async def custom_model_intervention_get(
         
 
 
+@cache(expire=60)
 @router.get(
     "/custom/model/region",
     responses={
@@ -105,6 +108,7 @@ async def custom_model_region_get(
         
 
 
+@cache(expire=60)
 @router.get(
     "/custom/models/standard_variable",
     responses={
@@ -131,6 +135,7 @@ async def custom_models_standard_variable_get(
         
 
 
+@cache(expire=60)
 @router.get(
     "/custom/models/variable",
     responses={
@@ -157,6 +162,7 @@ async def custom_models_variable_get(
         
 
 
+@cache(expire=60)
 @router.get(
     "/models",
     responses={
@@ -213,6 +219,7 @@ async def models_id_delete(
         
 
 
+@cache(expire=60)
 @router.get(
     "/models/{id}",
     responses={
