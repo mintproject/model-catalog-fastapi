@@ -19,6 +19,7 @@ from fastapi import (  # noqa: F401
 from openapi_server.models.extra_models import TokenModel  # noqa: F401
 from openapi_server.utils.vars import MODEL_TYPE_NAME, MODEL_TYPE_URI
 from openapi_server.connector import query_manager
+from fastapi_cache.decorator import cache
 
 from openapi_server.models.model import Model
 from openapi_server.security_api import get_token_BearerAuth
@@ -37,7 +38,7 @@ router = APIRouter()
 )
 async def custom_model_index_get(
     label: str = Query(None, description="Label of NumericalIndex"),
-    custom_query_name: str = Query("custom_model_index", description="Name of the custom query"),
+    custom_query_name: str = Query(&#39;custom_model_index&#39;, description="Name of the custom query"),
     username: str = Query(None, description="Username to query"),
 ) -> List[Model]:
     """Gets the details of a single instance of a Model"""
@@ -63,7 +64,7 @@ async def custom_model_index_get(
 )
 async def custom_model_intervention_get(
     label: str = Query(None, description="Label of intervation"),
-    custom_query_name: str = Query("custom_model_intervetion", description="Name of the custom query"),
+    custom_query_name: str = Query(&#39;custom_model_intervetion&#39;, description="Name of the custom query"),
     username: str = Query(None, description="Username to query"),
 ) -> List[Model]:
     """Gets the details of a single instance of a Model"""
@@ -89,7 +90,7 @@ async def custom_model_intervention_get(
 )
 async def custom_model_region_get(
     label: str = Query(None, description="region to search"),
-    custom_query_name: str = Query("custom_model_region", description="Name of the custom query"),
+    custom_query_name: str = Query(&#39;custom_model_region&#39;, description="Name of the custom query"),
     username: str = Query(None, description="Username to query"),
 ) -> List[Model]:
     """Gets the details of a single instance of a Model"""
@@ -115,7 +116,7 @@ async def custom_model_region_get(
 )
 async def custom_models_standard_variable_get(
     label: str = Query(None, description="standard variable name"),
-    custom_query_name: str = Query("custom_model_standard_variable", description="Name of the custom query"),
+    custom_query_name: str = Query(&#39;custom_model_standard_variable&#39;, description="Name of the custom query"),
     username: str = Query(None, description="Username to query"),
 ) -> List[Model]:
     """Gets a list of model filter by the label of a standard variable"""
@@ -141,7 +142,7 @@ async def custom_models_standard_variable_get(
 )
 async def custom_models_variable_get(
     label: str = Query(None, description="variable to search"),
-    custom_query_name: str = Query("custom_models_variable", description="Name of the custom query"),
+    custom_query_name: str = Query(&#39;custom_models_variable&#39;, description="Name of the custom query"),
     username: str = Query(None, description="Username to query"),
 ) -> List[Model]:
     """Get models by variable name"""
@@ -172,15 +173,15 @@ async def models_get(
     per_page: int = Query(100, description="Items per page", ge=1, le=200),
 ) -> List[Model]:
     """Gets a list of all instances of Model (more information in https://w3id.org/okn/o/sdm#Model)"""
-    models = query_manager.get_resource(
-        username=username,
-        label=label,page=page,per_page=per_page,
+    return query_manager.get_resource(
+        
+        username=username,label=label,page=page,per_page=per_page,
+        
         rdf_type_uri=MODEL_TYPE_URI,
         rdf_type_name=MODEL_TYPE_NAME, 
         kls=Model
         )
-    print(len(models))
-    return models 
+        
 
 
 @router.delete(

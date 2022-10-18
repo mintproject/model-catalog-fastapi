@@ -19,6 +19,7 @@ from fastapi import (  # noqa: F401
 from openapi_server.models.extra_models import TokenModel  # noqa: F401
 from openapi_server.utils.vars import MODELCONFIGURATION_TYPE_NAME, MODELCONFIGURATION_TYPE_URI
 from openapi_server.connector import query_manager
+from fastapi_cache.decorator import cache
 
 from openapi_server.models.model_configuration import ModelConfiguration
 from openapi_server.security_api import get_token_BearerAuth
@@ -38,7 +39,7 @@ router = APIRouter()
 async def custom_modelconfigurations_id_get(
     id: str = Path(None, description="The ID of the resource"),
     username: str = Query(None, description="Username to query"),
-    custom_query_name: str = Query("custom_modelconfigurations", description="Name of the custom query"),
+    custom_query_name: str = Query(&#39;custom_modelconfigurations&#39;, description="Name of the custom query"),
 ) -> ModelConfiguration:
     """Gets the details of a single instance of a ModelConfiguration"""
     return query_manager.get_resource(

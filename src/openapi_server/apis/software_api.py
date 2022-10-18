@@ -19,6 +19,7 @@ from fastapi import (  # noqa: F401
 from openapi_server.models.extra_models import TokenModel  # noqa: F401
 from openapi_server.utils.vars import SOFTWARE_TYPE_NAME, SOFTWARE_TYPE_URI
 from openapi_server.connector import query_manager
+from fastapi_cache.decorator import cache
 
 from openapi_server.models.software import Software
 from openapi_server.security_api import get_token_BearerAuth

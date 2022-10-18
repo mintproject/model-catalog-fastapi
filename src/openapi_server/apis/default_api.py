@@ -17,6 +17,10 @@ from fastapi import (  # noqa: F401
 )
 
 from openapi_server.models.extra_models import TokenModel  # noqa: F401
+from openapi_server.utils.vars import DEFAULT_TYPE_NAME, DEFAULT_TYPE_URI
+from openapi_server.connector import query_manager
+from fastapi_cache.decorator import cache
+
 from openapi_server.models.user import User
 
 
@@ -36,5 +40,12 @@ async def user_login_post(
     user: User = Body(None, description="User credentials"),
 ) -> str:
     """Login the user"""
-    ...
+    return query_manager.post_resource(
+        
+        
+        body=user,
+        rdf_type_uri=DEFAULT_TYPE_URI,
+        rdf_type_name=DEFAULT_TYPE_NAME, 
+        kls=default
+        )
         

@@ -19,6 +19,7 @@ from fastapi import (  # noqa: F401
 from openapi_server.models.extra_models import TokenModel  # noqa: F401
 from openapi_server.utils.vars import GEOCOORDINATES_TYPE_NAME, GEOCOORDINATES_TYPE_URI
 from openapi_server.connector import query_manager
+from fastapi_cache.decorator import cache
 
 from openapi_server.models.geo_coordinates import GeoCoordinates
 from openapi_server.security_api import get_token_BearerAuth

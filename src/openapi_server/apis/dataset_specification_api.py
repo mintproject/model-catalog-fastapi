@@ -19,6 +19,7 @@ from fastapi import (  # noqa: F401
 from openapi_server.models.extra_models import TokenModel  # noqa: F401
 from openapi_server.utils.vars import DATASETSPECIFICATION_TYPE_NAME, DATASETSPECIFICATION_TYPE_URI
 from openapi_server.connector import query_manager
+from fastapi_cache.decorator import cache
 
 from openapi_server.models.dataset_specification import DatasetSpecification
 from openapi_server.security_api import get_token_BearerAuth
@@ -38,7 +39,7 @@ router = APIRouter()
 async def custom_configuration_id_inputs_get(
     id: str = Path(None, description="The ID of the resource"),
     username: str = Query(None, description="Username to query"),
-    custom_query_name: str = Query("search_datasetspecification_by_configurationid", description="Name of the custom query"),
+    custom_query_name: str = Query(&#39;search_datasetspecification_by_configurationid&#39;, description="Name of the custom query"),
 ) -> List[DatasetSpecification]:
     """Gets all inputs of a configuration"""
     return query_manager.get_resource(
@@ -64,7 +65,7 @@ async def custom_configuration_id_inputs_get(
 async def custom_datasetspecifications_get(
     configurationid: str = Query(None, description="The ID of the configuration"),
     username: str = Query(None, description="Username to query"),
-    custom_query_name: str = Query("custom_allinputs", description="Name of the custom query"),
+    custom_query_name: str = Query(&#39;custom_allinputs&#39;, description="Name of the custom query"),
 ) -> List[DatasetSpecification]:
     """Gets all inputs of a configuration"""
     return query_manager.get_resource(

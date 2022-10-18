@@ -19,6 +19,7 @@ from fastapi import (  # noqa: F401
 from openapi_server.models.extra_models import TokenModel  # noqa: F401
 from openapi_server.utils.vars import CONFIGURATIONSETUP_TYPE_NAME, CONFIGURATIONSETUP_TYPE_URI
 from openapi_server.connector import query_manager
+from fastapi_cache.decorator import cache
 
 from openapi_server.models.configuration_setup import ConfigurationSetup
 from openapi_server.models.model_configuration_setup import ModelConfigurationSetup
@@ -178,7 +179,7 @@ async def configurationsetups_post(
 async def custom_configurationsetups_id_get(
     id: str = Path(None, description="The ID of the resource"),
     username: str = Query(None, description="Username to query"),
-    custom_query_name: str = Query("custom_configurationsetups", description="Name of the custom query"),
+    custom_query_name: str = Query(&#39;custom_configurationsetups&#39;, description="Name of the custom query"),
 ) -> ModelConfigurationSetup:
     """Gets the details of a single instance of a ModelConfigurationSetup"""
     return query_manager.get_resource(

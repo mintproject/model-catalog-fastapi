@@ -19,6 +19,7 @@ from fastapi import (  # noqa: F401
 from openapi_server.models.extra_models import TokenModel  # noqa: F401
 from openapi_server.utils.vars import DATATRANSFORMATION_TYPE_NAME, DATATRANSFORMATION_TYPE_URI
 from openapi_server.connector import query_manager
+from fastapi_cache.decorator import cache
 
 from openapi_server.models.data_transformation import DataTransformation
 from openapi_server.security_api import get_token_BearerAuth
@@ -37,7 +38,7 @@ router = APIRouter()
 )
 async def custom_datasetspecifications_id_datatransformations_get(
     id: str = Path(None, description="The ID of the dataspecification"),
-    custom_query_name: str = Query("custom_datatransformations", description="Name of the custom query"),
+    custom_query_name: str = Query(&#39;custom_datatransformations&#39;, description="Name of the custom query"),
     username: str = Query(None, description="Username to query"),
 ) -> List[DataTransformation]:
     """Gets a list of data transformations related a dataset"""
