@@ -52,7 +52,7 @@ async def theory_guidedmodels_get(
         
         rdf_type_uri=THEORY_GUIDEDMODEL_TYPE_URI,
         rdf_type_name=THEORY_GUIDEDMODEL_TYPE_NAME, 
-        kls=Theory_GuidedModel
+        kls=TheoryGuidedModel
         )
         
 
@@ -83,7 +83,7 @@ async def theory_guidedmodels_id_delete(
         
         rdf_type_uri=THEORY_GUIDEDMODEL_TYPE_URI,
         rdf_type_name=THEORY_GUIDEDMODEL_TYPE_NAME, 
-        kls=Theory_GuidedModel
+        kls=TheoryGuidedModel
         )
         
 
@@ -110,7 +110,7 @@ async def theory_guidedmodels_id_get(
         
         rdf_type_uri=THEORY_GUIDEDMODEL_TYPE_URI,
         rdf_type_name=THEORY_GUIDEDMODEL_TYPE_NAME, 
-        kls=Theory_GuidedModel
+        kls=TheoryGuidedModel
         )
         
 
@@ -142,7 +142,7 @@ async def theory_guidedmodels_id_put(
         body=theory_guided_model,
         rdf_type_uri=THEORY_GUIDEDMODEL_TYPE_URI,
         rdf_type_name=THEORY_GUIDEDMODEL_TYPE_NAME, 
-        kls=Theory_GuidedModel
+        kls=TheoryGuidedModel
         )
         
 
@@ -172,6 +172,6 @@ async def theory_guidedmodels_post(
         body=theory_guided_model,
         rdf_type_uri=THEORY_GUIDEDMODEL_TYPE_URI,
         rdf_type_name=THEORY_GUIDEDMODEL_TYPE_NAME, 
-        kls=Theory_GuidedModel
+        kls=TheoryGuidedModel
         )
         
