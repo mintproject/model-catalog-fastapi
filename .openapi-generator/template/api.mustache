@@ -2,6 +2,7 @@
 
 from typing import Dict, List  # noqa: F401
 
+from fastapi_cache import FastAPICache
 from fastapi import (  # noqa: F401
     APIRouter,
     Body,
@@ -47,6 +48,9 @@ router = APIRouter()
     {{/description}}
     response_model_by_alias=True,
 )
+{{^hasAuthMethods}}
+@cache(namespace="{{baseName}}", expire=1800)
+{{/hasAuthMethods}}
 async def {{operationId}}(
     {{#allParams}}
     {{>endpoint_argument_definition}},
@@ -60,6 +64,10 @@ async def {{operationId}}(
     {{/hasAuthMethods}}
 ) -> {{returnType}}{{^returnType}}None{{/returnType}}:
     {{#notes}}"""{{.}}"""
+    
+    {{#hasAuthMethods}}
+    await FastAPICache.clear(namespace="{{baseName}}")
+    {{/hasAuthMethods}}
     return query_manager.{{#lambda.lowercase}}{{httpMethod}}_resource{{/lambda.lowercase}}(
         {{#pathParams}}{{paramName}}={{paramName}},{{/pathParams}}
         {{#queryParams}}{{paramName}}={{paramName}},{{/queryParams}}

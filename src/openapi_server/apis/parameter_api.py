@@ -2,6 +2,7 @@
 
 from typing import Dict, List  # noqa: F401
 
+from fastapi_cache import FastAPICache
 from fastapi import (  # noqa: F401
     APIRouter,
     Body,
@@ -27,7 +28,6 @@ from openapi_server.security_api import get_token_BearerAuth
 router = APIRouter()
 
 
-@cache(expire=60)
 @router.get(
     "/parameters",
     responses={
@@ -37,6 +37,7 @@ router = APIRouter()
     summary="List all instances of Parameter",
     response_model_by_alias=True,
 )
+@cache(namespace="Parameter", expire=1800)
 async def parameters_get(
     username: str = Query(None, description="Name of the user graph to query"),
     label: str = Query(None, description="Filter by label"),
@@ -44,6 +45,7 @@ async def parameters_get(
     per_page: int = Query(100, description="Items per page", ge=1, le=200),
 ) -> List[Parameter]:
     """Gets a list of all instances of Parameter (more information in https://w3id.org/okn/o/sd#Parameter)"""
+    
     return query_manager.get_resource(
         
         username=username,label=label,page=page,per_page=per_page,
@@ -73,6 +75,8 @@ async def parameters_id_delete(
     ),
 ) -> None:
     """Delete an existing Parameter (more information in https://w3id.org/okn/o/sd#Parameter)"""
+    
+    await FastAPICache.clear(namespace="Parameter")
     return query_manager.delete_resource(
         id=id,
         user=user,
@@ -84,7 +88,6 @@ async def parameters_id_delete(
         
 
 
-@cache(expire=60)
 @router.get(
     "/parameters/{id}",
     responses={
@@ -94,11 +97,13 @@ async def parameters_id_delete(
     summary="Get a single Parameter by its id",
     response_model_by_alias=True,
 )
+@cache(namespace="Parameter", expire=1800)
 async def parameters_id_get(
     id: str = Path(None, description="The ID of the Parameter to be retrieved"),
     username: str = Query(None, description="Name of the user graph to query"),
 ) -> Parameter:
     """Gets the details of a given Parameter (more information in https://w3id.org/okn/o/sd#Parameter)"""
+    
     return query_manager.get_resource(
         id=id,
         username=username,
@@ -129,6 +134,8 @@ async def parameters_id_put(
     ),
 ) -> Parameter:
     """Updates an existing Parameter (more information in https://w3id.org/okn/o/sd#Parameter)"""
+    
+    await FastAPICache.clear(namespace="Parameter")
     return query_manager.put_resource(
         id=id,
         user=user,
@@ -157,6 +164,8 @@ async def parameters_post(
     ),
 ) -> Parameter:
     """Create a new instance of Parameter (more information in https://w3id.org/okn/o/sd#Parameter)"""
+    
+    await FastAPICache.clear(namespace="Parameter")
     return query_manager.post_resource(
         
         user=user,

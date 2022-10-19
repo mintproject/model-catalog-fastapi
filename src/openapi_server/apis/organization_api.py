@@ -2,6 +2,7 @@
 
 from typing import Dict, List  # noqa: F401
 
+from fastapi_cache import FastAPICache
 from fastapi import (  # noqa: F401
     APIRouter,
     Body,
@@ -27,7 +28,6 @@ from openapi_server.security_api import get_token_BearerAuth
 router = APIRouter()
 
 
-@cache(expire=60)
 @router.get(
     "/organizations",
     responses={
@@ -37,6 +37,7 @@ router = APIRouter()
     summary="List all instances of Organization",
     response_model_by_alias=True,
 )
+@cache(namespace="Organization", expire=1800)
 async def organizations_get(
     username: str = Query(None, description="Name of the user graph to query"),
     label: str = Query(None, description="Filter by label"),
@@ -44,6 +45,7 @@ async def organizations_get(
     per_page: int = Query(100, description="Items per page", ge=1, le=200),
 ) -> List[Organization]:
     """Gets a list of all instances of Organization (more information in https://w3id.org/okn/o/sd#Organization)"""
+    
     return query_manager.get_resource(
         
         username=username,label=label,page=page,per_page=per_page,
@@ -73,6 +75,8 @@ async def organizations_id_delete(
     ),
 ) -> None:
     """Delete an existing Organization (more information in https://w3id.org/okn/o/sd#Organization)"""
+    
+    await FastAPICache.clear(namespace="Organization")
     return query_manager.delete_resource(
         id=id,
         user=user,
@@ -84,7 +88,6 @@ async def organizations_id_delete(
         
 
 
-@cache(expire=60)
 @router.get(
     "/organizations/{id}",
     responses={
@@ -94,11 +97,13 @@ async def organizations_id_delete(
     summary="Get a single Organization by its id",
     response_model_by_alias=True,
 )
+@cache(namespace="Organization", expire=1800)
 async def organizations_id_get(
     id: str = Path(None, description="The ID of the Organization to be retrieved"),
     username: str = Query(None, description="Name of the user graph to query"),
 ) -> Organization:
     """Gets the details of a given Organization (more information in https://w3id.org/okn/o/sd#Organization)"""
+    
     return query_manager.get_resource(
         id=id,
         username=username,
@@ -129,6 +134,8 @@ async def organizations_id_put(
     ),
 ) -> Organization:
     """Updates an existing Organization (more information in https://w3id.org/okn/o/sd#Organization)"""
+    
+    await FastAPICache.clear(namespace="Organization")
     return query_manager.put_resource(
         id=id,
         user=user,
@@ -157,6 +164,8 @@ async def organizations_post(
     ),
 ) -> Organization:
     """Create a new instance of Organization (more information in https://w3id.org/okn/o/sd#Organization)"""
+    
+    await FastAPICache.clear(namespace="Organization")
     return query_manager.post_resource(
         
         user=user,

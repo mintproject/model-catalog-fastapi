@@ -2,6 +2,7 @@
 
 from typing import Dict, List  # noqa: F401
 
+from fastapi_cache import FastAPICache
 from fastapi import (  # noqa: F401
     APIRouter,
     Body,
@@ -27,7 +28,6 @@ from openapi_server.security_api import get_token_BearerAuth
 router = APIRouter()
 
 
-@cache(expire=60)
 @router.get(
     "/custom/configuration/{id}/inputs",
     responses={
@@ -37,12 +37,14 @@ router = APIRouter()
     summary="Gets all inputs of a configuration",
     response_model_by_alias=True,
 )
+@cache(namespace="DatasetSpecification", expire=1800)
 async def custom_configuration_id_inputs_get(
     id: str = Path(None, description="The ID of the resource"),
     username: str = Query(None, description="Username to query"),
     custom_query_name: str = Query("search_datasetspecification_by_configurationid", description="Name of the custom query"),
 ) -> List[DatasetSpecification]:
     """Gets all inputs of a configuration"""
+    
     return query_manager.get_resource(
         id=id,
         username=username,custom_query_name=custom_query_name,
@@ -54,7 +56,6 @@ async def custom_configuration_id_inputs_get(
         
 
 
-@cache(expire=60)
 @router.get(
     "/custom/datasetspecifications",
     responses={
@@ -64,12 +65,14 @@ async def custom_configuration_id_inputs_get(
     summary="Gets all inputs of a configuration",
     response_model_by_alias=True,
 )
+@cache(namespace="DatasetSpecification", expire=1800)
 async def custom_datasetspecifications_get(
     configurationid: str = Query(None, description="The ID of the configuration"),
     username: str = Query(None, description="Username to query"),
     custom_query_name: str = Query("custom_allinputs", description="Name of the custom query"),
 ) -> List[DatasetSpecification]:
     """Gets all inputs of a configuration"""
+    
     return query_manager.get_resource(
         
         username=username,configurationid=configurationid,custom_query_name=custom_query_name,
@@ -81,7 +84,6 @@ async def custom_datasetspecifications_get(
         
 
 
-@cache(expire=60)
 @router.get(
     "/datasetspecifications",
     responses={
@@ -91,6 +93,7 @@ async def custom_datasetspecifications_get(
     summary="List all instances of DatasetSpecification",
     response_model_by_alias=True,
 )
+@cache(namespace="DatasetSpecification", expire=1800)
 async def datasetspecifications_get(
     username: str = Query(None, description="Name of the user graph to query"),
     label: str = Query(None, description="Filter by label"),
@@ -98,6 +101,7 @@ async def datasetspecifications_get(
     per_page: int = Query(100, description="Items per page", ge=1, le=200),
 ) -> List[DatasetSpecification]:
     """Gets a list of all instances of DatasetSpecification (more information in https://w3id.org/okn/o/sd#DatasetSpecification)"""
+    
     return query_manager.get_resource(
         
         username=username,label=label,page=page,per_page=per_page,
@@ -127,6 +131,8 @@ async def datasetspecifications_id_delete(
     ),
 ) -> None:
     """Delete an existing DatasetSpecification (more information in https://w3id.org/okn/o/sd#DatasetSpecification)"""
+    
+    await FastAPICache.clear(namespace="DatasetSpecification")
     return query_manager.delete_resource(
         id=id,
         user=user,
@@ -138,7 +144,6 @@ async def datasetspecifications_id_delete(
         
 
 
-@cache(expire=60)
 @router.get(
     "/datasetspecifications/{id}",
     responses={
@@ -148,11 +153,13 @@ async def datasetspecifications_id_delete(
     summary="Get a single DatasetSpecification by its id",
     response_model_by_alias=True,
 )
+@cache(namespace="DatasetSpecification", expire=1800)
 async def datasetspecifications_id_get(
     id: str = Path(None, description="The ID of the DatasetSpecification to be retrieved"),
     username: str = Query(None, description="Name of the user graph to query"),
 ) -> DatasetSpecification:
     """Gets the details of a given DatasetSpecification (more information in https://w3id.org/okn/o/sd#DatasetSpecification)"""
+    
     return query_manager.get_resource(
         id=id,
         username=username,
@@ -183,6 +190,8 @@ async def datasetspecifications_id_put(
     ),
 ) -> DatasetSpecification:
     """Updates an existing DatasetSpecification (more information in https://w3id.org/okn/o/sd#DatasetSpecification)"""
+    
+    await FastAPICache.clear(namespace="DatasetSpecification")
     return query_manager.put_resource(
         id=id,
         user=user,
@@ -211,6 +220,8 @@ async def datasetspecifications_post(
     ),
 ) -> DatasetSpecification:
     """Create a new instance of DatasetSpecification (more information in https://w3id.org/okn/o/sd#DatasetSpecification)"""
+    
+    await FastAPICache.clear(namespace="DatasetSpecification")
     return query_manager.post_resource(
         
         user=user,

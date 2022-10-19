@@ -2,6 +2,7 @@
 
 from typing import Dict, List  # noqa: F401
 
+from fastapi_cache import FastAPICache
 from fastapi import (  # noqa: F401
     APIRouter,
     Body,
@@ -27,7 +28,6 @@ from openapi_server.security_api import get_token_BearerAuth
 router = APIRouter()
 
 
-@cache(expire=60)
 @router.get(
     "/hybridmodels",
     responses={
@@ -37,6 +37,7 @@ router = APIRouter()
     summary="List all instances of HybridModel",
     response_model_by_alias=True,
 )
+@cache(namespace="HybridModel", expire=1800)
 async def hybridmodels_get(
     username: str = Query(None, description="Name of the user graph to query"),
     label: str = Query(None, description="Filter by label"),
@@ -44,6 +45,7 @@ async def hybridmodels_get(
     per_page: int = Query(100, description="Items per page", ge=1, le=200),
 ) -> List[HybridModel]:
     """Gets a list of all instances of HybridModel (more information in https://w3id.org/okn/o/sdm#HybridModel)"""
+    
     return query_manager.get_resource(
         
         username=username,label=label,page=page,per_page=per_page,
@@ -73,6 +75,8 @@ async def hybridmodels_id_delete(
     ),
 ) -> None:
     """Delete an existing HybridModel (more information in https://w3id.org/okn/o/sdm#HybridModel)"""
+    
+    await FastAPICache.clear(namespace="HybridModel")
     return query_manager.delete_resource(
         id=id,
         user=user,
@@ -84,7 +88,6 @@ async def hybridmodels_id_delete(
         
 
 
-@cache(expire=60)
 @router.get(
     "/hybridmodels/{id}",
     responses={
@@ -94,11 +97,13 @@ async def hybridmodels_id_delete(
     summary="Get a single HybridModel by its id",
     response_model_by_alias=True,
 )
+@cache(namespace="HybridModel", expire=1800)
 async def hybridmodels_id_get(
     id: str = Path(None, description="The ID of the HybridModel to be retrieved"),
     username: str = Query(None, description="Name of the user graph to query"),
 ) -> HybridModel:
     """Gets the details of a given HybridModel (more information in https://w3id.org/okn/o/sdm#HybridModel)"""
+    
     return query_manager.get_resource(
         id=id,
         username=username,
@@ -129,6 +134,8 @@ async def hybridmodels_id_put(
     ),
 ) -> HybridModel:
     """Updates an existing HybridModel (more information in https://w3id.org/okn/o/sdm#HybridModel)"""
+    
+    await FastAPICache.clear(namespace="HybridModel")
     return query_manager.put_resource(
         id=id,
         user=user,
@@ -157,6 +164,8 @@ async def hybridmodels_post(
     ),
 ) -> HybridModel:
     """Create a new instance of HybridModel (more information in https://w3id.org/okn/o/sdm#HybridModel)"""
+    
+    await FastAPICache.clear(namespace="HybridModel")
     return query_manager.post_resource(
         
         user=user,

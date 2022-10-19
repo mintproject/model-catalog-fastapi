@@ -2,6 +2,7 @@
 
 from typing import Dict, List  # noqa: F401
 
+from fastapi_cache import FastAPICache
 from fastapi import (  # noqa: F401
     APIRouter,
     Body,
@@ -28,7 +29,6 @@ from openapi_server.security_api import get_token_BearerAuth
 router = APIRouter()
 
 
-@cache(expire=60)
 @router.get(
     "/configurationsetups",
     responses={
@@ -38,6 +38,7 @@ router = APIRouter()
     summary="List all instances of ConfigurationSetup",
     response_model_by_alias=True,
 )
+@cache(namespace="ConfigurationSetup", expire=1800)
 async def configurationsetups_get(
     username: str = Query(None, description="Name of the user graph to query"),
     label: str = Query(None, description="Filter by label"),
@@ -45,6 +46,7 @@ async def configurationsetups_get(
     per_page: int = Query(100, description="Items per page", ge=1, le=200),
 ) -> List[ConfigurationSetup]:
     """Gets a list of all instances of ConfigurationSetup (more information in https://w3id.org/okn/o/sd#ConfigurationSetup)"""
+    
     return query_manager.get_resource(
         
         username=username,label=label,page=page,per_page=per_page,
@@ -74,6 +76,8 @@ async def configurationsetups_id_delete(
     ),
 ) -> None:
     """Delete an existing ConfigurationSetup (more information in https://w3id.org/okn/o/sd#ConfigurationSetup)"""
+    
+    await FastAPICache.clear(namespace="ConfigurationSetup")
     return query_manager.delete_resource(
         id=id,
         user=user,
@@ -85,7 +89,6 @@ async def configurationsetups_id_delete(
         
 
 
-@cache(expire=60)
 @router.get(
     "/configurationsetups/{id}",
     responses={
@@ -95,11 +98,13 @@ async def configurationsetups_id_delete(
     summary="Get a single ConfigurationSetup by its id",
     response_model_by_alias=True,
 )
+@cache(namespace="ConfigurationSetup", expire=1800)
 async def configurationsetups_id_get(
     id: str = Path(None, description="The ID of the ConfigurationSetup to be retrieved"),
     username: str = Query(None, description="Name of the user graph to query"),
 ) -> ConfigurationSetup:
     """Gets the details of a given ConfigurationSetup (more information in https://w3id.org/okn/o/sd#ConfigurationSetup)"""
+    
     return query_manager.get_resource(
         id=id,
         username=username,
@@ -130,6 +135,8 @@ async def configurationsetups_id_put(
     ),
 ) -> ConfigurationSetup:
     """Updates an existing ConfigurationSetup (more information in https://w3id.org/okn/o/sd#ConfigurationSetup)"""
+    
+    await FastAPICache.clear(namespace="ConfigurationSetup")
     return query_manager.put_resource(
         id=id,
         user=user,
@@ -158,6 +165,8 @@ async def configurationsetups_post(
     ),
 ) -> ConfigurationSetup:
     """Create a new instance of ConfigurationSetup (more information in https://w3id.org/okn/o/sd#ConfigurationSetup)"""
+    
+    await FastAPICache.clear(namespace="ConfigurationSetup")
     return query_manager.post_resource(
         
         user=user,
@@ -169,7 +178,6 @@ async def configurationsetups_post(
         
 
 
-@cache(expire=60)
 @router.get(
     "/custom/configurationsetups/{id}",
     responses={
@@ -179,12 +187,14 @@ async def configurationsetups_post(
     summary="Get a ModelConfigurationSetup",
     response_model_by_alias=True,
 )
+@cache(namespace="ConfigurationSetup", expire=1800)
 async def custom_configurationsetups_id_get(
     id: str = Path(None, description="The ID of the resource"),
     username: str = Query(None, description="Username to query"),
     custom_query_name: str = Query("custom_configurationsetups", description="Name of the custom query"),
 ) -> ModelConfigurationSetup:
     """Gets the details of a single instance of a ModelConfigurationSetup"""
+    
     return query_manager.get_resource(
         id=id,
         username=username,custom_query_name=custom_query_name,

@@ -2,6 +2,7 @@
 
 from typing import Dict, List  # noqa: F401
 
+from fastapi_cache import FastAPICache
 from fastapi import (  # noqa: F401
     APIRouter,
     Body,
@@ -27,7 +28,6 @@ from openapi_server.security_api import get_token_BearerAuth
 router = APIRouter()
 
 
-@cache(expire=60)
 @router.get(
     "/custom/modelconfigurations/{id}",
     responses={
@@ -37,12 +37,14 @@ router = APIRouter()
     summary="Get a ModelConfiguration",
     response_model_by_alias=True,
 )
+@cache(namespace="ModelConfiguration", expire=1800)
 async def custom_modelconfigurations_id_get(
     id: str = Path(None, description="The ID of the resource"),
     username: str = Query(None, description="Username to query"),
     custom_query_name: str = Query("custom_modelconfigurations", description="Name of the custom query"),
 ) -> ModelConfiguration:
     """Gets the details of a single instance of a ModelConfiguration"""
+    
     return query_manager.get_resource(
         id=id,
         username=username,custom_query_name=custom_query_name,
@@ -54,7 +56,6 @@ async def custom_modelconfigurations_id_get(
         
 
 
-@cache(expire=60)
 @router.get(
     "/modelconfigurations",
     responses={
@@ -64,6 +65,7 @@ async def custom_modelconfigurations_id_get(
     summary="List all instances of ModelConfiguration",
     response_model_by_alias=True,
 )
+@cache(namespace="ModelConfiguration", expire=1800)
 async def modelconfigurations_get(
     username: str = Query(None, description="Name of the user graph to query"),
     label: str = Query(None, description="Filter by label"),
@@ -71,6 +73,7 @@ async def modelconfigurations_get(
     per_page: int = Query(100, description="Items per page", ge=1, le=200),
 ) -> List[ModelConfiguration]:
     """Gets a list of all instances of ModelConfiguration (more information in https://w3id.org/okn/o/sdm#ModelConfiguration)"""
+    
     return query_manager.get_resource(
         
         username=username,label=label,page=page,per_page=per_page,
@@ -100,6 +103,8 @@ async def modelconfigurations_id_delete(
     ),
 ) -> None:
     """Delete an existing ModelConfiguration (more information in https://w3id.org/okn/o/sdm#ModelConfiguration)"""
+    
+    await FastAPICache.clear(namespace="ModelConfiguration")
     return query_manager.delete_resource(
         id=id,
         user=user,
@@ -111,7 +116,6 @@ async def modelconfigurations_id_delete(
         
 
 
-@cache(expire=60)
 @router.get(
     "/modelconfigurations/{id}",
     responses={
@@ -121,11 +125,13 @@ async def modelconfigurations_id_delete(
     summary="Get a single ModelConfiguration by its id",
     response_model_by_alias=True,
 )
+@cache(namespace="ModelConfiguration", expire=1800)
 async def modelconfigurations_id_get(
     id: str = Path(None, description="The ID of the ModelConfiguration to be retrieved"),
     username: str = Query(None, description="Name of the user graph to query"),
 ) -> ModelConfiguration:
     """Gets the details of a given ModelConfiguration (more information in https://w3id.org/okn/o/sdm#ModelConfiguration)"""
+    
     return query_manager.get_resource(
         id=id,
         username=username,
@@ -156,6 +162,8 @@ async def modelconfigurations_id_put(
     ),
 ) -> ModelConfiguration:
     """Updates an existing ModelConfiguration (more information in https://w3id.org/okn/o/sdm#ModelConfiguration)"""
+    
+    await FastAPICache.clear(namespace="ModelConfiguration")
     return query_manager.put_resource(
         id=id,
         user=user,
@@ -184,6 +192,8 @@ async def modelconfigurations_post(
     ),
 ) -> ModelConfiguration:
     """Create a new instance of ModelConfiguration (more information in https://w3id.org/okn/o/sdm#ModelConfiguration)"""
+    
+    await FastAPICache.clear(namespace="ModelConfiguration")
     return query_manager.post_resource(
         
         user=user,
