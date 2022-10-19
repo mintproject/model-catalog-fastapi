@@ -20,9 +20,7 @@ jobs:
 
       - name: Build image
         run: |
-          pushd server
           docker build . --tag $IMAGE_NAME
-          popd
 
 
       - name: Login to DockerHub
