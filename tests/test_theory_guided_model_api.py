@@ -69,7 +69,7 @@ def test_theory_guidedmodels_id_put(client: TestClient):
 
     Update an existing Theory-GuidedModel
     """
-    theory_guided_model = openapi_server.TheoryGuidedModel()
+    theory_guided_model = TheoryGuidedModel()
     params = [("user", 'user_example')]
     headers = {
         "Authorization": "Bearer special-key",
@@ -91,7 +91,7 @@ def test_theory_guidedmodels_post(client: TestClient):
 
     Create one Theory-GuidedModel
     """
-    theory_guided_model = openapi_server.TheoryGuidedModel()
+    theory_guided_model = TheoryGuidedModel()
     params = [("user", 'user_example')]
     headers = {
         "Authorization": "Bearer special-key",
