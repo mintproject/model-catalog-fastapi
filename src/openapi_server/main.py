@@ -73,6 +73,7 @@ app = FastAPI(
     description="This is the API of the Software Description Ontology at [https://w3id.org/okn/o/sdm](https://w3id.org/okn/o/sdm)",
     version="v1.8.0",
 )
+app.mount("/v1.8.0", app)
 
 origins = [
     "http://localhost",
@@ -133,7 +134,6 @@ app.include_router(UnitApiRouter)
 app.include_router(VariableApiRouter)
 app.include_router(VariablePresentationApiRouter)
 app.include_router(VisualizationApiRouter)
-
 
 @cache()
 async def get_cache():
