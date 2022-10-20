@@ -24,6 +24,7 @@ app = FastAPI(
     description="{{appDescription}}",
     version="{{appVersion}}",
 )
+app.mount("{{appVersion}}", app)
 
 origins = [
     "http://localhost",
