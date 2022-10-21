@@ -9,7 +9,7 @@ on:
   pull_request:
 
 env:
-  DOCKER_IMAGE_NAME: model_catalog_fastapi
+  DOCKER_IMAGE_NAME: model-catalog-fastapi
   DOCKER_IMAGE_REPOSITORY: mintproject
 
 jobs:
