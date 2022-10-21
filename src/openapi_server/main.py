@@ -72,8 +72,20 @@ app = FastAPI(
     title="Model Catalog",
     description="This is the API of the Software Description Ontology at [https://w3id.org/okn/o/sdm](https://w3id.org/okn/o/sdm)",
     version="v1.8.0",
+    docs_url="/v1.8.0",
+    redoc_url="/latest",
+    contact={
+        "name": "Maximiliano Osorio",
+        "email": "mosorio@isi.edu",
+    },
+    license_info={
+        "name": "Apache 2.0",
+        "url": "https://www.apache.org/licenses/LICENSE-2.0.html",
+    },
+    root_path="/v1.8.0",
 )
 app.mount("/v1.8.0", app)
+app.mount("/latest", app)
 
 origins = [
     "http://localhost",
