@@ -11,7 +11,8 @@ on:
 env:
   DOCKER_IMAGE_NAME: model-catalog-fastapi
   DOCKER_IMAGE_REPOSITORY: mintproject
-
+  INFRASTRUCTURE_REPOSITORY: mintproject/mint-instances
+  
 jobs:
   build:
     runs-on: ubuntu-latest
