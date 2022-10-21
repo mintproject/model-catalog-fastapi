@@ -3,7 +3,7 @@ name: Docker
 on:
   push:
     branches:
-      - '*'
+      - "*"
     tags:
       - v*
   pull_request:
@@ -44,7 +44,6 @@ jobs:
     outputs:
       docker_tag: ${{ steps.exposeValue.outputs.docker_tag }}
 
-
   security:
     permissions:
       contents: read
@@ -62,7 +61,7 @@ jobs:
           template: "@/contrib/sarif.tpl"
           output: "trivy-results.sarif"
           severity: ${{ env.VULNERABILITY_SCAN_LEVEL }}
-          exit-code: "0" 
+          exit-code: "0"
           ignore-unfixed: "true"
 
       - name: Upload Trivy scan results to GitHub Security tab
@@ -70,3 +69,27 @@ jobs:
         if: always()
         with:
           sarif_file: "trivy-results.sarif"
+
+  update:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Target Repository
+        uses: actions/checkout@v2
+        with:
+          repository: ${{ env.INFRASTRUCTURE_REPOSITORY }}
+          path: infrastructure
+          token: ${{ secrets.PRIVATE_REPO }}
+          ref: ${{ env.REPOSITORY_MAIN_BRANCH }}
+
+      - name: Update ISI dev instance
+        uses: fjogeleit/yaml-update-action@main
+        if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+        with:
+          valueFile: infrastructure/isi-dev/values.yaml
+          propertyPath: "components.model_catalog_api.image.tag"
+          value: ${{ needs.build.outputs.docker_tag }}
+          repository: ${{ env.INFRASTRUCTURE_REPOSITORY }}
+          token: ${{ secrets.PRIVATE_REPO }}
+          updateFile: true
+          message: "Update model catalog image"
