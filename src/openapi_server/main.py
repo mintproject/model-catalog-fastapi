@@ -72,8 +72,8 @@ app = FastAPI(
     title="Model Catalog",
     description="This is the API of the Software Description Ontology at [https://w3id.org/okn/o/sdm](https://w3id.org/okn/o/sdm)",
     version="v1.8.0",
-    docs_url="/v1.8.0",
-    redoc_url="/latest",
+    docs_url="/v1.8.0/docs",
+    redoc_url="/latest/docs",
     contact={
         "name": "Maximiliano Osorio",
         "email": "mosorio@isi.edu",
