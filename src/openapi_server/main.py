@@ -90,6 +90,7 @@ app.mount("/latest", app)
 origins = [
     "http://localhost",
     "http://localhost:8080",
+    "http://localhost:30000",
 ]
 
 app.add_middleware(
