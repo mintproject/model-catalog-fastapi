@@ -30,7 +30,7 @@ lxml==4.9.1
 MarkupSafe==2.1.1
 mccabe==0.7.0
 orjson==3.8.0
-obasparql==5.0.1
+obasparql==5.0.2
 pendulum==2.1.2
 ply==3.11
 promise==2.3
