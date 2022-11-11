@@ -35,7 +35,7 @@ class Parameter(BaseModel):
     """
 
     has_default_value: Optional[List[VisualizationValueInner]] = Field(alias="hasDefaultValue", default=None)
-    has_maximum_accepted_value: Optional[List[CatalogIdentifierHasMaximumAcceptedValueInner]] = Field(alias="hasMaximumAcceptedValue", default=None)
+    has_maximum_accepted_value: Optional[List[VisualizationValueInner]] = Field(alias="hasMaximumAcceptedValue", default=None)
     description: Optional[List[str]] = Field(alias="description", default=None)
     has_data_type: Optional[List[str]] = Field(alias="hasDataType", default=None)
     has_fixed_value: Optional[List[VisualizationValueInner]] = Field(alias="hasFixedValue", default=None)
@@ -43,7 +43,7 @@ class Parameter(BaseModel):
     label: Optional[List[str]] = Field(alias="label", default=None)
     recommended_increment: Optional[List[float]] = Field(alias="recommendedIncrement", default=None)
     type: Optional[List[str]] = Field(alias="type", default=None)
-    has_minimum_accepted_value: Optional[List[CatalogIdentifierHasMaximumAcceptedValueInner]] = Field(alias="hasMinimumAcceptedValue", default=None)
+    has_minimum_accepted_value: Optional[List[VisualizationValueInner]] = Field(alias="hasMinimumAcceptedValue", default=None)
     has_accepted_values: Optional[List[str]] = Field(alias="hasAcceptedValues", default=None)
     adjusts_variable: Optional[List[Variable]] = Field(alias="adjustsVariable", default=None)
     relevant_for_intervention: Optional[List[Intervention]] = Field(alias="relevantForIntervention", default=None)
