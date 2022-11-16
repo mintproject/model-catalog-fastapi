@@ -28,7 +28,7 @@ class TimeInterval(BaseModel):
     id: Optional[str] = Field(alias="id", default=None)
     label: Optional[List[str]] = Field(alias="label", default=None)
     type: Optional[List[str]] = Field(alias="type", default=None)
-    interval_value: Optional[List[TimeIntervalIntervalValueInner]] = Field(alias="intervalValue", default=None)
+    interval_value: Optional[List[UnionStrIntNone]] = Field(alias="intervalValue", default=None)
 
     class Config:
         arbitrary_types_allowed = True
@@ -40,6 +40,6 @@ class TimeInterval(BaseModel):
 
 
 
-from openapi_server.models.time_interval_interval_value_inner import TimeIntervalIntervalValueInner
+from openapi_server.models.union_str_int_none import UnionStrIntNone
 from openapi_server.models.unit import Unit
 TimeInterval.update_forward_refs()
