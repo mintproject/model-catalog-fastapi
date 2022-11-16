@@ -32,7 +32,7 @@ class CausalDiagramHasDiagramPartInner(BaseModel):
         influences: The influences of this CausalDiagramHasDiagramPartInner [Optional].
     """
 
-    has_default_value: Optional[List[UnionFloatStrBoolIntNone]]] = Field(alias="hasDefaultValue", default=None)
+    has_default_value: Optional[List[UnionFloatStrBoolIntNone]] = Field(alias="hasDefaultValue", default=None)
     has_short_name: Optional[List[str]] = Field(alias="hasShortName", default=None)
     has_minimum_accepted_value: Optional[List[UnionFloatStrBoolIntNone]] = Field(alias="hasMinimumAcceptedValue", default=None)
     has_standard_variable: Optional[List[StandardVariable]] = Field(alias="hasStandardVariable", default=None)
