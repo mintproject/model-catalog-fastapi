@@ -47,7 +47,7 @@ jobs:
           push: true
           context: .
           tags: ${{ env.DOCKER_IMAGE_REPOSITORY }}/${{ env.DOCKER_IMAGE_NAME }}:${{ env.DOCKER_TAG }}
-          platforms: linux/amd64,linux/arm64,linux/arm/v7
+          platforms: linux/amd64,linux/arm64
 
     outputs:
       docker_tag: ${{ steps.exposeValue.outputs.docker_tag }}
