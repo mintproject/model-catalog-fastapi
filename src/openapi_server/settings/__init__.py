@@ -1,7 +1,6 @@
 from configparser import ConfigParser
 import os
 from pathlib import Path
-
 # Default endpoint, if none specified elsewhere
 ENDPOINT = os.environ.get('ENDPOINT')
 ENDPOINT_USERNAME = os.environ.get('USER')
@@ -25,5 +24,7 @@ mime_types = {
 UPDATE_ENDPOINT = f'{ENDPOINT}/update'
 QUERY_ENDPOINT = f'{ENDPOINT}/query'
 
-QUERIES_TYPES = ["get_all", "get_all_related", "get_all_related_user", "get_all_user", "get_one", "get_one_user"]
-REDIS_ADDRESS = os.environ.get('REDIS_ADDRESS') if os.environ.get('REDIS_ADDRESS') else 'localhost'
+QUERIES_TYPES = ["get_all", "get_all_related",
+                 "get_all_related_user", "get_all_user", "get_one", "get_one_user"]
+REDIS_ADDRESS = os.environ.get('REDIS_ADDRESS') if os.environ.get(
+    'REDIS_ADDRESS') else 'localhost'
