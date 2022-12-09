@@ -43,7 +43,6 @@
         "@container": "@set"
     },
     "datePublished": {
-        "@type": "http://www.w3.org/2001/XMLSchema#dateTime",
         "@id": "https://w3id.org/okn/o/sd#datePublished",
         "@container": "@set"
     },
@@ -169,7 +168,6 @@
     },
     "Parameter": {"@id": "https://w3id.org/okn/o/sd#Parameter"},
     "validUntil": {
-        "@type": "http://www.w3.org/2001/XMLSchema#dateTime",
         "@id": "https://w3id.org/okn/o/sdm#validUntil",
         "@container": "@set"
     },
@@ -688,7 +686,6 @@
     },
     "DataTransformationSetup": {"@id": "https://w3id.org/okn/o/sd#DataTransformationSetup"},
     "dateCreated": {
-        "@type": "http://www.w3.org/2001/XMLSchema#dateTime",
         "@id": "https://w3id.org/okn/o/sd#dateCreated",
         "@container": "@set"
     },
