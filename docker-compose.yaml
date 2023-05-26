@@ -1,12 +1,20 @@
-version: '3.6'
+version: "3.6"
 services:
   service:
     build:
       context: .
-    env_file:
-      - src/.env
+    environment:
+      - CONTEXT_DIR=contexts/
+      - QUERIES_DIR=queries/
+      - REDIS_ADDRESS=redis://redis:6379
+      - ENDPOINT=https://endpoint.dev.mint.isi.edu/modelcatalog
+      - ENDPOINT_PASSWORD=CHANGEME
+      - GRAPH_BASE=http://endpoint.mint.isi.edu/modelCatalog-1.8.0/data/
+      - PREFIX=http://w3id.org/okn/i/mint/
+      - AUTH_CLIENT_ID=model_catalog
+      - AUTH_SERVER=https://auth.mint.isi.edu/
     ports:
-      - "8081:8080"
+      - "8080:8080"
     command: uvicorn openapi_server.main:app --host 0.0.0.0 --port 8080
   redis:
     image: redis:alpine
