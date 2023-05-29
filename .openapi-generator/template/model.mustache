@@ -7,6 +7,9 @@ import re  # noqa: F401
 from typing import Any, Dict, List, Optional  # noqa: F401
 
 from pydantic import AnyUrl, BaseModel, EmailStr, Field, validator  # noqa: F401
+from openapi_server.models.union_float_str_bool_init_none import UnionFloatStrBoolIntNone  # noqa: F401
+from openapi_server.models.union_float_int import UnionFloatInit
+from openapi_server.models.union_str_int_none import UnionStrIntNone
 
 {{#models}}
 {{#model}}
