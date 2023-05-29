@@ -21,3 +21,33 @@ sed -i '/app.include_router(DefaultApiRouter)/d '  ${dir}/src/openapi_server/mai
 rm ${dir}/src/openapi_server/models/time_interval_interval_value_inner.py
 rm ${dir}/src/openapi_server/models/catalog_identifier_has_maximum_accepted_value_inner.py
 rm ${dir}/src/openapi_server/models/causal_diagram_has_diagram_part_inner.py
+
+#List[VisualizationValueInner] -> List[UnionFloatStrBoolIntNone] ${dir}src/openapi_server/models/catalog_identifier.py
+sed -i 's/List\[VisualizationValueInner\]/List\[UnionFloatStrBoolIntNone\]/g' ${dir}/src/openapi_server/models/catalog_identifier.py
+#List[CatalogIdentifierHasMaximumAcceptedValueInner] -> List[UnionFloatStrBoolIntNone] ${dir}src/openapi_server/models/catalog_identifier.py
+sed -i 's/List\[CatalogIdentifierHasMaximumAcceptedValueInner\]/List\[UnionFloatStrBoolIntNone\]/g' ${dir}/src/openapi_server/models/catalog_identifier.py
+#List[] -> List[UnionFloatStrBoolIntNone] ${dir}src/openapi_server/models/catalog_identifier.py
+sed -i 's/List\[CatalogIdentifierHasMaximumAcceptedValueInner\]/List\[UnionFloatStrBoolIntNone\]/g' ${dir}/src/openapi_server/models/catalog_identifier.py
+#List[UnionFloatInit] -> List[float] ${dir}src/openapi_server/models/catalog_identifier.py
+sed -i 's/List\[UnionFloatInit\]/List\[float\]/g' ${dir}/src/openapi_server/models/catalog_identifier.py
+
+
+sed -i 's/List\[VisualizationValueInner\]/List\[UnionFloatStrBoolIntNone\]/g' ${dir}/src/openapi_server/models/parameter.py
+sed -i 's/List\[CatalogIdentifierHasMaximumAcceptedValueInner\]/List\[UnionFloatStrBoolIntNone\]/g' ${dir}/src/openapi_server/models/parameter.py
+sed -i 's/List\[UnionFloatInit\]/List\[float\]/g' ${dir}/src/openapi_server/models/catalog_identifier.py
+
+
+
+
+#List[TimeIntervalIntervalValueInner] -> List[UnionStrIntNone] ${dir}src/openapi_server/models/time_interval.py
+sed -i 's/List\[TimeIntervalIntervalValueInner\]/List\[UnionStrIntNone\]/g' ${dir}/src/openapi_server/models/time_interval.py
+
+#List[] -> List[UnionFloatStrBoolIntNone] ${dir}src/openapi_server/models/time_interval.py
+sed -i 's/List\[VisualizationValueInner\]/List\[UnionFloatStrBoolIntNone\]/g' ${dir}/src/openapi_server/models/variable_presentation.py
+sed -i 's/List\[CatalogIdentifierHasMaximumAcceptedValueInner\]/List\[UnionFloatStrBoolIntNone\]/g' ${dir}/src/openapi_server/models/variable_presentation.py
+
+#delete
+
+
+#List[] -> List[UnionFloatStrBoolIntNone] ${dir}src/openapi_server/models/variable_presentation.py
+
