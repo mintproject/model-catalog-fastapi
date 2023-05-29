@@ -216,7 +216,7 @@ async def models_id_delete(
 ) -> None:
     """Delete an existing Model (more information in https://w3id.org/okn/o/sdm#Model)"""
     
-    cache = await FastAPICache.clear(namespace="Model")
+    await FastAPICache.clear(namespace="Model")
     return query_manager.delete_resource(
         id=id,
         user=user,
