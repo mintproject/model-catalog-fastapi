@@ -1,11 +1,8 @@
 .flake8
 .gitignore
-Dockerfile
 README.md
-docker-compose.yaml
 openapi.yaml
 pyproject.toml
-requirements.txt
 setup.cfg
 src/openapi_server/apis/__init__.py
 src/openapi_server/apis/catalog_identifier_api.py
@@ -55,7 +52,6 @@ src/openapi_server/apis/unit_api.py
 src/openapi_server/apis/variable_api.py
 src/openapi_server/apis/variable_presentation_api.py
 src/openapi_server/apis/visualization_api.py
-src/openapi_server/main.py
 src/openapi_server/models/__init__.py
 src/openapi_server/models/catalog_identifier.py
 src/openapi_server/models/catalog_identifier_has_maximum_accepted_value_inner.py
