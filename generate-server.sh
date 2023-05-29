@@ -18,3 +18,6 @@ sed -i 's/&#39;/"/g'  ${dir}/src/openapi_server/apis/*.py
 rm ${dir}/src/openapi_server/apis/default_api.py
 sed -i '/openapi_server.apis.default_ap/d'  ${dir}/src/openapi_server/main.py
 sed -i '/app.include_router(DefaultApiRouter)/d '  ${dir}/src/openapi_server/main.py
+rm ${dir}/src/openapi_server/models/time_interval_interval_value_inner.py
+rm ${dir}/src/openapi_server/models/catalog_identifier_has_maximum_accepted_value_inner.py
+rm ${dir}/src/openapi_server/models/causal_diagram_has_diagram_part_inner.py
