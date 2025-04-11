@@ -1,4 +1,4 @@
-FROM python:3.8 AS builder
+FROM python:3.11 AS builder
 
 WORKDIR /usr/src/app
 RUN python3 -m venv /venv

@@ -3,7 +3,7 @@ name: Docker
 on:
   push:
     branches:
-      - '*'
+      - 'main'
     tags:
       - v*
   pull_request:
@@ -16,7 +16,6 @@ env:
 jobs:
   build-amd64:
     runs-on: ubuntu-latest
-    if: github.event_name == 'push'
     steps:
       - uses: actions/checkout@v2
 

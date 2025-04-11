@@ -45,16 +45,16 @@ async def softwareimages_get(
     per_page: int = Query(100, description="Items per page", ge=1, le=200),
 ) -> List[SoftwareImage]:
     """Gets a list of all instances of SoftwareImage (more information in https://w3id.org/okn/o/sd#SoftwareImage)"""
-    
+
     return query_manager.get_resource(
-        
+
         username=username,label=label,page=page,per_page=per_page,
-        
+
         rdf_type_uri=SOFTWAREIMAGE_TYPE_URI,
-        rdf_type_name=SOFTWAREIMAGE_TYPE_NAME, 
+        rdf_type_name=SOFTWAREIMAGE_TYPE_NAME,
         kls=SoftwareImage
         )
-        
+
 
 
 @router.delete(
@@ -68,24 +68,24 @@ async def softwareimages_get(
     response_model_by_alias=True,
 )
 async def softwareimages_id_delete(
-    id: str = Path(None, description="The ID of the SoftwareImage to be retrieved"),
+    id: str = Path( description="The ID of the SoftwareImage to be retrieved"),
     user: str = Query(None, description="Username"),
     token_BearerAuth: TokenModel = Security(
         get_token_BearerAuth
     ),
 ) -> None:
     """Delete an existing SoftwareImage (more information in https://w3id.org/okn/o/sd#SoftwareImage)"""
-    
+
     await FastAPICache.clear(namespace="SoftwareImage")
     return query_manager.delete_resource(
         id=id,
         user=user,
-        
+
         rdf_type_uri=SOFTWAREIMAGE_TYPE_URI,
-        rdf_type_name=SOFTWAREIMAGE_TYPE_NAME, 
+        rdf_type_name=SOFTWAREIMAGE_TYPE_NAME,
         kls=SoftwareImage
         )
-        
+
 
 
 @router.get(
@@ -99,20 +99,20 @@ async def softwareimages_id_delete(
 )
 @cache(namespace="SoftwareImage", expire=1800)
 async def softwareimages_id_get(
-    id: str = Path(None, description="The ID of the SoftwareImage to be retrieved"),
+    id: str = Path( description="The ID of the SoftwareImage to be retrieved"),
     username: str = Query(None, description="Name of the user graph to query"),
 ) -> SoftwareImage:
     """Gets the details of a given SoftwareImage (more information in https://w3id.org/okn/o/sd#SoftwareImage)"""
-    
+
     return query_manager.get_resource(
         id=id,
         username=username,
-        
+
         rdf_type_uri=SOFTWAREIMAGE_TYPE_URI,
-        rdf_type_name=SOFTWAREIMAGE_TYPE_NAME, 
+        rdf_type_name=SOFTWAREIMAGE_TYPE_NAME,
         kls=SoftwareImage
         )
-        
+
 
 
 @router.put(
@@ -126,7 +126,7 @@ async def softwareimages_id_get(
     response_model_by_alias=True,
 )
 async def softwareimages_id_put(
-    id: str = Path(None, description="The ID of the SoftwareImage to be retrieved"),
+    id: str = Path( description="The ID of the SoftwareImage to be retrieved"),
     user: str = Query(None, description="Username"),
     software_image: SoftwareImage = Body(None, description="An old SoftwareImageto be updated"),
     token_BearerAuth: TokenModel = Security(
@@ -134,17 +134,17 @@ async def softwareimages_id_put(
     ),
 ) -> SoftwareImage:
     """Updates an existing SoftwareImage (more information in https://w3id.org/okn/o/sd#SoftwareImage)"""
-    
+
     await FastAPICache.clear(namespace="SoftwareImage")
     return query_manager.put_resource(
         id=id,
         user=user,
         body=software_image,
         rdf_type_uri=SOFTWAREIMAGE_TYPE_URI,
-        rdf_type_name=SOFTWAREIMAGE_TYPE_NAME, 
+        rdf_type_name=SOFTWAREIMAGE_TYPE_NAME,
         kls=SoftwareImage
         )
-        
+
 
 
 @router.post(
@@ -164,14 +164,14 @@ async def softwareimages_post(
     ),
 ) -> SoftwareImage:
     """Create a new instance of SoftwareImage (more information in https://w3id.org/okn/o/sd#SoftwareImage)"""
-    
+
     await FastAPICache.clear(namespace="SoftwareImage")
     return query_manager.post_resource(
-        
+
         user=user,
         body=software_image,
         rdf_type_uri=SOFTWAREIMAGE_TYPE_URI,
-        rdf_type_name=SOFTWAREIMAGE_TYPE_NAME, 
+        rdf_type_name=SOFTWAREIMAGE_TYPE_NAME,
         kls=SoftwareImage
         )
-        
+

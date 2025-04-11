@@ -45,16 +45,16 @@ async def numericalindexs_get(
     per_page: int = Query(100, description="Items per page", ge=1, le=200),
 ) -> List[NumericalIndex]:
     """Gets a list of all instances of NumericalIndex (more information in https://w3id.org/okn/o/sd#NumericalIndex)"""
-    
+
     return query_manager.get_resource(
-        
+
         username=username,label=label,page=page,per_page=per_page,
-        
+
         rdf_type_uri=NUMERICALINDEX_TYPE_URI,
-        rdf_type_name=NUMERICALINDEX_TYPE_NAME, 
+        rdf_type_name=NUMERICALINDEX_TYPE_NAME,
         kls=NumericalIndex
         )
-        
+
 
 
 @router.delete(
@@ -68,24 +68,24 @@ async def numericalindexs_get(
     response_model_by_alias=True,
 )
 async def numericalindexs_id_delete(
-    id: str = Path(None, description="The ID of the NumericalIndex to be retrieved"),
+    id: str = Path( description="The ID of the NumericalIndex to be retrieved"),
     user: str = Query(None, description="Username"),
     token_BearerAuth: TokenModel = Security(
         get_token_BearerAuth
     ),
 ) -> None:
     """Delete an existing NumericalIndex (more information in https://w3id.org/okn/o/sd#NumericalIndex)"""
-    
+
     await FastAPICache.clear(namespace="NumericalIndex")
     return query_manager.delete_resource(
         id=id,
         user=user,
-        
+
         rdf_type_uri=NUMERICALINDEX_TYPE_URI,
-        rdf_type_name=NUMERICALINDEX_TYPE_NAME, 
+        rdf_type_name=NUMERICALINDEX_TYPE_NAME,
         kls=NumericalIndex
         )
-        
+
 
 
 @router.get(
@@ -99,20 +99,20 @@ async def numericalindexs_id_delete(
 )
 @cache(namespace="NumericalIndex", expire=1800)
 async def numericalindexs_id_get(
-    id: str = Path(None, description="The ID of the NumericalIndex to be retrieved"),
+    id: str = Path( description="The ID of the NumericalIndex to be retrieved"),
     username: str = Query(None, description="Name of the user graph to query"),
 ) -> NumericalIndex:
     """Gets the details of a given NumericalIndex (more information in https://w3id.org/okn/o/sd#NumericalIndex)"""
-    
+
     return query_manager.get_resource(
         id=id,
         username=username,
-        
+
         rdf_type_uri=NUMERICALINDEX_TYPE_URI,
-        rdf_type_name=NUMERICALINDEX_TYPE_NAME, 
+        rdf_type_name=NUMERICALINDEX_TYPE_NAME,
         kls=NumericalIndex
         )
-        
+
 
 
 @router.put(
@@ -126,7 +126,7 @@ async def numericalindexs_id_get(
     response_model_by_alias=True,
 )
 async def numericalindexs_id_put(
-    id: str = Path(None, description="The ID of the NumericalIndex to be retrieved"),
+    id: str = Path( description="The ID of the NumericalIndex to be retrieved"),
     user: str = Query(None, description="Username"),
     numerical_index: NumericalIndex = Body(None, description="An old NumericalIndexto be updated"),
     token_BearerAuth: TokenModel = Security(
@@ -134,17 +134,17 @@ async def numericalindexs_id_put(
     ),
 ) -> NumericalIndex:
     """Updates an existing NumericalIndex (more information in https://w3id.org/okn/o/sd#NumericalIndex)"""
-    
+
     await FastAPICache.clear(namespace="NumericalIndex")
     return query_manager.put_resource(
         id=id,
         user=user,
         body=numerical_index,
         rdf_type_uri=NUMERICALINDEX_TYPE_URI,
-        rdf_type_name=NUMERICALINDEX_TYPE_NAME, 
+        rdf_type_name=NUMERICALINDEX_TYPE_NAME,
         kls=NumericalIndex
         )
-        
+
 
 
 @router.post(
@@ -164,14 +164,14 @@ async def numericalindexs_post(
     ),
 ) -> NumericalIndex:
     """Create a new instance of NumericalIndex (more information in https://w3id.org/okn/o/sd#NumericalIndex)"""
-    
+
     await FastAPICache.clear(namespace="NumericalIndex")
     return query_manager.post_resource(
-        
+
         user=user,
         body=numerical_index,
         rdf_type_uri=NUMERICALINDEX_TYPE_URI,
-        rdf_type_name=NUMERICALINDEX_TYPE_NAME, 
+        rdf_type_name=NUMERICALINDEX_TYPE_NAME,
         kls=NumericalIndex
         )
-        
+

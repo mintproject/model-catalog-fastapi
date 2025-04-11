@@ -39,21 +39,21 @@ router = APIRouter()
 )
 @cache(namespace="DatasetSpecification", expire=1800)
 async def custom_configuration_id_inputs_get(
-    id: str = Path(None, description="The ID of the resource"),
+    id: str = Path( description="The ID of the resource"),
     username: str = Query(None, description="Username to query"),
     custom_query_name: str = Query("search_datasetspecification_by_configurationid", description="Name of the custom query"),
 ) -> List[DatasetSpecification]:
     """Gets all inputs of a configuration"""
-    
+
     return query_manager.get_resource(
         id=id,
         username=username,custom_query_name=custom_query_name,
-        
+
         rdf_type_uri=DATASETSPECIFICATION_TYPE_URI,
-        rdf_type_name=DATASETSPECIFICATION_TYPE_NAME, 
+        rdf_type_name=DATASETSPECIFICATION_TYPE_NAME,
         kls=DatasetSpecification
         )
-        
+
 
 
 @router.get(
@@ -72,16 +72,16 @@ async def custom_datasetspecifications_get(
     custom_query_name: str = Query("custom_allinputs", description="Name of the custom query"),
 ) -> List[DatasetSpecification]:
     """Gets all inputs of a configuration"""
-    
+
     return query_manager.get_resource(
-        
+
         username=username,configurationid=configurationid,custom_query_name=custom_query_name,
-        
+
         rdf_type_uri=DATASETSPECIFICATION_TYPE_URI,
-        rdf_type_name=DATASETSPECIFICATION_TYPE_NAME, 
+        rdf_type_name=DATASETSPECIFICATION_TYPE_NAME,
         kls=DatasetSpecification
         )
-        
+
 
 
 @router.get(
@@ -101,16 +101,16 @@ async def datasetspecifications_get(
     per_page: int = Query(100, description="Items per page", ge=1, le=200),
 ) -> List[DatasetSpecification]:
     """Gets a list of all instances of DatasetSpecification (more information in https://w3id.org/okn/o/sd#DatasetSpecification)"""
-    
+
     return query_manager.get_resource(
-        
+
         username=username,label=label,page=page,per_page=per_page,
-        
+
         rdf_type_uri=DATASETSPECIFICATION_TYPE_URI,
-        rdf_type_name=DATASETSPECIFICATION_TYPE_NAME, 
+        rdf_type_name=DATASETSPECIFICATION_TYPE_NAME,
         kls=DatasetSpecification
         )
-        
+
 
 
 @router.delete(
@@ -124,24 +124,24 @@ async def datasetspecifications_get(
     response_model_by_alias=True,
 )
 async def datasetspecifications_id_delete(
-    id: str = Path(None, description="The ID of the DatasetSpecification to be retrieved"),
+    id: str = Path( description="The ID of the DatasetSpecification to be retrieved"),
     user: str = Query(None, description="Username"),
     token_BearerAuth: TokenModel = Security(
         get_token_BearerAuth
     ),
 ) -> None:
     """Delete an existing DatasetSpecification (more information in https://w3id.org/okn/o/sd#DatasetSpecification)"""
-    
+
     await FastAPICache.clear(namespace="DatasetSpecification")
     return query_manager.delete_resource(
         id=id,
         user=user,
-        
+
         rdf_type_uri=DATASETSPECIFICATION_TYPE_URI,
-        rdf_type_name=DATASETSPECIFICATION_TYPE_NAME, 
+        rdf_type_name=DATASETSPECIFICATION_TYPE_NAME,
         kls=DatasetSpecification
         )
-        
+
 
 
 @router.get(
@@ -155,20 +155,20 @@ async def datasetspecifications_id_delete(
 )
 @cache(namespace="DatasetSpecification", expire=1800)
 async def datasetspecifications_id_get(
-    id: str = Path(None, description="The ID of the DatasetSpecification to be retrieved"),
+    id: str = Path( description="The ID of the DatasetSpecification to be retrieved"),
     username: str = Query(None, description="Name of the user graph to query"),
 ) -> DatasetSpecification:
     """Gets the details of a given DatasetSpecification (more information in https://w3id.org/okn/o/sd#DatasetSpecification)"""
-    
+
     return query_manager.get_resource(
         id=id,
         username=username,
-        
+
         rdf_type_uri=DATASETSPECIFICATION_TYPE_URI,
-        rdf_type_name=DATASETSPECIFICATION_TYPE_NAME, 
+        rdf_type_name=DATASETSPECIFICATION_TYPE_NAME,
         kls=DatasetSpecification
         )
-        
+
 
 
 @router.put(
@@ -182,7 +182,7 @@ async def datasetspecifications_id_get(
     response_model_by_alias=True,
 )
 async def datasetspecifications_id_put(
-    id: str = Path(None, description="The ID of the DatasetSpecification to be retrieved"),
+    id: str = Path( description="The ID of the DatasetSpecification to be retrieved"),
     user: str = Query(None, description="Username"),
     dataset_specification: DatasetSpecification = Body(None, description="An old DatasetSpecificationto be updated"),
     token_BearerAuth: TokenModel = Security(
@@ -190,17 +190,17 @@ async def datasetspecifications_id_put(
     ),
 ) -> DatasetSpecification:
     """Updates an existing DatasetSpecification (more information in https://w3id.org/okn/o/sd#DatasetSpecification)"""
-    
+
     await FastAPICache.clear(namespace="DatasetSpecification")
     return query_manager.put_resource(
         id=id,
         user=user,
         body=dataset_specification,
         rdf_type_uri=DATASETSPECIFICATION_TYPE_URI,
-        rdf_type_name=DATASETSPECIFICATION_TYPE_NAME, 
+        rdf_type_name=DATASETSPECIFICATION_TYPE_NAME,
         kls=DatasetSpecification
         )
-        
+
 
 
 @router.post(
@@ -220,14 +220,14 @@ async def datasetspecifications_post(
     ),
 ) -> DatasetSpecification:
     """Create a new instance of DatasetSpecification (more information in https://w3id.org/okn/o/sd#DatasetSpecification)"""
-    
+
     await FastAPICache.clear(namespace="DatasetSpecification")
     return query_manager.post_resource(
-        
+
         user=user,
         body=dataset_specification,
         rdf_type_uri=DATASETSPECIFICATION_TYPE_URI,
-        rdf_type_name=DATASETSPECIFICATION_TYPE_NAME, 
+        rdf_type_name=DATASETSPECIFICATION_TYPE_NAME,
         kls=DatasetSpecification
         )
-        
+

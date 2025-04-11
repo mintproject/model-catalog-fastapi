@@ -45,16 +45,16 @@ async def interventions_get(
     per_page: int = Query(100, description="Items per page", ge=1, le=200),
 ) -> List[Intervention]:
     """Gets a list of all instances of Intervention (more information in https://w3id.org/okn/o/sdm#Intervention)"""
-    
+
     return query_manager.get_resource(
-        
+
         username=username,label=label,page=page,per_page=per_page,
-        
+
         rdf_type_uri=INTERVENTION_TYPE_URI,
-        rdf_type_name=INTERVENTION_TYPE_NAME, 
+        rdf_type_name=INTERVENTION_TYPE_NAME,
         kls=Intervention
         )
-        
+
 
 
 @router.delete(
@@ -68,24 +68,24 @@ async def interventions_get(
     response_model_by_alias=True,
 )
 async def interventions_id_delete(
-    id: str = Path(None, description="The ID of the Intervention to be retrieved"),
+    id: str = Path( description="The ID of the Intervention to be retrieved"),
     user: str = Query(None, description="Username"),
     token_BearerAuth: TokenModel = Security(
         get_token_BearerAuth
     ),
 ) -> None:
     """Delete an existing Intervention (more information in https://w3id.org/okn/o/sdm#Intervention)"""
-    
+
     await FastAPICache.clear(namespace="Intervention")
     return query_manager.delete_resource(
         id=id,
         user=user,
-        
+
         rdf_type_uri=INTERVENTION_TYPE_URI,
-        rdf_type_name=INTERVENTION_TYPE_NAME, 
+        rdf_type_name=INTERVENTION_TYPE_NAME,
         kls=Intervention
         )
-        
+
 
 
 @router.get(
@@ -99,20 +99,20 @@ async def interventions_id_delete(
 )
 @cache(namespace="Intervention", expire=1800)
 async def interventions_id_get(
-    id: str = Path(None, description="The ID of the Intervention to be retrieved"),
+    id: str = Path( description="The ID of the Intervention to be retrieved"),
     username: str = Query(None, description="Name of the user graph to query"),
 ) -> Intervention:
     """Gets the details of a given Intervention (more information in https://w3id.org/okn/o/sdm#Intervention)"""
-    
+
     return query_manager.get_resource(
         id=id,
         username=username,
-        
+
         rdf_type_uri=INTERVENTION_TYPE_URI,
-        rdf_type_name=INTERVENTION_TYPE_NAME, 
+        rdf_type_name=INTERVENTION_TYPE_NAME,
         kls=Intervention
         )
-        
+
 
 
 @router.put(
@@ -126,7 +126,7 @@ async def interventions_id_get(
     response_model_by_alias=True,
 )
 async def interventions_id_put(
-    id: str = Path(None, description="The ID of the Intervention to be retrieved"),
+    id: str = Path( description="The ID of the Intervention to be retrieved"),
     user: str = Query(None, description="Username"),
     intervention: Intervention = Body(None, description="An old Interventionto be updated"),
     token_BearerAuth: TokenModel = Security(
@@ -134,17 +134,17 @@ async def interventions_id_put(
     ),
 ) -> Intervention:
     """Updates an existing Intervention (more information in https://w3id.org/okn/o/sdm#Intervention)"""
-    
+
     await FastAPICache.clear(namespace="Intervention")
     return query_manager.put_resource(
         id=id,
         user=user,
         body=intervention,
         rdf_type_uri=INTERVENTION_TYPE_URI,
-        rdf_type_name=INTERVENTION_TYPE_NAME, 
+        rdf_type_name=INTERVENTION_TYPE_NAME,
         kls=Intervention
         )
-        
+
 
 
 @router.post(
@@ -164,14 +164,14 @@ async def interventions_post(
     ),
 ) -> Intervention:
     """Create a new instance of Intervention (more information in https://w3id.org/okn/o/sdm#Intervention)"""
-    
+
     await FastAPICache.clear(namespace="Intervention")
     return query_manager.post_resource(
-        
+
         user=user,
         body=intervention,
         rdf_type_uri=INTERVENTION_TYPE_URI,
-        rdf_type_name=INTERVENTION_TYPE_NAME, 
+        rdf_type_name=INTERVENTION_TYPE_NAME,
         kls=Intervention
         )
-        
+

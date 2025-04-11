@@ -45,16 +45,16 @@ async def constraints_get(
     per_page: int = Query(100, description="Items per page", ge=1, le=200),
 ) -> List[Constraint]:
     """Gets a list of all instances of Constraint (more information in https://w3id.org/okn/o/sd#Constraint)"""
-    
+
     return query_manager.get_resource(
-        
+
         username=username,label=label,page=page,per_page=per_page,
-        
+
         rdf_type_uri=CONSTRAINT_TYPE_URI,
-        rdf_type_name=CONSTRAINT_TYPE_NAME, 
+        rdf_type_name=CONSTRAINT_TYPE_NAME,
         kls=Constraint
         )
-        
+
 
 
 @router.delete(
@@ -68,24 +68,24 @@ async def constraints_get(
     response_model_by_alias=True,
 )
 async def constraints_id_delete(
-    id: str = Path(None, description="The ID of the Constraint to be retrieved"),
+    id: str = Path( description="The ID of the Constraint to be retrieved"),
     user: str = Query(None, description="Username"),
     token_BearerAuth: TokenModel = Security(
         get_token_BearerAuth
     ),
 ) -> None:
     """Delete an existing Constraint (more information in https://w3id.org/okn/o/sd#Constraint)"""
-    
+
     await FastAPICache.clear(namespace="Constraint")
     return query_manager.delete_resource(
         id=id,
         user=user,
-        
+
         rdf_type_uri=CONSTRAINT_TYPE_URI,
-        rdf_type_name=CONSTRAINT_TYPE_NAME, 
+        rdf_type_name=CONSTRAINT_TYPE_NAME,
         kls=Constraint
         )
-        
+
 
 
 @router.get(
@@ -99,20 +99,20 @@ async def constraints_id_delete(
 )
 @cache(namespace="Constraint", expire=1800)
 async def constraints_id_get(
-    id: str = Path(None, description="The ID of the Constraint to be retrieved"),
+    id: str = Path( description="The ID of the Constraint to be retrieved"),
     username: str = Query(None, description="Name of the user graph to query"),
 ) -> Constraint:
     """Gets the details of a given Constraint (more information in https://w3id.org/okn/o/sd#Constraint)"""
-    
+
     return query_manager.get_resource(
         id=id,
         username=username,
-        
+
         rdf_type_uri=CONSTRAINT_TYPE_URI,
-        rdf_type_name=CONSTRAINT_TYPE_NAME, 
+        rdf_type_name=CONSTRAINT_TYPE_NAME,
         kls=Constraint
         )
-        
+
 
 
 @router.put(
@@ -126,7 +126,7 @@ async def constraints_id_get(
     response_model_by_alias=True,
 )
 async def constraints_id_put(
-    id: str = Path(None, description="The ID of the Constraint to be retrieved"),
+    id: str = Path( description="The ID of the Constraint to be retrieved"),
     user: str = Query(None, description="Username"),
     constraint: Constraint = Body(None, description="An old Constraintto be updated"),
     token_BearerAuth: TokenModel = Security(
@@ -134,17 +134,17 @@ async def constraints_id_put(
     ),
 ) -> Constraint:
     """Updates an existing Constraint (more information in https://w3id.org/okn/o/sd#Constraint)"""
-    
+
     await FastAPICache.clear(namespace="Constraint")
     return query_manager.put_resource(
         id=id,
         user=user,
         body=constraint,
         rdf_type_uri=CONSTRAINT_TYPE_URI,
-        rdf_type_name=CONSTRAINT_TYPE_NAME, 
+        rdf_type_name=CONSTRAINT_TYPE_NAME,
         kls=Constraint
         )
-        
+
 
 
 @router.post(
@@ -164,14 +164,14 @@ async def constraints_post(
     ),
 ) -> Constraint:
     """Create a new instance of Constraint (more information in https://w3id.org/okn/o/sd#Constraint)"""
-    
+
     await FastAPICache.clear(namespace="Constraint")
     return query_manager.post_resource(
-        
+
         user=user,
         body=constraint,
         rdf_type_uri=CONSTRAINT_TYPE_URI,
-        rdf_type_name=CONSTRAINT_TYPE_NAME, 
+        rdf_type_name=CONSTRAINT_TYPE_NAME,
         kls=Constraint
         )
-        
+

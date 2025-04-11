@@ -45,16 +45,16 @@ async def equations_get(
     per_page: int = Query(100, description="Items per page", ge=1, le=200),
 ) -> List[Equation]:
     """Gets a list of all instances of Equation (more information in https://w3id.org/okn/o/sdm#Equation)"""
-    
+
     return query_manager.get_resource(
-        
+
         username=username,label=label,page=page,per_page=per_page,
-        
+
         rdf_type_uri=EQUATION_TYPE_URI,
-        rdf_type_name=EQUATION_TYPE_NAME, 
+        rdf_type_name=EQUATION_TYPE_NAME,
         kls=Equation
         )
-        
+
 
 
 @router.delete(
@@ -68,24 +68,24 @@ async def equations_get(
     response_model_by_alias=True,
 )
 async def equations_id_delete(
-    id: str = Path(None, description="The ID of the Equation to be retrieved"),
+    id: str = Path( description="The ID of the Equation to be retrieved"),
     user: str = Query(None, description="Username"),
     token_BearerAuth: TokenModel = Security(
         get_token_BearerAuth
     ),
 ) -> None:
     """Delete an existing Equation (more information in https://w3id.org/okn/o/sdm#Equation)"""
-    
+
     await FastAPICache.clear(namespace="Equation")
     return query_manager.delete_resource(
         id=id,
         user=user,
-        
+
         rdf_type_uri=EQUATION_TYPE_URI,
-        rdf_type_name=EQUATION_TYPE_NAME, 
+        rdf_type_name=EQUATION_TYPE_NAME,
         kls=Equation
         )
-        
+
 
 
 @router.get(
@@ -99,20 +99,20 @@ async def equations_id_delete(
 )
 @cache(namespace="Equation", expire=1800)
 async def equations_id_get(
-    id: str = Path(None, description="The ID of the Equation to be retrieved"),
+    id: str = Path( description="The ID of the Equation to be retrieved"),
     username: str = Query(None, description="Name of the user graph to query"),
 ) -> Equation:
     """Gets the details of a given Equation (more information in https://w3id.org/okn/o/sdm#Equation)"""
-    
+
     return query_manager.get_resource(
         id=id,
         username=username,
-        
+
         rdf_type_uri=EQUATION_TYPE_URI,
-        rdf_type_name=EQUATION_TYPE_NAME, 
+        rdf_type_name=EQUATION_TYPE_NAME,
         kls=Equation
         )
-        
+
 
 
 @router.put(
@@ -126,7 +126,7 @@ async def equations_id_get(
     response_model_by_alias=True,
 )
 async def equations_id_put(
-    id: str = Path(None, description="The ID of the Equation to be retrieved"),
+    id: str = Path( description="The ID of the Equation to be retrieved"),
     user: str = Query(None, description="Username"),
     equation: Equation = Body(None, description="An old Equationto be updated"),
     token_BearerAuth: TokenModel = Security(
@@ -134,17 +134,17 @@ async def equations_id_put(
     ),
 ) -> Equation:
     """Updates an existing Equation (more information in https://w3id.org/okn/o/sdm#Equation)"""
-    
+
     await FastAPICache.clear(namespace="Equation")
     return query_manager.put_resource(
         id=id,
         user=user,
         body=equation,
         rdf_type_uri=EQUATION_TYPE_URI,
-        rdf_type_name=EQUATION_TYPE_NAME, 
+        rdf_type_name=EQUATION_TYPE_NAME,
         kls=Equation
         )
-        
+
 
 
 @router.post(
@@ -164,14 +164,14 @@ async def equations_post(
     ),
 ) -> Equation:
     """Create a new instance of Equation (more information in https://w3id.org/okn/o/sdm#Equation)"""
-    
+
     await FastAPICache.clear(namespace="Equation")
     return query_manager.post_resource(
-        
+
         user=user,
         body=equation,
         rdf_type_uri=EQUATION_TYPE_URI,
-        rdf_type_name=EQUATION_TYPE_NAME, 
+        rdf_type_name=EQUATION_TYPE_NAME,
         kls=Equation
         )
-        
+

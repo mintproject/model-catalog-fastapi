@@ -44,16 +44,16 @@ async def custom_model_index_get(
     username: str = Query(None, description="Username to query"),
 ) -> List[Model]:
     """Gets the details of a single instance of a Model"""
-    
+
     return query_manager.get_resource(
-        
+
         custom_query_name=custom_query_name,username=username,label=label,
-        
+
         rdf_type_uri=MODEL_TYPE_URI,
-        rdf_type_name=MODEL_TYPE_NAME, 
+        rdf_type_name=MODEL_TYPE_NAME,
         kls=Model
         )
-        
+
 
 
 @router.get(
@@ -72,16 +72,16 @@ async def custom_model_intervention_get(
     username: str = Query(None, description="Username to query"),
 ) -> List[Model]:
     """Gets the details of a single instance of a Model"""
-    
+
     return query_manager.get_resource(
-        
+
         custom_query_name=custom_query_name,username=username,label=label,
-        
+
         rdf_type_uri=MODEL_TYPE_URI,
-        rdf_type_name=MODEL_TYPE_NAME, 
+        rdf_type_name=MODEL_TYPE_NAME,
         kls=Model
         )
-        
+
 
 
 @router.get(
@@ -100,16 +100,16 @@ async def custom_model_region_get(
     username: str = Query(None, description="Username to query"),
 ) -> List[Model]:
     """Gets the details of a single instance of a Model"""
-    
+
     return query_manager.get_resource(
-        
+
         custom_query_name=custom_query_name,username=username,label=label,
-        
+
         rdf_type_uri=MODEL_TYPE_URI,
-        rdf_type_name=MODEL_TYPE_NAME, 
+        rdf_type_name=MODEL_TYPE_NAME,
         kls=Model
         )
-        
+
 
 
 @router.get(
@@ -128,16 +128,16 @@ async def custom_models_standard_variable_get(
     username: str = Query(None, description="Username to query"),
 ) -> List[Model]:
     """Gets a list of model filter by the label of a standard variable"""
-    
+
     return query_manager.get_resource(
-        
+
         custom_query_name=custom_query_name,username=username,label=label,
-        
+
         rdf_type_uri=MODEL_TYPE_URI,
-        rdf_type_name=MODEL_TYPE_NAME, 
+        rdf_type_name=MODEL_TYPE_NAME,
         kls=Model
         )
-        
+
 
 
 @router.get(
@@ -156,16 +156,16 @@ async def custom_models_variable_get(
     username: str = Query(None, description="Username to query"),
 ) -> List[Model]:
     """Get models by variable name"""
-    
+
     return query_manager.get_resource(
-        
+
         custom_query_name=custom_query_name,username=username,label=label,
-        
+
         rdf_type_uri=MODEL_TYPE_URI,
-        rdf_type_name=MODEL_TYPE_NAME, 
+        rdf_type_name=MODEL_TYPE_NAME,
         kls=Model
         )
-        
+
 
 
 @router.get(
@@ -185,16 +185,16 @@ async def models_get(
     per_page: int = Query(100, description="Items per page", ge=1, le=200),
 ) -> List[Model]:
     """Gets a list of all instances of Model (more information in https://w3id.org/okn/o/sdm#Model)"""
-    
+
     return query_manager.get_resource(
-        
+
         username=username,label=label,page=page,per_page=per_page,
-        
+
         rdf_type_uri=MODEL_TYPE_URI,
-        rdf_type_name=MODEL_TYPE_NAME, 
+        rdf_type_name=MODEL_TYPE_NAME,
         kls=Model
         )
-        
+
 
 
 @router.delete(
@@ -208,24 +208,24 @@ async def models_get(
     response_model_by_alias=True,
 )
 async def models_id_delete(
-    id: str = Path(None, description="The ID of the Model to be retrieved"),
+    id: str = Path( description="The ID of the Model to be retrieved"),
     user: str = Query(None, description="Username"),
     token_BearerAuth: TokenModel = Security(
         get_token_BearerAuth
     ),
 ) -> None:
     """Delete an existing Model (more information in https://w3id.org/okn/o/sdm#Model)"""
-    
+
     await FastAPICache.clear(namespace="Model")
     return query_manager.delete_resource(
         id=id,
         user=user,
-        
+
         rdf_type_uri=MODEL_TYPE_URI,
-        rdf_type_name=MODEL_TYPE_NAME, 
+        rdf_type_name=MODEL_TYPE_NAME,
         kls=Model
         )
-        
+
 
 
 @router.get(
@@ -239,20 +239,20 @@ async def models_id_delete(
 )
 @cache(namespace="Model", expire=1800)
 async def models_id_get(
-    id: str = Path(None, description="The ID of the Model to be retrieved"),
+    id: str = Path( description="The ID of the Model to be retrieved"),
     username: str = Query(None, description="Name of the user graph to query"),
 ) -> Model:
     """Gets the details of a given Model (more information in https://w3id.org/okn/o/sdm#Model)"""
-    
+
     return query_manager.get_resource(
         id=id,
         username=username,
-        
+
         rdf_type_uri=MODEL_TYPE_URI,
-        rdf_type_name=MODEL_TYPE_NAME, 
+        rdf_type_name=MODEL_TYPE_NAME,
         kls=Model
         )
-        
+
 
 
 @router.put(
@@ -266,7 +266,7 @@ async def models_id_get(
     response_model_by_alias=True,
 )
 async def models_id_put(
-    id: str = Path(None, description="The ID of the Model to be retrieved"),
+    id: str = Path( description="The ID of the Model to be retrieved"),
     user: str = Query(None, description="Username"),
     model: Model = Body(None, description="An old Modelto be updated"),
     token_BearerAuth: TokenModel = Security(
@@ -274,17 +274,17 @@ async def models_id_put(
     ),
 ) -> Model:
     """Updates an existing Model (more information in https://w3id.org/okn/o/sdm#Model)"""
-    
+
     await FastAPICache.clear(namespace="Model")
     return query_manager.put_resource(
         id=id,
         user=user,
         body=model,
         rdf_type_uri=MODEL_TYPE_URI,
-        rdf_type_name=MODEL_TYPE_NAME, 
+        rdf_type_name=MODEL_TYPE_NAME,
         kls=Model
         )
-        
+
 
 
 @router.post(
@@ -304,14 +304,14 @@ async def models_post(
     ),
 ) -> Model:
     """Create a new instance of Model (more information in https://w3id.org/okn/o/sdm#Model)"""
-    
+
     await FastAPICache.clear(namespace="Model")
     return query_manager.post_resource(
-        
+
         user=user,
         body=model,
         rdf_type_uri=MODEL_TYPE_URI,
-        rdf_type_name=MODEL_TYPE_NAME, 
+        rdf_type_name=MODEL_TYPE_NAME,
         kls=Model
         )
-        
+

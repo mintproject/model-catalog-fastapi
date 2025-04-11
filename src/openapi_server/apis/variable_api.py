@@ -45,16 +45,16 @@ async def variables_get(
     per_page: int = Query(100, description="Items per page", ge=1, le=200),
 ) -> List[Variable]:
     """Gets a list of all instances of Variable (more information in https://w3id.org/okn/o/sd#Variable)"""
-    
+
     return query_manager.get_resource(
-        
+
         username=username,label=label,page=page,per_page=per_page,
-        
+
         rdf_type_uri=VARIABLE_TYPE_URI,
-        rdf_type_name=VARIABLE_TYPE_NAME, 
+        rdf_type_name=VARIABLE_TYPE_NAME,
         kls=Variable
         )
-        
+
 
 
 @router.delete(
@@ -68,24 +68,24 @@ async def variables_get(
     response_model_by_alias=True,
 )
 async def variables_id_delete(
-    id: str = Path(None, description="The ID of the Variable to be retrieved"),
+    id: str = Path( description="The ID of the Variable to be retrieved"),
     user: str = Query(None, description="Username"),
     token_BearerAuth: TokenModel = Security(
         get_token_BearerAuth
     ),
 ) -> None:
     """Delete an existing Variable (more information in https://w3id.org/okn/o/sd#Variable)"""
-    
+
     await FastAPICache.clear(namespace="Variable")
     return query_manager.delete_resource(
         id=id,
         user=user,
-        
+
         rdf_type_uri=VARIABLE_TYPE_URI,
-        rdf_type_name=VARIABLE_TYPE_NAME, 
+        rdf_type_name=VARIABLE_TYPE_NAME,
         kls=Variable
         )
-        
+
 
 
 @router.get(
@@ -99,20 +99,20 @@ async def variables_id_delete(
 )
 @cache(namespace="Variable", expire=1800)
 async def variables_id_get(
-    id: str = Path(None, description="The ID of the Variable to be retrieved"),
+    id: str = Path( description="The ID of the Variable to be retrieved"),
     username: str = Query(None, description="Name of the user graph to query"),
 ) -> Variable:
     """Gets the details of a given Variable (more information in https://w3id.org/okn/o/sd#Variable)"""
-    
+
     return query_manager.get_resource(
         id=id,
         username=username,
-        
+
         rdf_type_uri=VARIABLE_TYPE_URI,
-        rdf_type_name=VARIABLE_TYPE_NAME, 
+        rdf_type_name=VARIABLE_TYPE_NAME,
         kls=Variable
         )
-        
+
 
 
 @router.put(
@@ -126,7 +126,7 @@ async def variables_id_get(
     response_model_by_alias=True,
 )
 async def variables_id_put(
-    id: str = Path(None, description="The ID of the Variable to be retrieved"),
+    id: str = Path( description="The ID of the Variable to be retrieved"),
     user: str = Query(None, description="Username"),
     variable: Variable = Body(None, description="An old Variableto be updated"),
     token_BearerAuth: TokenModel = Security(
@@ -134,17 +134,17 @@ async def variables_id_put(
     ),
 ) -> Variable:
     """Updates an existing Variable (more information in https://w3id.org/okn/o/sd#Variable)"""
-    
+
     await FastAPICache.clear(namespace="Variable")
     return query_manager.put_resource(
         id=id,
         user=user,
         body=variable,
         rdf_type_uri=VARIABLE_TYPE_URI,
-        rdf_type_name=VARIABLE_TYPE_NAME, 
+        rdf_type_name=VARIABLE_TYPE_NAME,
         kls=Variable
         )
-        
+
 
 
 @router.post(
@@ -164,14 +164,14 @@ async def variables_post(
     ),
 ) -> Variable:
     """Create a new instance of Variable (more information in https://w3id.org/okn/o/sd#Variable)"""
-    
+
     await FastAPICache.clear(namespace="Variable")
     return query_manager.post_resource(
-        
+
         user=user,
         body=variable,
         rdf_type_uri=VARIABLE_TYPE_URI,
-        rdf_type_name=VARIABLE_TYPE_NAME, 
+        rdf_type_name=VARIABLE_TYPE_NAME,
         kls=Variable
         )
-        
+

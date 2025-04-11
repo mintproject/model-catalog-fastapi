@@ -45,16 +45,16 @@ async def units_get(
     per_page: int = Query(100, description="Items per page", ge=1, le=200),
 ) -> List[Unit]:
     """Gets a list of all instances of Unit (more information in https://w3id.org/okn/o/sd#Unit)"""
-    
+
     return query_manager.get_resource(
-        
+
         username=username,label=label,page=page,per_page=per_page,
-        
+
         rdf_type_uri=UNIT_TYPE_URI,
-        rdf_type_name=UNIT_TYPE_NAME, 
+        rdf_type_name=UNIT_TYPE_NAME,
         kls=Unit
         )
-        
+
 
 
 @router.delete(
@@ -68,24 +68,24 @@ async def units_get(
     response_model_by_alias=True,
 )
 async def units_id_delete(
-    id: str = Path(None, description="The ID of the Unit to be retrieved"),
+    id: str = Path( description="The ID of the Unit to be retrieved"),
     user: str = Query(None, description="Username"),
     token_BearerAuth: TokenModel = Security(
         get_token_BearerAuth
     ),
 ) -> None:
     """Delete an existing Unit (more information in https://w3id.org/okn/o/sd#Unit)"""
-    
+
     await FastAPICache.clear(namespace="Unit")
     return query_manager.delete_resource(
         id=id,
         user=user,
-        
+
         rdf_type_uri=UNIT_TYPE_URI,
-        rdf_type_name=UNIT_TYPE_NAME, 
+        rdf_type_name=UNIT_TYPE_NAME,
         kls=Unit
         )
-        
+
 
 
 @router.get(
@@ -99,20 +99,20 @@ async def units_id_delete(
 )
 @cache(namespace="Unit", expire=1800)
 async def units_id_get(
-    id: str = Path(None, description="The ID of the Unit to be retrieved"),
+    id: str = Path( description="The ID of the Unit to be retrieved"),
     username: str = Query(None, description="Name of the user graph to query"),
 ) -> Unit:
     """Gets the details of a given Unit (more information in https://w3id.org/okn/o/sd#Unit)"""
-    
+
     return query_manager.get_resource(
         id=id,
         username=username,
-        
+
         rdf_type_uri=UNIT_TYPE_URI,
-        rdf_type_name=UNIT_TYPE_NAME, 
+        rdf_type_name=UNIT_TYPE_NAME,
         kls=Unit
         )
-        
+
 
 
 @router.put(
@@ -126,7 +126,7 @@ async def units_id_get(
     response_model_by_alias=True,
 )
 async def units_id_put(
-    id: str = Path(None, description="The ID of the Unit to be retrieved"),
+    id: str = Path( description="The ID of the Unit to be retrieved"),
     user: str = Query(None, description="Username"),
     unit: Unit = Body(None, description="An old Unitto be updated"),
     token_BearerAuth: TokenModel = Security(
@@ -134,17 +134,17 @@ async def units_id_put(
     ),
 ) -> Unit:
     """Updates an existing Unit (more information in https://w3id.org/okn/o/sd#Unit)"""
-    
+
     await FastAPICache.clear(namespace="Unit")
     return query_manager.put_resource(
         id=id,
         user=user,
         body=unit,
         rdf_type_uri=UNIT_TYPE_URI,
-        rdf_type_name=UNIT_TYPE_NAME, 
+        rdf_type_name=UNIT_TYPE_NAME,
         kls=Unit
         )
-        
+
 
 
 @router.post(
@@ -164,14 +164,14 @@ async def units_post(
     ),
 ) -> Unit:
     """Create a new instance of Unit (more information in https://w3id.org/okn/o/sd#Unit)"""
-    
+
     await FastAPICache.clear(namespace="Unit")
     return query_manager.post_resource(
-        
+
         user=user,
         body=unit,
         rdf_type_uri=UNIT_TYPE_URI,
-        rdf_type_name=UNIT_TYPE_NAME, 
+        rdf_type_name=UNIT_TYPE_NAME,
         kls=Unit
         )
-        
+

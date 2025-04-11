@@ -45,16 +45,16 @@ async def emulators_get(
     per_page: int = Query(100, description="Items per page", ge=1, le=200),
 ) -> List[Emulator]:
     """Gets a list of all instances of Emulator (more information in https://w3id.org/okn/o/sdm#Emulator)"""
-    
+
     return query_manager.get_resource(
-        
+
         username=username,label=label,page=page,per_page=per_page,
-        
+
         rdf_type_uri=EMULATOR_TYPE_URI,
-        rdf_type_name=EMULATOR_TYPE_NAME, 
+        rdf_type_name=EMULATOR_TYPE_NAME,
         kls=Emulator
         )
-        
+
 
 
 @router.delete(
@@ -68,24 +68,24 @@ async def emulators_get(
     response_model_by_alias=True,
 )
 async def emulators_id_delete(
-    id: str = Path(None, description="The ID of the Emulator to be retrieved"),
+    id: str = Path( description="The ID of the Emulator to be retrieved"),
     user: str = Query(None, description="Username"),
     token_BearerAuth: TokenModel = Security(
         get_token_BearerAuth
     ),
 ) -> None:
     """Delete an existing Emulator (more information in https://w3id.org/okn/o/sdm#Emulator)"""
-    
+
     await FastAPICache.clear(namespace="Emulator")
     return query_manager.delete_resource(
         id=id,
         user=user,
-        
+
         rdf_type_uri=EMULATOR_TYPE_URI,
-        rdf_type_name=EMULATOR_TYPE_NAME, 
+        rdf_type_name=EMULATOR_TYPE_NAME,
         kls=Emulator
         )
-        
+
 
 
 @router.get(
@@ -99,20 +99,20 @@ async def emulators_id_delete(
 )
 @cache(namespace="Emulator", expire=1800)
 async def emulators_id_get(
-    id: str = Path(None, description="The ID of the Emulator to be retrieved"),
+    id: str = Path( description="The ID of the Emulator to be retrieved"),
     username: str = Query(None, description="Name of the user graph to query"),
 ) -> Emulator:
     """Gets the details of a given Emulator (more information in https://w3id.org/okn/o/sdm#Emulator)"""
-    
+
     return query_manager.get_resource(
         id=id,
         username=username,
-        
+
         rdf_type_uri=EMULATOR_TYPE_URI,
-        rdf_type_name=EMULATOR_TYPE_NAME, 
+        rdf_type_name=EMULATOR_TYPE_NAME,
         kls=Emulator
         )
-        
+
 
 
 @router.put(
@@ -126,7 +126,7 @@ async def emulators_id_get(
     response_model_by_alias=True,
 )
 async def emulators_id_put(
-    id: str = Path(None, description="The ID of the Emulator to be retrieved"),
+    id: str = Path( description="The ID of the Emulator to be retrieved"),
     user: str = Query(None, description="Username"),
     emulator: Emulator = Body(None, description="An old Emulatorto be updated"),
     token_BearerAuth: TokenModel = Security(
@@ -134,17 +134,17 @@ async def emulators_id_put(
     ),
 ) -> Emulator:
     """Updates an existing Emulator (more information in https://w3id.org/okn/o/sdm#Emulator)"""
-    
+
     await FastAPICache.clear(namespace="Emulator")
     return query_manager.put_resource(
         id=id,
         user=user,
         body=emulator,
         rdf_type_uri=EMULATOR_TYPE_URI,
-        rdf_type_name=EMULATOR_TYPE_NAME, 
+        rdf_type_name=EMULATOR_TYPE_NAME,
         kls=Emulator
         )
-        
+
 
 
 @router.post(
@@ -164,14 +164,14 @@ async def emulators_post(
     ),
 ) -> Emulator:
     """Create a new instance of Emulator (more information in https://w3id.org/okn/o/sdm#Emulator)"""
-    
+
     await FastAPICache.clear(namespace="Emulator")
     return query_manager.post_resource(
-        
+
         user=user,
         body=emulator,
         rdf_type_uri=EMULATOR_TYPE_URI,
-        rdf_type_name=EMULATOR_TYPE_NAME, 
+        rdf_type_name=EMULATOR_TYPE_NAME,
         kls=Emulator
         )
-        
+

@@ -45,16 +45,16 @@ async def sourcecodes_get(
     per_page: int = Query(100, description="Items per page", ge=1, le=200),
 ) -> List[SourceCode]:
     """Gets a list of all instances of SourceCode (more information in https://w3id.org/okn/o/sd#SourceCode)"""
-    
+
     return query_manager.get_resource(
-        
+
         username=username,label=label,page=page,per_page=per_page,
-        
+
         rdf_type_uri=SOURCECODE_TYPE_URI,
-        rdf_type_name=SOURCECODE_TYPE_NAME, 
+        rdf_type_name=SOURCECODE_TYPE_NAME,
         kls=SourceCode
         )
-        
+
 
 
 @router.delete(
@@ -68,24 +68,24 @@ async def sourcecodes_get(
     response_model_by_alias=True,
 )
 async def sourcecodes_id_delete(
-    id: str = Path(None, description="The ID of the SourceCode to be retrieved"),
+    id: str = Path( description="The ID of the SourceCode to be retrieved"),
     user: str = Query(None, description="Username"),
     token_BearerAuth: TokenModel = Security(
         get_token_BearerAuth
     ),
 ) -> None:
     """Delete an existing SourceCode (more information in https://w3id.org/okn/o/sd#SourceCode)"""
-    
+
     await FastAPICache.clear(namespace="SourceCode")
     return query_manager.delete_resource(
         id=id,
         user=user,
-        
+
         rdf_type_uri=SOURCECODE_TYPE_URI,
-        rdf_type_name=SOURCECODE_TYPE_NAME, 
+        rdf_type_name=SOURCECODE_TYPE_NAME,
         kls=SourceCode
         )
-        
+
 
 
 @router.get(
@@ -99,20 +99,20 @@ async def sourcecodes_id_delete(
 )
 @cache(namespace="SourceCode", expire=1800)
 async def sourcecodes_id_get(
-    id: str = Path(None, description="The ID of the SourceCode to be retrieved"),
+    id: str = Path( description="The ID of the SourceCode to be retrieved"),
     username: str = Query(None, description="Name of the user graph to query"),
 ) -> SourceCode:
     """Gets the details of a given SourceCode (more information in https://w3id.org/okn/o/sd#SourceCode)"""
-    
+
     return query_manager.get_resource(
         id=id,
         username=username,
-        
+
         rdf_type_uri=SOURCECODE_TYPE_URI,
-        rdf_type_name=SOURCECODE_TYPE_NAME, 
+        rdf_type_name=SOURCECODE_TYPE_NAME,
         kls=SourceCode
         )
-        
+
 
 
 @router.put(
@@ -126,7 +126,7 @@ async def sourcecodes_id_get(
     response_model_by_alias=True,
 )
 async def sourcecodes_id_put(
-    id: str = Path(None, description="The ID of the SourceCode to be retrieved"),
+    id: str = Path( description="The ID of the SourceCode to be retrieved"),
     user: str = Query(None, description="Username"),
     source_code: SourceCode = Body(None, description="An old SourceCodeto be updated"),
     token_BearerAuth: TokenModel = Security(
@@ -134,17 +134,17 @@ async def sourcecodes_id_put(
     ),
 ) -> SourceCode:
     """Updates an existing SourceCode (more information in https://w3id.org/okn/o/sd#SourceCode)"""
-    
+
     await FastAPICache.clear(namespace="SourceCode")
     return query_manager.put_resource(
         id=id,
         user=user,
         body=source_code,
         rdf_type_uri=SOURCECODE_TYPE_URI,
-        rdf_type_name=SOURCECODE_TYPE_NAME, 
+        rdf_type_name=SOURCECODE_TYPE_NAME,
         kls=SourceCode
         )
-        
+
 
 
 @router.post(
@@ -164,14 +164,14 @@ async def sourcecodes_post(
     ),
 ) -> SourceCode:
     """Create a new instance of SourceCode (more information in https://w3id.org/okn/o/sd#SourceCode)"""
-    
+
     await FastAPICache.clear(namespace="SourceCode")
     return query_manager.post_resource(
-        
+
         user=user,
         body=source_code,
         rdf_type_uri=SOURCECODE_TYPE_URI,
-        rdf_type_name=SOURCECODE_TYPE_NAME, 
+        rdf_type_name=SOURCECODE_TYPE_NAME,
         kls=SourceCode
         )
-        
+

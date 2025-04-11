@@ -45,16 +45,16 @@ async def datatransformationsetups_get(
     per_page: int = Query(100, description="Items per page", ge=1, le=200),
 ) -> List[DataTransformationSetup]:
     """Gets a list of all instances of DataTransformationSetup (more information in https://w3id.org/okn/o/sd#DataTransformationSetup)"""
-    
+
     return query_manager.get_resource(
-        
+
         username=username,label=label,page=page,per_page=per_page,
-        
+
         rdf_type_uri=DATATRANSFORMATIONSETUP_TYPE_URI,
-        rdf_type_name=DATATRANSFORMATIONSETUP_TYPE_NAME, 
+        rdf_type_name=DATATRANSFORMATIONSETUP_TYPE_NAME,
         kls=DataTransformationSetup
         )
-        
+
 
 
 @router.delete(
@@ -68,24 +68,24 @@ async def datatransformationsetups_get(
     response_model_by_alias=True,
 )
 async def datatransformationsetups_id_delete(
-    id: str = Path(None, description="The ID of the DataTransformationSetup to be retrieved"),
+    id: str = Path( description="The ID of the DataTransformationSetup to be retrieved"),
     user: str = Query(None, description="Username"),
     token_BearerAuth: TokenModel = Security(
         get_token_BearerAuth
     ),
 ) -> None:
     """Delete an existing DataTransformationSetup (more information in https://w3id.org/okn/o/sd#DataTransformationSetup)"""
-    
+
     await FastAPICache.clear(namespace="DataTransformationSetup")
     return query_manager.delete_resource(
         id=id,
         user=user,
-        
+
         rdf_type_uri=DATATRANSFORMATIONSETUP_TYPE_URI,
-        rdf_type_name=DATATRANSFORMATIONSETUP_TYPE_NAME, 
+        rdf_type_name=DATATRANSFORMATIONSETUP_TYPE_NAME,
         kls=DataTransformationSetup
         )
-        
+
 
 
 @router.get(
@@ -99,20 +99,20 @@ async def datatransformationsetups_id_delete(
 )
 @cache(namespace="DataTransformationSetup", expire=1800)
 async def datatransformationsetups_id_get(
-    id: str = Path(None, description="The ID of the DataTransformationSetup to be retrieved"),
+    id: str = Path( description="The ID of the DataTransformationSetup to be retrieved"),
     username: str = Query(None, description="Name of the user graph to query"),
 ) -> DataTransformationSetup:
     """Gets the details of a given DataTransformationSetup (more information in https://w3id.org/okn/o/sd#DataTransformationSetup)"""
-    
+
     return query_manager.get_resource(
         id=id,
         username=username,
-        
+
         rdf_type_uri=DATATRANSFORMATIONSETUP_TYPE_URI,
-        rdf_type_name=DATATRANSFORMATIONSETUP_TYPE_NAME, 
+        rdf_type_name=DATATRANSFORMATIONSETUP_TYPE_NAME,
         kls=DataTransformationSetup
         )
-        
+
 
 
 @router.put(
@@ -126,7 +126,7 @@ async def datatransformationsetups_id_get(
     response_model_by_alias=True,
 )
 async def datatransformationsetups_id_put(
-    id: str = Path(None, description="The ID of the DataTransformationSetup to be retrieved"),
+    id: str = Path( description="The ID of the DataTransformationSetup to be retrieved"),
     user: str = Query(None, description="Username"),
     data_transformation_setup: DataTransformationSetup = Body(None, description="An old DataTransformationSetupto be updated"),
     token_BearerAuth: TokenModel = Security(
@@ -134,17 +134,17 @@ async def datatransformationsetups_id_put(
     ),
 ) -> DataTransformationSetup:
     """Updates an existing DataTransformationSetup (more information in https://w3id.org/okn/o/sd#DataTransformationSetup)"""
-    
+
     await FastAPICache.clear(namespace="DataTransformationSetup")
     return query_manager.put_resource(
         id=id,
         user=user,
         body=data_transformation_setup,
         rdf_type_uri=DATATRANSFORMATIONSETUP_TYPE_URI,
-        rdf_type_name=DATATRANSFORMATIONSETUP_TYPE_NAME, 
+        rdf_type_name=DATATRANSFORMATIONSETUP_TYPE_NAME,
         kls=DataTransformationSetup
         )
-        
+
 
 
 @router.post(
@@ -164,14 +164,14 @@ async def datatransformationsetups_post(
     ),
 ) -> DataTransformationSetup:
     """Create a new instance of DataTransformationSetup (more information in https://w3id.org/okn/o/sd#DataTransformationSetup)"""
-    
+
     await FastAPICache.clear(namespace="DataTransformationSetup")
     return query_manager.post_resource(
-        
+
         user=user,
         body=data_transformation_setup,
         rdf_type_uri=DATATRANSFORMATIONSETUP_TYPE_URI,
-        rdf_type_name=DATATRANSFORMATIONSETUP_TYPE_NAME, 
+        rdf_type_name=DATATRANSFORMATIONSETUP_TYPE_NAME,
         kls=DataTransformationSetup
         )
-        
+

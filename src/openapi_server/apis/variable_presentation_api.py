@@ -45,16 +45,16 @@ async def variablepresentations_get(
     per_page: int = Query(100, description="Items per page", ge=1, le=200),
 ) -> List[VariablePresentation]:
     """Gets a list of all instances of VariablePresentation (more information in https://w3id.org/okn/o/sd#VariablePresentation)"""
-    
+
     return query_manager.get_resource(
-        
+
         username=username,label=label,page=page,per_page=per_page,
-        
+
         rdf_type_uri=VARIABLEPRESENTATION_TYPE_URI,
-        rdf_type_name=VARIABLEPRESENTATION_TYPE_NAME, 
+        rdf_type_name=VARIABLEPRESENTATION_TYPE_NAME,
         kls=VariablePresentation
         )
-        
+
 
 
 @router.delete(
@@ -68,24 +68,24 @@ async def variablepresentations_get(
     response_model_by_alias=True,
 )
 async def variablepresentations_id_delete(
-    id: str = Path(None, description="The ID of the VariablePresentation to be retrieved"),
+    id: str = Path( description="The ID of the VariablePresentation to be retrieved"),
     user: str = Query(None, description="Username"),
     token_BearerAuth: TokenModel = Security(
         get_token_BearerAuth
     ),
 ) -> None:
     """Delete an existing VariablePresentation (more information in https://w3id.org/okn/o/sd#VariablePresentation)"""
-    
+
     await FastAPICache.clear(namespace="VariablePresentation")
     return query_manager.delete_resource(
         id=id,
         user=user,
-        
+
         rdf_type_uri=VARIABLEPRESENTATION_TYPE_URI,
-        rdf_type_name=VARIABLEPRESENTATION_TYPE_NAME, 
+        rdf_type_name=VARIABLEPRESENTATION_TYPE_NAME,
         kls=VariablePresentation
         )
-        
+
 
 
 @router.get(
@@ -99,20 +99,20 @@ async def variablepresentations_id_delete(
 )
 @cache(namespace="VariablePresentation", expire=1800)
 async def variablepresentations_id_get(
-    id: str = Path(None, description="The ID of the VariablePresentation to be retrieved"),
+    id: str = Path( description="The ID of the VariablePresentation to be retrieved"),
     username: str = Query(None, description="Name of the user graph to query"),
 ) -> VariablePresentation:
     """Gets the details of a given VariablePresentation (more information in https://w3id.org/okn/o/sd#VariablePresentation)"""
-    
+
     return query_manager.get_resource(
         id=id,
         username=username,
-        
+
         rdf_type_uri=VARIABLEPRESENTATION_TYPE_URI,
-        rdf_type_name=VARIABLEPRESENTATION_TYPE_NAME, 
+        rdf_type_name=VARIABLEPRESENTATION_TYPE_NAME,
         kls=VariablePresentation
         )
-        
+
 
 
 @router.put(
@@ -126,7 +126,7 @@ async def variablepresentations_id_get(
     response_model_by_alias=True,
 )
 async def variablepresentations_id_put(
-    id: str = Path(None, description="The ID of the VariablePresentation to be retrieved"),
+    id: str = Path( description="The ID of the VariablePresentation to be retrieved"),
     user: str = Query(None, description="Username"),
     variable_presentation: VariablePresentation = Body(None, description="An old VariablePresentationto be updated"),
     token_BearerAuth: TokenModel = Security(
@@ -134,17 +134,17 @@ async def variablepresentations_id_put(
     ),
 ) -> VariablePresentation:
     """Updates an existing VariablePresentation (more information in https://w3id.org/okn/o/sd#VariablePresentation)"""
-    
+
     await FastAPICache.clear(namespace="VariablePresentation")
     return query_manager.put_resource(
         id=id,
         user=user,
         body=variable_presentation,
         rdf_type_uri=VARIABLEPRESENTATION_TYPE_URI,
-        rdf_type_name=VARIABLEPRESENTATION_TYPE_NAME, 
+        rdf_type_name=VARIABLEPRESENTATION_TYPE_NAME,
         kls=VariablePresentation
         )
-        
+
 
 
 @router.post(
@@ -164,14 +164,14 @@ async def variablepresentations_post(
     ),
 ) -> VariablePresentation:
     """Create a new instance of VariablePresentation (more information in https://w3id.org/okn/o/sd#VariablePresentation)"""
-    
+
     await FastAPICache.clear(namespace="VariablePresentation")
     return query_manager.post_resource(
-        
+
         user=user,
         body=variable_presentation,
         rdf_type_uri=VARIABLEPRESENTATION_TYPE_URI,
-        rdf_type_name=VARIABLEPRESENTATION_TYPE_NAME, 
+        rdf_type_name=VARIABLEPRESENTATION_TYPE_NAME,
         kls=VariablePresentation
         )
-        
+

@@ -45,16 +45,16 @@ async def geoshapes_get(
     per_page: int = Query(100, description="Items per page", ge=1, le=200),
 ) -> List[GeoShape]:
     """Gets a list of all instances of GeoShape (more information in https://w3id.org/okn/o/sdm#GeoShape)"""
-    
+
     return query_manager.get_resource(
-        
+
         username=username,label=label,page=page,per_page=per_page,
-        
+
         rdf_type_uri=GEOSHAPE_TYPE_URI,
-        rdf_type_name=GEOSHAPE_TYPE_NAME, 
+        rdf_type_name=GEOSHAPE_TYPE_NAME,
         kls=GeoShape
         )
-        
+
 
 
 @router.delete(
@@ -68,24 +68,24 @@ async def geoshapes_get(
     response_model_by_alias=True,
 )
 async def geoshapes_id_delete(
-    id: str = Path(None, description="The ID of the GeoShape to be retrieved"),
+    id: str = Path( description="The ID of the GeoShape to be retrieved"),
     user: str = Query(None, description="Username"),
     token_BearerAuth: TokenModel = Security(
         get_token_BearerAuth
     ),
 ) -> None:
     """Delete an existing GeoShape (more information in https://w3id.org/okn/o/sdm#GeoShape)"""
-    
+
     await FastAPICache.clear(namespace="GeoShape")
     return query_manager.delete_resource(
         id=id,
         user=user,
-        
+
         rdf_type_uri=GEOSHAPE_TYPE_URI,
-        rdf_type_name=GEOSHAPE_TYPE_NAME, 
+        rdf_type_name=GEOSHAPE_TYPE_NAME,
         kls=GeoShape
         )
-        
+
 
 
 @router.get(
@@ -99,20 +99,20 @@ async def geoshapes_id_delete(
 )
 @cache(namespace="GeoShape", expire=1800)
 async def geoshapes_id_get(
-    id: str = Path(None, description="The ID of the GeoShape to be retrieved"),
+    id: str = Path( description="The ID of the GeoShape to be retrieved"),
     username: str = Query(None, description="Name of the user graph to query"),
 ) -> GeoShape:
     """Gets the details of a given GeoShape (more information in https://w3id.org/okn/o/sdm#GeoShape)"""
-    
+
     return query_manager.get_resource(
         id=id,
         username=username,
-        
+
         rdf_type_uri=GEOSHAPE_TYPE_URI,
-        rdf_type_name=GEOSHAPE_TYPE_NAME, 
+        rdf_type_name=GEOSHAPE_TYPE_NAME,
         kls=GeoShape
         )
-        
+
 
 
 @router.put(
@@ -126,7 +126,7 @@ async def geoshapes_id_get(
     response_model_by_alias=True,
 )
 async def geoshapes_id_put(
-    id: str = Path(None, description="The ID of the GeoShape to be retrieved"),
+    id: str = Path( description="The ID of the GeoShape to be retrieved"),
     user: str = Query(None, description="Username"),
     geo_shape: GeoShape = Body(None, description="An old GeoShapeto be updated"),
     token_BearerAuth: TokenModel = Security(
@@ -134,17 +134,17 @@ async def geoshapes_id_put(
     ),
 ) -> GeoShape:
     """Updates an existing GeoShape (more information in https://w3id.org/okn/o/sdm#GeoShape)"""
-    
+
     await FastAPICache.clear(namespace="GeoShape")
     return query_manager.put_resource(
         id=id,
         user=user,
         body=geo_shape,
         rdf_type_uri=GEOSHAPE_TYPE_URI,
-        rdf_type_name=GEOSHAPE_TYPE_NAME, 
+        rdf_type_name=GEOSHAPE_TYPE_NAME,
         kls=GeoShape
         )
-        
+
 
 
 @router.post(
@@ -164,14 +164,14 @@ async def geoshapes_post(
     ),
 ) -> GeoShape:
     """Create a new instance of GeoShape (more information in https://w3id.org/okn/o/sdm#GeoShape)"""
-    
+
     await FastAPICache.clear(namespace="GeoShape")
     return query_manager.post_resource(
-        
+
         user=user,
         body=geo_shape,
         rdf_type_uri=GEOSHAPE_TYPE_URI,
-        rdf_type_name=GEOSHAPE_TYPE_NAME, 
+        rdf_type_name=GEOSHAPE_TYPE_NAME,
         kls=GeoShape
         )
-        
+

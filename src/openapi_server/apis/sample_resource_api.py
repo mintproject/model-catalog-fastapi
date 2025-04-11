@@ -45,16 +45,16 @@ async def sampleresources_get(
     per_page: int = Query(100, description="Items per page", ge=1, le=200),
 ) -> List[SampleResource]:
     """Gets a list of all instances of SampleResource (more information in https://w3id.org/okn/o/sd#SampleResource)"""
-    
+
     return query_manager.get_resource(
-        
+
         username=username,label=label,page=page,per_page=per_page,
-        
+
         rdf_type_uri=SAMPLERESOURCE_TYPE_URI,
-        rdf_type_name=SAMPLERESOURCE_TYPE_NAME, 
+        rdf_type_name=SAMPLERESOURCE_TYPE_NAME,
         kls=SampleResource
         )
-        
+
 
 
 @router.delete(
@@ -68,24 +68,24 @@ async def sampleresources_get(
     response_model_by_alias=True,
 )
 async def sampleresources_id_delete(
-    id: str = Path(None, description="The ID of the SampleResource to be retrieved"),
+    id: str = Path( description="The ID of the SampleResource to be retrieved"),
     user: str = Query(None, description="Username"),
     token_BearerAuth: TokenModel = Security(
         get_token_BearerAuth
     ),
 ) -> None:
     """Delete an existing SampleResource (more information in https://w3id.org/okn/o/sd#SampleResource)"""
-    
+
     await FastAPICache.clear(namespace="SampleResource")
     return query_manager.delete_resource(
         id=id,
         user=user,
-        
+
         rdf_type_uri=SAMPLERESOURCE_TYPE_URI,
-        rdf_type_name=SAMPLERESOURCE_TYPE_NAME, 
+        rdf_type_name=SAMPLERESOURCE_TYPE_NAME,
         kls=SampleResource
         )
-        
+
 
 
 @router.get(
@@ -99,20 +99,20 @@ async def sampleresources_id_delete(
 )
 @cache(namespace="SampleResource", expire=1800)
 async def sampleresources_id_get(
-    id: str = Path(None, description="The ID of the SampleResource to be retrieved"),
+    id: str = Path( description="The ID of the SampleResource to be retrieved"),
     username: str = Query(None, description="Name of the user graph to query"),
 ) -> SampleResource:
     """Gets the details of a given SampleResource (more information in https://w3id.org/okn/o/sd#SampleResource)"""
-    
+
     return query_manager.get_resource(
         id=id,
         username=username,
-        
+
         rdf_type_uri=SAMPLERESOURCE_TYPE_URI,
-        rdf_type_name=SAMPLERESOURCE_TYPE_NAME, 
+        rdf_type_name=SAMPLERESOURCE_TYPE_NAME,
         kls=SampleResource
         )
-        
+
 
 
 @router.put(
@@ -126,7 +126,7 @@ async def sampleresources_id_get(
     response_model_by_alias=True,
 )
 async def sampleresources_id_put(
-    id: str = Path(None, description="The ID of the SampleResource to be retrieved"),
+    id: str = Path( description="The ID of the SampleResource to be retrieved"),
     user: str = Query(None, description="Username"),
     sample_resource: SampleResource = Body(None, description="An old SampleResourceto be updated"),
     token_BearerAuth: TokenModel = Security(
@@ -134,17 +134,17 @@ async def sampleresources_id_put(
     ),
 ) -> SampleResource:
     """Updates an existing SampleResource (more information in https://w3id.org/okn/o/sd#SampleResource)"""
-    
+
     await FastAPICache.clear(namespace="SampleResource")
     return query_manager.put_resource(
         id=id,
         user=user,
         body=sample_resource,
         rdf_type_uri=SAMPLERESOURCE_TYPE_URI,
-        rdf_type_name=SAMPLERESOURCE_TYPE_NAME, 
+        rdf_type_name=SAMPLERESOURCE_TYPE_NAME,
         kls=SampleResource
         )
-        
+
 
 
 @router.post(
@@ -164,14 +164,14 @@ async def sampleresources_post(
     ),
 ) -> SampleResource:
     """Create a new instance of SampleResource (more information in https://w3id.org/okn/o/sd#SampleResource)"""
-    
+
     await FastAPICache.clear(namespace="SampleResource")
     return query_manager.post_resource(
-        
+
         user=user,
         body=sample_resource,
         rdf_type_uri=SAMPLERESOURCE_TYPE_URI,
-        rdf_type_name=SAMPLERESOURCE_TYPE_NAME, 
+        rdf_type_name=SAMPLERESOURCE_TYPE_NAME,
         kls=SampleResource
         )
-        
+

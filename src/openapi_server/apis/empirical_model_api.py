@@ -45,16 +45,16 @@ async def empiricalmodels_get(
     per_page: int = Query(100, description="Items per page", ge=1, le=200),
 ) -> List[EmpiricalModel]:
     """Gets a list of all instances of EmpiricalModel (more information in https://w3id.org/okn/o/sdm#EmpiricalModel)"""
-    
+
     return query_manager.get_resource(
-        
+
         username=username,label=label,page=page,per_page=per_page,
-        
+
         rdf_type_uri=EMPIRICALMODEL_TYPE_URI,
-        rdf_type_name=EMPIRICALMODEL_TYPE_NAME, 
+        rdf_type_name=EMPIRICALMODEL_TYPE_NAME,
         kls=EmpiricalModel
         )
-        
+
 
 
 @router.delete(
@@ -68,24 +68,24 @@ async def empiricalmodels_get(
     response_model_by_alias=True,
 )
 async def empiricalmodels_id_delete(
-    id: str = Path(None, description="The ID of the EmpiricalModel to be retrieved"),
+    id: str = Path( description="The ID of the EmpiricalModel to be retrieved"),
     user: str = Query(None, description="Username"),
     token_BearerAuth: TokenModel = Security(
         get_token_BearerAuth
     ),
 ) -> None:
     """Delete an existing EmpiricalModel (more information in https://w3id.org/okn/o/sdm#EmpiricalModel)"""
-    
+
     await FastAPICache.clear(namespace="EmpiricalModel")
     return query_manager.delete_resource(
         id=id,
         user=user,
-        
+
         rdf_type_uri=EMPIRICALMODEL_TYPE_URI,
-        rdf_type_name=EMPIRICALMODEL_TYPE_NAME, 
+        rdf_type_name=EMPIRICALMODEL_TYPE_NAME,
         kls=EmpiricalModel
         )
-        
+
 
 
 @router.get(
@@ -99,20 +99,20 @@ async def empiricalmodels_id_delete(
 )
 @cache(namespace="EmpiricalModel", expire=1800)
 async def empiricalmodels_id_get(
-    id: str = Path(None, description="The ID of the EmpiricalModel to be retrieved"),
+    id: str = Path( description="The ID of the EmpiricalModel to be retrieved"),
     username: str = Query(None, description="Name of the user graph to query"),
 ) -> EmpiricalModel:
     """Gets the details of a given EmpiricalModel (more information in https://w3id.org/okn/o/sdm#EmpiricalModel)"""
-    
+
     return query_manager.get_resource(
         id=id,
         username=username,
-        
+
         rdf_type_uri=EMPIRICALMODEL_TYPE_URI,
-        rdf_type_name=EMPIRICALMODEL_TYPE_NAME, 
+        rdf_type_name=EMPIRICALMODEL_TYPE_NAME,
         kls=EmpiricalModel
         )
-        
+
 
 
 @router.put(
@@ -126,7 +126,7 @@ async def empiricalmodels_id_get(
     response_model_by_alias=True,
 )
 async def empiricalmodels_id_put(
-    id: str = Path(None, description="The ID of the EmpiricalModel to be retrieved"),
+    id: str = Path( description="The ID of the EmpiricalModel to be retrieved"),
     user: str = Query(None, description="Username"),
     empirical_model: EmpiricalModel = Body(None, description="An old EmpiricalModelto be updated"),
     token_BearerAuth: TokenModel = Security(
@@ -134,17 +134,17 @@ async def empiricalmodels_id_put(
     ),
 ) -> EmpiricalModel:
     """Updates an existing EmpiricalModel (more information in https://w3id.org/okn/o/sdm#EmpiricalModel)"""
-    
+
     await FastAPICache.clear(namespace="EmpiricalModel")
     return query_manager.put_resource(
         id=id,
         user=user,
         body=empirical_model,
         rdf_type_uri=EMPIRICALMODEL_TYPE_URI,
-        rdf_type_name=EMPIRICALMODEL_TYPE_NAME, 
+        rdf_type_name=EMPIRICALMODEL_TYPE_NAME,
         kls=EmpiricalModel
         )
-        
+
 
 
 @router.post(
@@ -164,14 +164,14 @@ async def empiricalmodels_post(
     ),
 ) -> EmpiricalModel:
     """Create a new instance of EmpiricalModel (more information in https://w3id.org/okn/o/sdm#EmpiricalModel)"""
-    
+
     await FastAPICache.clear(namespace="EmpiricalModel")
     return query_manager.post_resource(
-        
+
         user=user,
         body=empirical_model,
         rdf_type_uri=EMPIRICALMODEL_TYPE_URI,
-        rdf_type_name=EMPIRICALMODEL_TYPE_NAME, 
+        rdf_type_name=EMPIRICALMODEL_TYPE_NAME,
         kls=EmpiricalModel
         )
-        
+

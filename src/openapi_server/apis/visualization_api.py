@@ -45,16 +45,16 @@ async def visualizations_get(
     per_page: int = Query(100, description="Items per page", ge=1, le=200),
 ) -> List[Visualization]:
     """Gets a list of all instances of Visualization (more information in https://w3id.org/okn/o/sd#Visualization)"""
-    
+
     return query_manager.get_resource(
-        
+
         username=username,label=label,page=page,per_page=per_page,
-        
+
         rdf_type_uri=VISUALIZATION_TYPE_URI,
-        rdf_type_name=VISUALIZATION_TYPE_NAME, 
+        rdf_type_name=VISUALIZATION_TYPE_NAME,
         kls=Visualization
         )
-        
+
 
 
 @router.delete(
@@ -68,24 +68,24 @@ async def visualizations_get(
     response_model_by_alias=True,
 )
 async def visualizations_id_delete(
-    id: str = Path(None, description="The ID of the Visualization to be retrieved"),
+    id: str = Path( description="The ID of the Visualization to be retrieved"),
     user: str = Query(None, description="Username"),
     token_BearerAuth: TokenModel = Security(
         get_token_BearerAuth
     ),
 ) -> None:
     """Delete an existing Visualization (more information in https://w3id.org/okn/o/sd#Visualization)"""
-    
+
     await FastAPICache.clear(namespace="Visualization")
     return query_manager.delete_resource(
         id=id,
         user=user,
-        
+
         rdf_type_uri=VISUALIZATION_TYPE_URI,
-        rdf_type_name=VISUALIZATION_TYPE_NAME, 
+        rdf_type_name=VISUALIZATION_TYPE_NAME,
         kls=Visualization
         )
-        
+
 
 
 @router.get(
@@ -99,20 +99,20 @@ async def visualizations_id_delete(
 )
 @cache(namespace="Visualization", expire=1800)
 async def visualizations_id_get(
-    id: str = Path(None, description="The ID of the Visualization to be retrieved"),
+    id: str = Path( description="The ID of the Visualization to be retrieved"),
     username: str = Query(None, description="Name of the user graph to query"),
 ) -> Visualization:
     """Gets the details of a given Visualization (more information in https://w3id.org/okn/o/sd#Visualization)"""
-    
+
     return query_manager.get_resource(
         id=id,
         username=username,
-        
+
         rdf_type_uri=VISUALIZATION_TYPE_URI,
-        rdf_type_name=VISUALIZATION_TYPE_NAME, 
+        rdf_type_name=VISUALIZATION_TYPE_NAME,
         kls=Visualization
         )
-        
+
 
 
 @router.put(
@@ -126,7 +126,7 @@ async def visualizations_id_get(
     response_model_by_alias=True,
 )
 async def visualizations_id_put(
-    id: str = Path(None, description="The ID of the Visualization to be retrieved"),
+    id: str = Path( description="The ID of the Visualization to be retrieved"),
     user: str = Query(None, description="Username"),
     visualization: Visualization = Body(None, description="An old Visualizationto be updated"),
     token_BearerAuth: TokenModel = Security(
@@ -134,17 +134,17 @@ async def visualizations_id_put(
     ),
 ) -> Visualization:
     """Updates an existing Visualization (more information in https://w3id.org/okn/o/sd#Visualization)"""
-    
+
     await FastAPICache.clear(namespace="Visualization")
     return query_manager.put_resource(
         id=id,
         user=user,
         body=visualization,
         rdf_type_uri=VISUALIZATION_TYPE_URI,
-        rdf_type_name=VISUALIZATION_TYPE_NAME, 
+        rdf_type_name=VISUALIZATION_TYPE_NAME,
         kls=Visualization
         )
-        
+
 
 
 @router.post(
@@ -164,14 +164,14 @@ async def visualizations_post(
     ),
 ) -> Visualization:
     """Create a new instance of Visualization (more information in https://w3id.org/okn/o/sd#Visualization)"""
-    
+
     await FastAPICache.clear(namespace="Visualization")
     return query_manager.post_resource(
-        
+
         user=user,
         body=visualization,
         rdf_type_uri=VISUALIZATION_TYPE_URI,
-        rdf_type_name=VISUALIZATION_TYPE_NAME, 
+        rdf_type_name=VISUALIZATION_TYPE_NAME,
         kls=Visualization
         )
-        
+

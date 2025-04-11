@@ -45,16 +45,16 @@ async def geocoordinatess_get(
     per_page: int = Query(100, description="Items per page", ge=1, le=200),
 ) -> List[GeoCoordinates]:
     """Gets a list of all instances of GeoCoordinates (more information in https://w3id.org/okn/o/sdm#GeoCoordinates)"""
-    
+
     return query_manager.get_resource(
-        
+
         username=username,label=label,page=page,per_page=per_page,
-        
+
         rdf_type_uri=GEOCOORDINATES_TYPE_URI,
-        rdf_type_name=GEOCOORDINATES_TYPE_NAME, 
+        rdf_type_name=GEOCOORDINATES_TYPE_NAME,
         kls=GeoCoordinates
         )
-        
+
 
 
 @router.delete(
@@ -68,24 +68,24 @@ async def geocoordinatess_get(
     response_model_by_alias=True,
 )
 async def geocoordinatess_id_delete(
-    id: str = Path(None, description="The ID of the GeoCoordinates to be retrieved"),
+    id: str = Path( description="The ID of the GeoCoordinates to be retrieved"),
     user: str = Query(None, description="Username"),
     token_BearerAuth: TokenModel = Security(
         get_token_BearerAuth
     ),
 ) -> None:
     """Delete an existing GeoCoordinates (more information in https://w3id.org/okn/o/sdm#GeoCoordinates)"""
-    
+
     await FastAPICache.clear(namespace="GeoCoordinates")
     return query_manager.delete_resource(
         id=id,
         user=user,
-        
+
         rdf_type_uri=GEOCOORDINATES_TYPE_URI,
-        rdf_type_name=GEOCOORDINATES_TYPE_NAME, 
+        rdf_type_name=GEOCOORDINATES_TYPE_NAME,
         kls=GeoCoordinates
         )
-        
+
 
 
 @router.get(
@@ -99,20 +99,20 @@ async def geocoordinatess_id_delete(
 )
 @cache(namespace="GeoCoordinates", expire=1800)
 async def geocoordinatess_id_get(
-    id: str = Path(None, description="The ID of the GeoCoordinates to be retrieved"),
+    id: str = Path( description="The ID of the GeoCoordinates to be retrieved"),
     username: str = Query(None, description="Name of the user graph to query"),
 ) -> GeoCoordinates:
     """Gets the details of a given GeoCoordinates (more information in https://w3id.org/okn/o/sdm#GeoCoordinates)"""
-    
+
     return query_manager.get_resource(
         id=id,
         username=username,
-        
+
         rdf_type_uri=GEOCOORDINATES_TYPE_URI,
-        rdf_type_name=GEOCOORDINATES_TYPE_NAME, 
+        rdf_type_name=GEOCOORDINATES_TYPE_NAME,
         kls=GeoCoordinates
         )
-        
+
 
 
 @router.put(
@@ -126,7 +126,7 @@ async def geocoordinatess_id_get(
     response_model_by_alias=True,
 )
 async def geocoordinatess_id_put(
-    id: str = Path(None, description="The ID of the GeoCoordinates to be retrieved"),
+    id: str = Path( description="The ID of the GeoCoordinates to be retrieved"),
     user: str = Query(None, description="Username"),
     geo_coordinates: GeoCoordinates = Body(None, description="An old GeoCoordinatesto be updated"),
     token_BearerAuth: TokenModel = Security(
@@ -134,17 +134,17 @@ async def geocoordinatess_id_put(
     ),
 ) -> GeoCoordinates:
     """Updates an existing GeoCoordinates (more information in https://w3id.org/okn/o/sdm#GeoCoordinates)"""
-    
+
     await FastAPICache.clear(namespace="GeoCoordinates")
     return query_manager.put_resource(
         id=id,
         user=user,
         body=geo_coordinates,
         rdf_type_uri=GEOCOORDINATES_TYPE_URI,
-        rdf_type_name=GEOCOORDINATES_TYPE_NAME, 
+        rdf_type_name=GEOCOORDINATES_TYPE_NAME,
         kls=GeoCoordinates
         )
-        
+
 
 
 @router.post(
@@ -164,14 +164,14 @@ async def geocoordinatess_post(
     ),
 ) -> GeoCoordinates:
     """Create a new instance of GeoCoordinates (more information in https://w3id.org/okn/o/sdm#GeoCoordinates)"""
-    
+
     await FastAPICache.clear(namespace="GeoCoordinates")
     return query_manager.post_resource(
-        
+
         user=user,
         body=geo_coordinates,
         rdf_type_uri=GEOCOORDINATES_TYPE_URI,
-        rdf_type_name=GEOCOORDINATES_TYPE_NAME, 
+        rdf_type_name=GEOCOORDINATES_TYPE_NAME,
         kls=GeoCoordinates
         )
-        
+

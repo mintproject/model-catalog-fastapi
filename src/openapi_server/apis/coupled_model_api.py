@@ -45,16 +45,16 @@ async def coupledmodels_get(
     per_page: int = Query(100, description="Items per page", ge=1, le=200),
 ) -> List[CoupledModel]:
     """Gets a list of all instances of CoupledModel (more information in https://w3id.org/okn/o/sdm#CoupledModel)"""
-    
+
     return query_manager.get_resource(
-        
+
         username=username,label=label,page=page,per_page=per_page,
-        
+
         rdf_type_uri=COUPLEDMODEL_TYPE_URI,
-        rdf_type_name=COUPLEDMODEL_TYPE_NAME, 
+        rdf_type_name=COUPLEDMODEL_TYPE_NAME,
         kls=CoupledModel
         )
-        
+
 
 
 @router.delete(
@@ -68,24 +68,24 @@ async def coupledmodels_get(
     response_model_by_alias=True,
 )
 async def coupledmodels_id_delete(
-    id: str = Path(None, description="The ID of the CoupledModel to be retrieved"),
+    id: str = Path( description="The ID of the CoupledModel to be retrieved"),
     user: str = Query(None, description="Username"),
     token_BearerAuth: TokenModel = Security(
         get_token_BearerAuth
     ),
 ) -> None:
     """Delete an existing CoupledModel (more information in https://w3id.org/okn/o/sdm#CoupledModel)"""
-    
+
     await FastAPICache.clear(namespace="CoupledModel")
     return query_manager.delete_resource(
         id=id,
         user=user,
-        
+
         rdf_type_uri=COUPLEDMODEL_TYPE_URI,
-        rdf_type_name=COUPLEDMODEL_TYPE_NAME, 
+        rdf_type_name=COUPLEDMODEL_TYPE_NAME,
         kls=CoupledModel
         )
-        
+
 
 
 @router.get(
@@ -99,20 +99,20 @@ async def coupledmodels_id_delete(
 )
 @cache(namespace="CoupledModel", expire=1800)
 async def coupledmodels_id_get(
-    id: str = Path(None, description="The ID of the CoupledModel to be retrieved"),
+    id: str = Path( description="The ID of the CoupledModel to be retrieved"),
     username: str = Query(None, description="Name of the user graph to query"),
 ) -> CoupledModel:
     """Gets the details of a given CoupledModel (more information in https://w3id.org/okn/o/sdm#CoupledModel)"""
-    
+
     return query_manager.get_resource(
         id=id,
         username=username,
-        
+
         rdf_type_uri=COUPLEDMODEL_TYPE_URI,
-        rdf_type_name=COUPLEDMODEL_TYPE_NAME, 
+        rdf_type_name=COUPLEDMODEL_TYPE_NAME,
         kls=CoupledModel
         )
-        
+
 
 
 @router.put(
@@ -126,7 +126,7 @@ async def coupledmodels_id_get(
     response_model_by_alias=True,
 )
 async def coupledmodels_id_put(
-    id: str = Path(None, description="The ID of the CoupledModel to be retrieved"),
+    id: str = Path( description="The ID of the CoupledModel to be retrieved"),
     user: str = Query(None, description="Username"),
     coupled_model: CoupledModel = Body(None, description="An old CoupledModelto be updated"),
     token_BearerAuth: TokenModel = Security(
@@ -134,17 +134,17 @@ async def coupledmodels_id_put(
     ),
 ) -> CoupledModel:
     """Updates an existing CoupledModel (more information in https://w3id.org/okn/o/sdm#CoupledModel)"""
-    
+
     await FastAPICache.clear(namespace="CoupledModel")
     return query_manager.put_resource(
         id=id,
         user=user,
         body=coupled_model,
         rdf_type_uri=COUPLEDMODEL_TYPE_URI,
-        rdf_type_name=COUPLEDMODEL_TYPE_NAME, 
+        rdf_type_name=COUPLEDMODEL_TYPE_NAME,
         kls=CoupledModel
         )
-        
+
 
 
 @router.post(
@@ -164,14 +164,14 @@ async def coupledmodels_post(
     ),
 ) -> CoupledModel:
     """Create a new instance of CoupledModel (more information in https://w3id.org/okn/o/sdm#CoupledModel)"""
-    
+
     await FastAPICache.clear(namespace="CoupledModel")
     return query_manager.post_resource(
-        
+
         user=user,
         body=coupled_model,
         rdf_type_uri=COUPLEDMODEL_TYPE_URI,
-        rdf_type_name=COUPLEDMODEL_TYPE_NAME, 
+        rdf_type_name=COUPLEDMODEL_TYPE_NAME,
         kls=CoupledModel
         )
-        
+
