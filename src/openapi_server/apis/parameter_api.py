@@ -45,16 +45,16 @@ async def parameters_get(
     per_page: int = Query(100, description="Items per page", ge=1, le=200),
 ) -> List[Parameter]:
     """Gets a list of all instances of Parameter (more information in https://w3id.org/okn/o/sd#Parameter)"""
-    
+
     return query_manager.get_resource(
-        
+
         username=username,label=label,page=page,per_page=per_page,
-        
+
         rdf_type_uri=PARAMETER_TYPE_URI,
-        rdf_type_name=PARAMETER_TYPE_NAME, 
+        rdf_type_name=PARAMETER_TYPE_NAME,
         kls=Parameter
         )
-        
+
 
 
 @router.delete(
@@ -68,24 +68,24 @@ async def parameters_get(
     response_model_by_alias=True,
 )
 async def parameters_id_delete(
-    id: str = Path(None, description="The ID of the Parameter to be retrieved"),
+    id: str = Path( description="The ID of the Parameter to be retrieved"),
     user: str = Query(None, description="Username"),
     token_BearerAuth: TokenModel = Security(
         get_token_BearerAuth
     ),
 ) -> None:
     """Delete an existing Parameter (more information in https://w3id.org/okn/o/sd#Parameter)"""
-    
+
     await FastAPICache.clear(namespace="Parameter")
     return query_manager.delete_resource(
         id=id,
         user=user,
-        
+
         rdf_type_uri=PARAMETER_TYPE_URI,
-        rdf_type_name=PARAMETER_TYPE_NAME, 
+        rdf_type_name=PARAMETER_TYPE_NAME,
         kls=Parameter
         )
-        
+
 
 
 @router.get(
@@ -99,20 +99,20 @@ async def parameters_id_delete(
 )
 @cache(namespace="Parameter", expire=1800)
 async def parameters_id_get(
-    id: str = Path(None, description="The ID of the Parameter to be retrieved"),
+    id: str = Path( description="The ID of the Parameter to be retrieved"),
     username: str = Query(None, description="Name of the user graph to query"),
 ) -> Parameter:
     """Gets the details of a given Parameter (more information in https://w3id.org/okn/o/sd#Parameter)"""
-    
+
     return query_manager.get_resource(
         id=id,
         username=username,
-        
+
         rdf_type_uri=PARAMETER_TYPE_URI,
-        rdf_type_name=PARAMETER_TYPE_NAME, 
+        rdf_type_name=PARAMETER_TYPE_NAME,
         kls=Parameter
         )
-        
+
 
 
 @router.put(
@@ -126,7 +126,7 @@ async def parameters_id_get(
     response_model_by_alias=True,
 )
 async def parameters_id_put(
-    id: str = Path(None, description="The ID of the Parameter to be retrieved"),
+    id: str = Path( description="The ID of the Parameter to be retrieved"),
     user: str = Query(None, description="Username"),
     parameter: Parameter = Body(None, description="An old Parameterto be updated"),
     token_BearerAuth: TokenModel = Security(
@@ -134,17 +134,17 @@ async def parameters_id_put(
     ),
 ) -> Parameter:
     """Updates an existing Parameter (more information in https://w3id.org/okn/o/sd#Parameter)"""
-    
+
     await FastAPICache.clear(namespace="Parameter")
     return query_manager.put_resource(
         id=id,
         user=user,
         body=parameter,
         rdf_type_uri=PARAMETER_TYPE_URI,
-        rdf_type_name=PARAMETER_TYPE_NAME, 
+        rdf_type_name=PARAMETER_TYPE_NAME,
         kls=Parameter
         )
-        
+
 
 
 @router.post(
@@ -164,14 +164,14 @@ async def parameters_post(
     ),
 ) -> Parameter:
     """Create a new instance of Parameter (more information in https://w3id.org/okn/o/sd#Parameter)"""
-    
+
     await FastAPICache.clear(namespace="Parameter")
     return query_manager.post_resource(
-        
+
         user=user,
         body=parameter,
         rdf_type_uri=PARAMETER_TYPE_URI,
-        rdf_type_name=PARAMETER_TYPE_NAME, 
+        rdf_type_name=PARAMETER_TYPE_NAME,
         kls=Parameter
         )
-        
+

@@ -45,16 +45,16 @@ async def causaldiagrams_get(
     per_page: int = Query(100, description="Items per page", ge=1, le=200),
 ) -> List[CausalDiagram]:
     """Gets a list of all instances of CausalDiagram (more information in https://w3id.org/okn/o/sdm#CausalDiagram)"""
-    
+
     return query_manager.get_resource(
-        
+
         username=username,label=label,page=page,per_page=per_page,
-        
+
         rdf_type_uri=CAUSALDIAGRAM_TYPE_URI,
-        rdf_type_name=CAUSALDIAGRAM_TYPE_NAME, 
+        rdf_type_name=CAUSALDIAGRAM_TYPE_NAME,
         kls=CausalDiagram
         )
-        
+
 
 
 @router.delete(
@@ -68,24 +68,24 @@ async def causaldiagrams_get(
     response_model_by_alias=True,
 )
 async def causaldiagrams_id_delete(
-    id: str = Path(None, description="The ID of the CausalDiagram to be retrieved"),
+    id: str = Path( description="The ID of the CausalDiagram to be retrieved"),
     user: str = Query(None, description="Username"),
     token_BearerAuth: TokenModel = Security(
         get_token_BearerAuth
     ),
 ) -> None:
     """Delete an existing CausalDiagram (more information in https://w3id.org/okn/o/sdm#CausalDiagram)"""
-    
+
     await FastAPICache.clear(namespace="CausalDiagram")
     return query_manager.delete_resource(
         id=id,
         user=user,
-        
+
         rdf_type_uri=CAUSALDIAGRAM_TYPE_URI,
-        rdf_type_name=CAUSALDIAGRAM_TYPE_NAME, 
+        rdf_type_name=CAUSALDIAGRAM_TYPE_NAME,
         kls=CausalDiagram
         )
-        
+
 
 
 @router.get(
@@ -99,20 +99,20 @@ async def causaldiagrams_id_delete(
 )
 @cache(namespace="CausalDiagram", expire=1800)
 async def causaldiagrams_id_get(
-    id: str = Path(None, description="The ID of the CausalDiagram to be retrieved"),
+    id: str = Path( description="The ID of the CausalDiagram to be retrieved"),
     username: str = Query(None, description="Name of the user graph to query"),
 ) -> CausalDiagram:
     """Gets the details of a given CausalDiagram (more information in https://w3id.org/okn/o/sdm#CausalDiagram)"""
-    
+
     return query_manager.get_resource(
         id=id,
         username=username,
-        
+
         rdf_type_uri=CAUSALDIAGRAM_TYPE_URI,
-        rdf_type_name=CAUSALDIAGRAM_TYPE_NAME, 
+        rdf_type_name=CAUSALDIAGRAM_TYPE_NAME,
         kls=CausalDiagram
         )
-        
+
 
 
 @router.put(
@@ -126,7 +126,7 @@ async def causaldiagrams_id_get(
     response_model_by_alias=True,
 )
 async def causaldiagrams_id_put(
-    id: str = Path(None, description="The ID of the CausalDiagram to be retrieved"),
+    id: str = Path( description="The ID of the CausalDiagram to be retrieved"),
     user: str = Query(None, description="Username"),
     causal_diagram: CausalDiagram = Body(None, description="An old CausalDiagramto be updated"),
     token_BearerAuth: TokenModel = Security(
@@ -134,17 +134,17 @@ async def causaldiagrams_id_put(
     ),
 ) -> CausalDiagram:
     """Updates an existing CausalDiagram (more information in https://w3id.org/okn/o/sdm#CausalDiagram)"""
-    
+
     await FastAPICache.clear(namespace="CausalDiagram")
     return query_manager.put_resource(
         id=id,
         user=user,
         body=causal_diagram,
         rdf_type_uri=CAUSALDIAGRAM_TYPE_URI,
-        rdf_type_name=CAUSALDIAGRAM_TYPE_NAME, 
+        rdf_type_name=CAUSALDIAGRAM_TYPE_NAME,
         kls=CausalDiagram
         )
-        
+
 
 
 @router.post(
@@ -164,14 +164,14 @@ async def causaldiagrams_post(
     ),
 ) -> CausalDiagram:
     """Create a new instance of CausalDiagram (more information in https://w3id.org/okn/o/sdm#CausalDiagram)"""
-    
+
     await FastAPICache.clear(namespace="CausalDiagram")
     return query_manager.post_resource(
-        
+
         user=user,
         body=causal_diagram,
         rdf_type_uri=CAUSALDIAGRAM_TYPE_URI,
-        rdf_type_name=CAUSALDIAGRAM_TYPE_NAME, 
+        rdf_type_name=CAUSALDIAGRAM_TYPE_NAME,
         kls=CausalDiagram
         )
-        
+

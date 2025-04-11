@@ -45,16 +45,16 @@ async def images_get(
     per_page: int = Query(100, description="Items per page", ge=1, le=200),
 ) -> List[Image]:
     """Gets a list of all instances of Image (more information in https://w3id.org/okn/o/sd#Image)"""
-    
+
     return query_manager.get_resource(
-        
+
         username=username,label=label,page=page,per_page=per_page,
-        
+
         rdf_type_uri=IMAGE_TYPE_URI,
-        rdf_type_name=IMAGE_TYPE_NAME, 
+        rdf_type_name=IMAGE_TYPE_NAME,
         kls=Image
         )
-        
+
 
 
 @router.delete(
@@ -68,24 +68,24 @@ async def images_get(
     response_model_by_alias=True,
 )
 async def images_id_delete(
-    id: str = Path(None, description="The ID of the Image to be retrieved"),
+    id: str = Path( description="The ID of the Image to be retrieved"),
     user: str = Query(None, description="Username"),
     token_BearerAuth: TokenModel = Security(
         get_token_BearerAuth
     ),
 ) -> None:
     """Delete an existing Image (more information in https://w3id.org/okn/o/sd#Image)"""
-    
+
     await FastAPICache.clear(namespace="Image")
     return query_manager.delete_resource(
         id=id,
         user=user,
-        
+
         rdf_type_uri=IMAGE_TYPE_URI,
-        rdf_type_name=IMAGE_TYPE_NAME, 
+        rdf_type_name=IMAGE_TYPE_NAME,
         kls=Image
         )
-        
+
 
 
 @router.get(
@@ -99,20 +99,20 @@ async def images_id_delete(
 )
 @cache(namespace="Image", expire=1800)
 async def images_id_get(
-    id: str = Path(None, description="The ID of the Image to be retrieved"),
+    id: str = Path( description="The ID of the Image to be retrieved"),
     username: str = Query(None, description="Name of the user graph to query"),
 ) -> Image:
     """Gets the details of a given Image (more information in https://w3id.org/okn/o/sd#Image)"""
-    
+
     return query_manager.get_resource(
         id=id,
         username=username,
-        
+
         rdf_type_uri=IMAGE_TYPE_URI,
-        rdf_type_name=IMAGE_TYPE_NAME, 
+        rdf_type_name=IMAGE_TYPE_NAME,
         kls=Image
         )
-        
+
 
 
 @router.put(
@@ -126,7 +126,7 @@ async def images_id_get(
     response_model_by_alias=True,
 )
 async def images_id_put(
-    id: str = Path(None, description="The ID of the Image to be retrieved"),
+    id: str = Path( description="The ID of the Image to be retrieved"),
     user: str = Query(None, description="Username"),
     image: Image = Body(None, description="An old Imageto be updated"),
     token_BearerAuth: TokenModel = Security(
@@ -134,17 +134,17 @@ async def images_id_put(
     ),
 ) -> Image:
     """Updates an existing Image (more information in https://w3id.org/okn/o/sd#Image)"""
-    
+
     await FastAPICache.clear(namespace="Image")
     return query_manager.put_resource(
         id=id,
         user=user,
         body=image,
         rdf_type_uri=IMAGE_TYPE_URI,
-        rdf_type_name=IMAGE_TYPE_NAME, 
+        rdf_type_name=IMAGE_TYPE_NAME,
         kls=Image
         )
-        
+
 
 
 @router.post(
@@ -164,14 +164,14 @@ async def images_post(
     ),
 ) -> Image:
     """Create a new instance of Image (more information in https://w3id.org/okn/o/sd#Image)"""
-    
+
     await FastAPICache.clear(namespace="Image")
     return query_manager.post_resource(
-        
+
         user=user,
         body=image,
         rdf_type_uri=IMAGE_TYPE_URI,
-        rdf_type_name=IMAGE_TYPE_NAME, 
+        rdf_type_name=IMAGE_TYPE_NAME,
         kls=Image
         )
-        
+

@@ -45,16 +45,16 @@ async def persons_get(
     per_page: int = Query(100, description="Items per page", ge=1, le=200),
 ) -> List[Person]:
     """Gets a list of all instances of Person (more information in https://w3id.org/okn/o/sd#Person)"""
-    
+
     return query_manager.get_resource(
-        
+
         username=username,label=label,page=page,per_page=per_page,
-        
+
         rdf_type_uri=PERSON_TYPE_URI,
-        rdf_type_name=PERSON_TYPE_NAME, 
+        rdf_type_name=PERSON_TYPE_NAME,
         kls=Person
         )
-        
+
 
 
 @router.delete(
@@ -68,24 +68,24 @@ async def persons_get(
     response_model_by_alias=True,
 )
 async def persons_id_delete(
-    id: str = Path(None, description="The ID of the Person to be retrieved"),
+    id: str = Path( description="The ID of the Person to be retrieved"),
     user: str = Query(None, description="Username"),
     token_BearerAuth: TokenModel = Security(
         get_token_BearerAuth
     ),
 ) -> None:
     """Delete an existing Person (more information in https://w3id.org/okn/o/sd#Person)"""
-    
+
     await FastAPICache.clear(namespace="Person")
     return query_manager.delete_resource(
         id=id,
         user=user,
-        
+
         rdf_type_uri=PERSON_TYPE_URI,
-        rdf_type_name=PERSON_TYPE_NAME, 
+        rdf_type_name=PERSON_TYPE_NAME,
         kls=Person
         )
-        
+
 
 
 @router.get(
@@ -99,20 +99,20 @@ async def persons_id_delete(
 )
 @cache(namespace="Person", expire=1800)
 async def persons_id_get(
-    id: str = Path(None, description="The ID of the Person to be retrieved"),
+    id: str = Path( description="The ID of the Person to be retrieved"),
     username: str = Query(None, description="Name of the user graph to query"),
 ) -> Person:
     """Gets the details of a given Person (more information in https://w3id.org/okn/o/sd#Person)"""
-    
+
     return query_manager.get_resource(
         id=id,
         username=username,
-        
+
         rdf_type_uri=PERSON_TYPE_URI,
-        rdf_type_name=PERSON_TYPE_NAME, 
+        rdf_type_name=PERSON_TYPE_NAME,
         kls=Person
         )
-        
+
 
 
 @router.put(
@@ -126,7 +126,7 @@ async def persons_id_get(
     response_model_by_alias=True,
 )
 async def persons_id_put(
-    id: str = Path(None, description="The ID of the Person to be retrieved"),
+    id: str = Path( description="The ID of the Person to be retrieved"),
     user: str = Query(None, description="Username"),
     person: Person = Body(None, description="An old Personto be updated"),
     token_BearerAuth: TokenModel = Security(
@@ -134,17 +134,17 @@ async def persons_id_put(
     ),
 ) -> Person:
     """Updates an existing Person (more information in https://w3id.org/okn/o/sd#Person)"""
-    
+
     await FastAPICache.clear(namespace="Person")
     return query_manager.put_resource(
         id=id,
         user=user,
         body=person,
         rdf_type_uri=PERSON_TYPE_URI,
-        rdf_type_name=PERSON_TYPE_NAME, 
+        rdf_type_name=PERSON_TYPE_NAME,
         kls=Person
         )
-        
+
 
 
 @router.post(
@@ -164,14 +164,14 @@ async def persons_post(
     ),
 ) -> Person:
     """Create a new instance of Person (more information in https://w3id.org/okn/o/sd#Person)"""
-    
+
     await FastAPICache.clear(namespace="Person")
     return query_manager.post_resource(
-        
+
         user=user,
         body=person,
         rdf_type_uri=PERSON_TYPE_URI,
-        rdf_type_name=PERSON_TYPE_NAME, 
+        rdf_type_name=PERSON_TYPE_NAME,
         kls=Person
         )
-        
+

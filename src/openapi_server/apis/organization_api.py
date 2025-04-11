@@ -45,16 +45,16 @@ async def organizations_get(
     per_page: int = Query(100, description="Items per page", ge=1, le=200),
 ) -> List[Organization]:
     """Gets a list of all instances of Organization (more information in https://w3id.org/okn/o/sd#Organization)"""
-    
+
     return query_manager.get_resource(
-        
+
         username=username,label=label,page=page,per_page=per_page,
-        
+
         rdf_type_uri=ORGANIZATION_TYPE_URI,
-        rdf_type_name=ORGANIZATION_TYPE_NAME, 
+        rdf_type_name=ORGANIZATION_TYPE_NAME,
         kls=Organization
         )
-        
+
 
 
 @router.delete(
@@ -68,24 +68,24 @@ async def organizations_get(
     response_model_by_alias=True,
 )
 async def organizations_id_delete(
-    id: str = Path(None, description="The ID of the Organization to be retrieved"),
+    id: str = Path( description="The ID of the Organization to be retrieved"),
     user: str = Query(None, description="Username"),
     token_BearerAuth: TokenModel = Security(
         get_token_BearerAuth
     ),
 ) -> None:
     """Delete an existing Organization (more information in https://w3id.org/okn/o/sd#Organization)"""
-    
+
     await FastAPICache.clear(namespace="Organization")
     return query_manager.delete_resource(
         id=id,
         user=user,
-        
+
         rdf_type_uri=ORGANIZATION_TYPE_URI,
-        rdf_type_name=ORGANIZATION_TYPE_NAME, 
+        rdf_type_name=ORGANIZATION_TYPE_NAME,
         kls=Organization
         )
-        
+
 
 
 @router.get(
@@ -99,20 +99,20 @@ async def organizations_id_delete(
 )
 @cache(namespace="Organization", expire=1800)
 async def organizations_id_get(
-    id: str = Path(None, description="The ID of the Organization to be retrieved"),
+    id: str = Path( description="The ID of the Organization to be retrieved"),
     username: str = Query(None, description="Name of the user graph to query"),
 ) -> Organization:
     """Gets the details of a given Organization (more information in https://w3id.org/okn/o/sd#Organization)"""
-    
+
     return query_manager.get_resource(
         id=id,
         username=username,
-        
+
         rdf_type_uri=ORGANIZATION_TYPE_URI,
-        rdf_type_name=ORGANIZATION_TYPE_NAME, 
+        rdf_type_name=ORGANIZATION_TYPE_NAME,
         kls=Organization
         )
-        
+
 
 
 @router.put(
@@ -126,7 +126,7 @@ async def organizations_id_get(
     response_model_by_alias=True,
 )
 async def organizations_id_put(
-    id: str = Path(None, description="The ID of the Organization to be retrieved"),
+    id: str = Path( description="The ID of the Organization to be retrieved"),
     user: str = Query(None, description="Username"),
     organization: Organization = Body(None, description="An old Organizationto be updated"),
     token_BearerAuth: TokenModel = Security(
@@ -134,17 +134,17 @@ async def organizations_id_put(
     ),
 ) -> Organization:
     """Updates an existing Organization (more information in https://w3id.org/okn/o/sd#Organization)"""
-    
+
     await FastAPICache.clear(namespace="Organization")
     return query_manager.put_resource(
         id=id,
         user=user,
         body=organization,
         rdf_type_uri=ORGANIZATION_TYPE_URI,
-        rdf_type_name=ORGANIZATION_TYPE_NAME, 
+        rdf_type_name=ORGANIZATION_TYPE_NAME,
         kls=Organization
         )
-        
+
 
 
 @router.post(
@@ -164,14 +164,14 @@ async def organizations_post(
     ),
 ) -> Organization:
     """Create a new instance of Organization (more information in https://w3id.org/okn/o/sd#Organization)"""
-    
+
     await FastAPICache.clear(namespace="Organization")
     return query_manager.post_resource(
-        
+
         user=user,
         body=organization,
         rdf_type_uri=ORGANIZATION_TYPE_URI,
-        rdf_type_name=ORGANIZATION_TYPE_NAME, 
+        rdf_type_name=ORGANIZATION_TYPE_NAME,
         kls=Organization
         )
-        
+

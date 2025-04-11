@@ -45,16 +45,16 @@ async def regions_get(
     per_page: int = Query(100, description="Items per page", ge=1, le=200),
 ) -> List[Region]:
     """Gets a list of all instances of Region (more information in https://w3id.org/okn/o/sdm#Region)"""
-    
+
     return query_manager.get_resource(
-        
+
         username=username,label=label,page=page,per_page=per_page,
-        
+
         rdf_type_uri=REGION_TYPE_URI,
-        rdf_type_name=REGION_TYPE_NAME, 
+        rdf_type_name=REGION_TYPE_NAME,
         kls=Region
         )
-        
+
 
 
 @router.delete(
@@ -68,24 +68,24 @@ async def regions_get(
     response_model_by_alias=True,
 )
 async def regions_id_delete(
-    id: str = Path(None, description="The ID of the Region to be retrieved"),
+    id: str = Path( description="The ID of the Region to be retrieved"),
     user: str = Query(None, description="Username"),
     token_BearerAuth: TokenModel = Security(
         get_token_BearerAuth
     ),
 ) -> None:
     """Delete an existing Region (more information in https://w3id.org/okn/o/sdm#Region)"""
-    
+
     await FastAPICache.clear(namespace="Region")
     return query_manager.delete_resource(
         id=id,
         user=user,
-        
+
         rdf_type_uri=REGION_TYPE_URI,
-        rdf_type_name=REGION_TYPE_NAME, 
+        rdf_type_name=REGION_TYPE_NAME,
         kls=Region
         )
-        
+
 
 
 @router.get(
@@ -99,20 +99,20 @@ async def regions_id_delete(
 )
 @cache(namespace="Region", expire=1800)
 async def regions_id_get(
-    id: str = Path(None, description="The ID of the Region to be retrieved"),
+    id: str = Path( description="The ID of the Region to be retrieved"),
     username: str = Query(None, description="Name of the user graph to query"),
 ) -> Region:
     """Gets the details of a given Region (more information in https://w3id.org/okn/o/sdm#Region)"""
-    
+
     return query_manager.get_resource(
         id=id,
         username=username,
-        
+
         rdf_type_uri=REGION_TYPE_URI,
-        rdf_type_name=REGION_TYPE_NAME, 
+        rdf_type_name=REGION_TYPE_NAME,
         kls=Region
         )
-        
+
 
 
 @router.put(
@@ -126,7 +126,7 @@ async def regions_id_get(
     response_model_by_alias=True,
 )
 async def regions_id_put(
-    id: str = Path(None, description="The ID of the Region to be retrieved"),
+    id: str = Path( description="The ID of the Region to be retrieved"),
     user: str = Query(None, description="Username"),
     region: Region = Body(None, description="An old Regionto be updated"),
     token_BearerAuth: TokenModel = Security(
@@ -134,17 +134,17 @@ async def regions_id_put(
     ),
 ) -> Region:
     """Updates an existing Region (more information in https://w3id.org/okn/o/sdm#Region)"""
-    
+
     await FastAPICache.clear(namespace="Region")
     return query_manager.put_resource(
         id=id,
         user=user,
         body=region,
         rdf_type_uri=REGION_TYPE_URI,
-        rdf_type_name=REGION_TYPE_NAME, 
+        rdf_type_name=REGION_TYPE_NAME,
         kls=Region
         )
-        
+
 
 
 @router.post(
@@ -164,14 +164,14 @@ async def regions_post(
     ),
 ) -> Region:
     """Create a new instance of Region (more information in https://w3id.org/okn/o/sdm#Region)"""
-    
+
     await FastAPICache.clear(namespace="Region")
     return query_manager.post_resource(
-        
+
         user=user,
         body=region,
         rdf_type_uri=REGION_TYPE_URI,
-        rdf_type_name=REGION_TYPE_NAME, 
+        rdf_type_name=REGION_TYPE_NAME,
         kls=Region
         )
-        
+

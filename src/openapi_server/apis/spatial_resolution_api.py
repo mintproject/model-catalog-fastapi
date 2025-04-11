@@ -45,16 +45,16 @@ async def spatialresolutions_get(
     per_page: int = Query(100, description="Items per page", ge=1, le=200),
 ) -> List[SpatialResolution]:
     """Gets a list of all instances of SpatialResolution (more information in https://w3id.org/okn/o/sdm#SpatialResolution)"""
-    
+
     return query_manager.get_resource(
-        
+
         username=username,label=label,page=page,per_page=per_page,
-        
+
         rdf_type_uri=SPATIALRESOLUTION_TYPE_URI,
-        rdf_type_name=SPATIALRESOLUTION_TYPE_NAME, 
+        rdf_type_name=SPATIALRESOLUTION_TYPE_NAME,
         kls=SpatialResolution
         )
-        
+
 
 
 @router.delete(
@@ -68,24 +68,24 @@ async def spatialresolutions_get(
     response_model_by_alias=True,
 )
 async def spatialresolutions_id_delete(
-    id: str = Path(None, description="The ID of the SpatialResolution to be retrieved"),
+    id: str = Path( description="The ID of the SpatialResolution to be retrieved"),
     user: str = Query(None, description="Username"),
     token_BearerAuth: TokenModel = Security(
         get_token_BearerAuth
     ),
 ) -> None:
     """Delete an existing SpatialResolution (more information in https://w3id.org/okn/o/sdm#SpatialResolution)"""
-    
+
     await FastAPICache.clear(namespace="SpatialResolution")
     return query_manager.delete_resource(
         id=id,
         user=user,
-        
+
         rdf_type_uri=SPATIALRESOLUTION_TYPE_URI,
-        rdf_type_name=SPATIALRESOLUTION_TYPE_NAME, 
+        rdf_type_name=SPATIALRESOLUTION_TYPE_NAME,
         kls=SpatialResolution
         )
-        
+
 
 
 @router.get(
@@ -99,20 +99,20 @@ async def spatialresolutions_id_delete(
 )
 @cache(namespace="SpatialResolution", expire=1800)
 async def spatialresolutions_id_get(
-    id: str = Path(None, description="The ID of the SpatialResolution to be retrieved"),
+    id: str = Path( description="The ID of the SpatialResolution to be retrieved"),
     username: str = Query(None, description="Name of the user graph to query"),
 ) -> SpatialResolution:
     """Gets the details of a given SpatialResolution (more information in https://w3id.org/okn/o/sdm#SpatialResolution)"""
-    
+
     return query_manager.get_resource(
         id=id,
         username=username,
-        
+
         rdf_type_uri=SPATIALRESOLUTION_TYPE_URI,
-        rdf_type_name=SPATIALRESOLUTION_TYPE_NAME, 
+        rdf_type_name=SPATIALRESOLUTION_TYPE_NAME,
         kls=SpatialResolution
         )
-        
+
 
 
 @router.put(
@@ -126,7 +126,7 @@ async def spatialresolutions_id_get(
     response_model_by_alias=True,
 )
 async def spatialresolutions_id_put(
-    id: str = Path(None, description="The ID of the SpatialResolution to be retrieved"),
+    id: str = Path( description="The ID of the SpatialResolution to be retrieved"),
     user: str = Query(None, description="Username"),
     spatial_resolution: SpatialResolution = Body(None, description="An old SpatialResolutionto be updated"),
     token_BearerAuth: TokenModel = Security(
@@ -134,17 +134,17 @@ async def spatialresolutions_id_put(
     ),
 ) -> SpatialResolution:
     """Updates an existing SpatialResolution (more information in https://w3id.org/okn/o/sdm#SpatialResolution)"""
-    
+
     await FastAPICache.clear(namespace="SpatialResolution")
     return query_manager.put_resource(
         id=id,
         user=user,
         body=spatial_resolution,
         rdf_type_uri=SPATIALRESOLUTION_TYPE_URI,
-        rdf_type_name=SPATIALRESOLUTION_TYPE_NAME, 
+        rdf_type_name=SPATIALRESOLUTION_TYPE_NAME,
         kls=SpatialResolution
         )
-        
+
 
 
 @router.post(
@@ -164,14 +164,14 @@ async def spatialresolutions_post(
     ),
 ) -> SpatialResolution:
     """Create a new instance of SpatialResolution (more information in https://w3id.org/okn/o/sdm#SpatialResolution)"""
-    
+
     await FastAPICache.clear(namespace="SpatialResolution")
     return query_manager.post_resource(
-        
+
         user=user,
         body=spatial_resolution,
         rdf_type_uri=SPATIALRESOLUTION_TYPE_URI,
-        rdf_type_name=SPATIALRESOLUTION_TYPE_NAME, 
+        rdf_type_name=SPATIALRESOLUTION_TYPE_NAME,
         kls=SpatialResolution
         )
-        
+

@@ -45,16 +45,16 @@ async def sampleexecutions_get(
     per_page: int = Query(100, description="Items per page", ge=1, le=200),
 ) -> List[SampleExecution]:
     """Gets a list of all instances of SampleExecution (more information in https://w3id.org/okn/o/sd#SampleExecution)"""
-    
+
     return query_manager.get_resource(
-        
+
         username=username,label=label,page=page,per_page=per_page,
-        
+
         rdf_type_uri=SAMPLEEXECUTION_TYPE_URI,
-        rdf_type_name=SAMPLEEXECUTION_TYPE_NAME, 
+        rdf_type_name=SAMPLEEXECUTION_TYPE_NAME,
         kls=SampleExecution
         )
-        
+
 
 
 @router.delete(
@@ -68,24 +68,24 @@ async def sampleexecutions_get(
     response_model_by_alias=True,
 )
 async def sampleexecutions_id_delete(
-    id: str = Path(None, description="The ID of the SampleExecution to be retrieved"),
+    id: str = Path( description="The ID of the SampleExecution to be retrieved"),
     user: str = Query(None, description="Username"),
     token_BearerAuth: TokenModel = Security(
         get_token_BearerAuth
     ),
 ) -> None:
     """Delete an existing SampleExecution (more information in https://w3id.org/okn/o/sd#SampleExecution)"""
-    
+
     await FastAPICache.clear(namespace="SampleExecution")
     return query_manager.delete_resource(
         id=id,
         user=user,
-        
+
         rdf_type_uri=SAMPLEEXECUTION_TYPE_URI,
-        rdf_type_name=SAMPLEEXECUTION_TYPE_NAME, 
+        rdf_type_name=SAMPLEEXECUTION_TYPE_NAME,
         kls=SampleExecution
         )
-        
+
 
 
 @router.get(
@@ -99,20 +99,20 @@ async def sampleexecutions_id_delete(
 )
 @cache(namespace="SampleExecution", expire=1800)
 async def sampleexecutions_id_get(
-    id: str = Path(None, description="The ID of the SampleExecution to be retrieved"),
+    id: str = Path( description="The ID of the SampleExecution to be retrieved"),
     username: str = Query(None, description="Name of the user graph to query"),
 ) -> SampleExecution:
     """Gets the details of a given SampleExecution (more information in https://w3id.org/okn/o/sd#SampleExecution)"""
-    
+
     return query_manager.get_resource(
         id=id,
         username=username,
-        
+
         rdf_type_uri=SAMPLEEXECUTION_TYPE_URI,
-        rdf_type_name=SAMPLEEXECUTION_TYPE_NAME, 
+        rdf_type_name=SAMPLEEXECUTION_TYPE_NAME,
         kls=SampleExecution
         )
-        
+
 
 
 @router.put(
@@ -126,7 +126,7 @@ async def sampleexecutions_id_get(
     response_model_by_alias=True,
 )
 async def sampleexecutions_id_put(
-    id: str = Path(None, description="The ID of the SampleExecution to be retrieved"),
+    id: str = Path( description="The ID of the SampleExecution to be retrieved"),
     user: str = Query(None, description="Username"),
     sample_execution: SampleExecution = Body(None, description="An old SampleExecutionto be updated"),
     token_BearerAuth: TokenModel = Security(
@@ -134,17 +134,17 @@ async def sampleexecutions_id_put(
     ),
 ) -> SampleExecution:
     """Updates an existing SampleExecution (more information in https://w3id.org/okn/o/sd#SampleExecution)"""
-    
+
     await FastAPICache.clear(namespace="SampleExecution")
     return query_manager.put_resource(
         id=id,
         user=user,
         body=sample_execution,
         rdf_type_uri=SAMPLEEXECUTION_TYPE_URI,
-        rdf_type_name=SAMPLEEXECUTION_TYPE_NAME, 
+        rdf_type_name=SAMPLEEXECUTION_TYPE_NAME,
         kls=SampleExecution
         )
-        
+
 
 
 @router.post(
@@ -164,14 +164,14 @@ async def sampleexecutions_post(
     ),
 ) -> SampleExecution:
     """Create a new instance of SampleExecution (more information in https://w3id.org/okn/o/sd#SampleExecution)"""
-    
+
     await FastAPICache.clear(namespace="SampleExecution")
     return query_manager.post_resource(
-        
+
         user=user,
         body=sample_execution,
         rdf_type_uri=SAMPLEEXECUTION_TYPE_URI,
-        rdf_type_name=SAMPLEEXECUTION_TYPE_NAME, 
+        rdf_type_name=SAMPLEEXECUTION_TYPE_NAME,
         kls=SampleExecution
         )
-        
+

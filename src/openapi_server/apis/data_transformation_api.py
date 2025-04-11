@@ -39,21 +39,21 @@ router = APIRouter()
 )
 @cache(namespace="DataTransformation", expire=1800)
 async def custom_datasetspecifications_id_datatransformations_get(
-    id: str = Path(None, description="The ID of the dataspecification"),
+    id: str = Path( description="The ID of the dataspecification"),
     custom_query_name: str = Query("custom_datatransformations", description="Name of the custom query"),
     username: str = Query(None, description="Username to query"),
 ) -> List[DataTransformation]:
     """Gets a list of data transformations related a dataset"""
-    
+
     return query_manager.get_resource(
         id=id,
         custom_query_name=custom_query_name,username=username,
-        
+
         rdf_type_uri=DATATRANSFORMATION_TYPE_URI,
-        rdf_type_name=DATATRANSFORMATION_TYPE_NAME, 
+        rdf_type_name=DATATRANSFORMATION_TYPE_NAME,
         kls=DataTransformation
         )
-        
+
 
 
 @router.get(
@@ -73,16 +73,16 @@ async def datatransformations_get(
     per_page: int = Query(100, description="Items per page", ge=1, le=200),
 ) -> List[DataTransformation]:
     """Gets a list of all instances of DataTransformation (more information in https://w3id.org/okn/o/sd#DataTransformation)"""
-    
+
     return query_manager.get_resource(
-        
+
         username=username,label=label,page=page,per_page=per_page,
-        
+
         rdf_type_uri=DATATRANSFORMATION_TYPE_URI,
-        rdf_type_name=DATATRANSFORMATION_TYPE_NAME, 
+        rdf_type_name=DATATRANSFORMATION_TYPE_NAME,
         kls=DataTransformation
         )
-        
+
 
 
 @router.delete(
@@ -96,24 +96,24 @@ async def datatransformations_get(
     response_model_by_alias=True,
 )
 async def datatransformations_id_delete(
-    id: str = Path(None, description="The ID of the DataTransformation to be retrieved"),
+    id: str = Path( description="The ID of the DataTransformation to be retrieved"),
     user: str = Query(None, description="Username"),
     token_BearerAuth: TokenModel = Security(
         get_token_BearerAuth
     ),
 ) -> None:
     """Delete an existing DataTransformation (more information in https://w3id.org/okn/o/sd#DataTransformation)"""
-    
+
     await FastAPICache.clear(namespace="DataTransformation")
     return query_manager.delete_resource(
         id=id,
         user=user,
-        
+
         rdf_type_uri=DATATRANSFORMATION_TYPE_URI,
-        rdf_type_name=DATATRANSFORMATION_TYPE_NAME, 
+        rdf_type_name=DATATRANSFORMATION_TYPE_NAME,
         kls=DataTransformation
         )
-        
+
 
 
 @router.get(
@@ -127,20 +127,20 @@ async def datatransformations_id_delete(
 )
 @cache(namespace="DataTransformation", expire=1800)
 async def datatransformations_id_get(
-    id: str = Path(None, description="The ID of the DataTransformation to be retrieved"),
+    id: str = Path( description="The ID of the DataTransformation to be retrieved"),
     username: str = Query(None, description="Name of the user graph to query"),
 ) -> DataTransformation:
     """Gets the details of a given DataTransformation (more information in https://w3id.org/okn/o/sd#DataTransformation)"""
-    
+
     return query_manager.get_resource(
         id=id,
         username=username,
-        
+
         rdf_type_uri=DATATRANSFORMATION_TYPE_URI,
-        rdf_type_name=DATATRANSFORMATION_TYPE_NAME, 
+        rdf_type_name=DATATRANSFORMATION_TYPE_NAME,
         kls=DataTransformation
         )
-        
+
 
 
 @router.put(
@@ -154,7 +154,7 @@ async def datatransformations_id_get(
     response_model_by_alias=True,
 )
 async def datatransformations_id_put(
-    id: str = Path(None, description="The ID of the DataTransformation to be retrieved"),
+    id: str = Path( description="The ID of the DataTransformation to be retrieved"),
     user: str = Query(None, description="Username"),
     data_transformation: DataTransformation = Body(None, description="An old DataTransformationto be updated"),
     token_BearerAuth: TokenModel = Security(
@@ -162,17 +162,17 @@ async def datatransformations_id_put(
     ),
 ) -> DataTransformation:
     """Updates an existing DataTransformation (more information in https://w3id.org/okn/o/sd#DataTransformation)"""
-    
+
     await FastAPICache.clear(namespace="DataTransformation")
     return query_manager.put_resource(
         id=id,
         user=user,
         body=data_transformation,
         rdf_type_uri=DATATRANSFORMATION_TYPE_URI,
-        rdf_type_name=DATATRANSFORMATION_TYPE_NAME, 
+        rdf_type_name=DATATRANSFORMATION_TYPE_NAME,
         kls=DataTransformation
         )
-        
+
 
 
 @router.post(
@@ -192,14 +192,14 @@ async def datatransformations_post(
     ),
 ) -> DataTransformation:
     """Create a new instance of DataTransformation (more information in https://w3id.org/okn/o/sd#DataTransformation)"""
-    
+
     await FastAPICache.clear(namespace="DataTransformation")
     return query_manager.post_resource(
-        
+
         user=user,
         body=data_transformation,
         rdf_type_uri=DATATRANSFORMATION_TYPE_URI,
-        rdf_type_name=DATATRANSFORMATION_TYPE_NAME, 
+        rdf_type_name=DATATRANSFORMATION_TYPE_NAME,
         kls=DataTransformation
         )
-        
+

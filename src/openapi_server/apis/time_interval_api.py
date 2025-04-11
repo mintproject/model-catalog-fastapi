@@ -45,16 +45,16 @@ async def timeintervals_get(
     per_page: int = Query(100, description="Items per page", ge=1, le=200),
 ) -> List[TimeInterval]:
     """Gets a list of all instances of TimeInterval (more information in https://w3id.org/okn/o/sdm#TimeInterval)"""
-    
+
     return query_manager.get_resource(
-        
+
         username=username,label=label,page=page,per_page=per_page,
-        
+
         rdf_type_uri=TIMEINTERVAL_TYPE_URI,
-        rdf_type_name=TIMEINTERVAL_TYPE_NAME, 
+        rdf_type_name=TIMEINTERVAL_TYPE_NAME,
         kls=TimeInterval
         )
-        
+
 
 
 @router.delete(
@@ -68,24 +68,24 @@ async def timeintervals_get(
     response_model_by_alias=True,
 )
 async def timeintervals_id_delete(
-    id: str = Path(None, description="The ID of the TimeInterval to be retrieved"),
+    id: str = Path( description="The ID of the TimeInterval to be retrieved"),
     user: str = Query(None, description="Username"),
     token_BearerAuth: TokenModel = Security(
         get_token_BearerAuth
     ),
 ) -> None:
     """Delete an existing TimeInterval (more information in https://w3id.org/okn/o/sdm#TimeInterval)"""
-    
+
     await FastAPICache.clear(namespace="TimeInterval")
     return query_manager.delete_resource(
         id=id,
         user=user,
-        
+
         rdf_type_uri=TIMEINTERVAL_TYPE_URI,
-        rdf_type_name=TIMEINTERVAL_TYPE_NAME, 
+        rdf_type_name=TIMEINTERVAL_TYPE_NAME,
         kls=TimeInterval
         )
-        
+
 
 
 @router.get(
@@ -99,20 +99,20 @@ async def timeintervals_id_delete(
 )
 @cache(namespace="TimeInterval", expire=1800)
 async def timeintervals_id_get(
-    id: str = Path(None, description="The ID of the TimeInterval to be retrieved"),
+    id: str = Path( description="The ID of the TimeInterval to be retrieved"),
     username: str = Query(None, description="Name of the user graph to query"),
 ) -> TimeInterval:
     """Gets the details of a given TimeInterval (more information in https://w3id.org/okn/o/sdm#TimeInterval)"""
-    
+
     return query_manager.get_resource(
         id=id,
         username=username,
-        
+
         rdf_type_uri=TIMEINTERVAL_TYPE_URI,
-        rdf_type_name=TIMEINTERVAL_TYPE_NAME, 
+        rdf_type_name=TIMEINTERVAL_TYPE_NAME,
         kls=TimeInterval
         )
-        
+
 
 
 @router.put(
@@ -126,7 +126,7 @@ async def timeintervals_id_get(
     response_model_by_alias=True,
 )
 async def timeintervals_id_put(
-    id: str = Path(None, description="The ID of the TimeInterval to be retrieved"),
+    id: str = Path( description="The ID of the TimeInterval to be retrieved"),
     user: str = Query(None, description="Username"),
     time_interval: TimeInterval = Body(None, description="An old TimeIntervalto be updated"),
     token_BearerAuth: TokenModel = Security(
@@ -134,17 +134,17 @@ async def timeintervals_id_put(
     ),
 ) -> TimeInterval:
     """Updates an existing TimeInterval (more information in https://w3id.org/okn/o/sdm#TimeInterval)"""
-    
+
     await FastAPICache.clear(namespace="TimeInterval")
     return query_manager.put_resource(
         id=id,
         user=user,
         body=time_interval,
         rdf_type_uri=TIMEINTERVAL_TYPE_URI,
-        rdf_type_name=TIMEINTERVAL_TYPE_NAME, 
+        rdf_type_name=TIMEINTERVAL_TYPE_NAME,
         kls=TimeInterval
         )
-        
+
 
 
 @router.post(
@@ -164,14 +164,14 @@ async def timeintervals_post(
     ),
 ) -> TimeInterval:
     """Create a new instance of TimeInterval (more information in https://w3id.org/okn/o/sdm#TimeInterval)"""
-    
+
     await FastAPICache.clear(namespace="TimeInterval")
     return query_manager.post_resource(
-        
+
         user=user,
         body=time_interval,
         rdf_type_uri=TIMEINTERVAL_TYPE_URI,
-        rdf_type_name=TIMEINTERVAL_TYPE_NAME, 
+        rdf_type_name=TIMEINTERVAL_TYPE_NAME,
         kls=TimeInterval
         )
-        
+

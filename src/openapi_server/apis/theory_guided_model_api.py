@@ -45,16 +45,16 @@ async def theory_guidedmodels_get(
     per_page: int = Query(100, description="Items per page", ge=1, le=200),
 ) -> List[TheoryGuidedModel]:
     """Gets a list of all instances of Theory-GuidedModel (more information in https://w3id.org/okn/o/sdm#Theory-GuidedModel)"""
-    
+
     return query_manager.get_resource(
-        
+
         username=username,label=label,page=page,per_page=per_page,
-        
+
         rdf_type_uri=THEORY_GUIDEDMODEL_TYPE_URI,
-        rdf_type_name=THEORY_GUIDEDMODEL_TYPE_NAME, 
+        rdf_type_name=THEORY_GUIDEDMODEL_TYPE_NAME,
         kls=TheoryGuidedModel
         )
-        
+
 
 
 @router.delete(
@@ -68,24 +68,24 @@ async def theory_guidedmodels_get(
     response_model_by_alias=True,
 )
 async def theory_guidedmodels_id_delete(
-    id: str = Path(None, description="The ID of the Theory-GuidedModel to be retrieved"),
+    id: str = Path( description="The ID of the Theory-GuidedModel to be retrieved"),
     user: str = Query(None, description="Username"),
     token_BearerAuth: TokenModel = Security(
         get_token_BearerAuth
     ),
 ) -> None:
     """Delete an existing Theory-GuidedModel (more information in https://w3id.org/okn/o/sdm#Theory-GuidedModel)"""
-    
+
     await FastAPICache.clear(namespace="Theory_GuidedModel")
     return query_manager.delete_resource(
         id=id,
         user=user,
-        
+
         rdf_type_uri=THEORY_GUIDEDMODEL_TYPE_URI,
-        rdf_type_name=THEORY_GUIDEDMODEL_TYPE_NAME, 
+        rdf_type_name=THEORY_GUIDEDMODEL_TYPE_NAME,
         kls=TheoryGuidedModel
         )
-        
+
 
 
 @router.get(
@@ -99,20 +99,20 @@ async def theory_guidedmodels_id_delete(
 )
 @cache(namespace="Theory_GuidedModel", expire=1800)
 async def theory_guidedmodels_id_get(
-    id: str = Path(None, description="The ID of the Theory-GuidedModel to be retrieved"),
+    id: str = Path( description="The ID of the Theory-GuidedModel to be retrieved"),
     username: str = Query(None, description="Name of the user graph to query"),
 ) -> TheoryGuidedModel:
     """Gets the details of a given Theory-GuidedModel (more information in https://w3id.org/okn/o/sdm#Theory-GuidedModel)"""
-    
+
     return query_manager.get_resource(
         id=id,
         username=username,
-        
+
         rdf_type_uri=THEORY_GUIDEDMODEL_TYPE_URI,
-        rdf_type_name=THEORY_GUIDEDMODEL_TYPE_NAME, 
+        rdf_type_name=THEORY_GUIDEDMODEL_TYPE_NAME,
         kls=TheoryGuidedModel
         )
-        
+
 
 
 @router.put(
@@ -126,7 +126,7 @@ async def theory_guidedmodels_id_get(
     response_model_by_alias=True,
 )
 async def theory_guidedmodels_id_put(
-    id: str = Path(None, description="The ID of the Theory-GuidedModel to be retrieved"),
+    id: str = Path( description="The ID of the Theory-GuidedModel to be retrieved"),
     user: str = Query(None, description="Username"),
     theory_guided_model: TheoryGuidedModel = Body(None, description="An old Theory-GuidedModelto be updated"),
     token_BearerAuth: TokenModel = Security(
@@ -134,17 +134,17 @@ async def theory_guidedmodels_id_put(
     ),
 ) -> TheoryGuidedModel:
     """Updates an existing Theory-GuidedModel (more information in https://w3id.org/okn/o/sdm#Theory-GuidedModel)"""
-    
+
     await FastAPICache.clear(namespace="Theory_GuidedModel")
     return query_manager.put_resource(
         id=id,
         user=user,
         body=theory_guided_model,
         rdf_type_uri=THEORY_GUIDEDMODEL_TYPE_URI,
-        rdf_type_name=THEORY_GUIDEDMODEL_TYPE_NAME, 
+        rdf_type_name=THEORY_GUIDEDMODEL_TYPE_NAME,
         kls=TheoryGuidedModel
         )
-        
+
 
 
 @router.post(
@@ -164,14 +164,14 @@ async def theory_guidedmodels_post(
     ),
 ) -> TheoryGuidedModel:
     """Create a new instance of Theory-GuidedModel (more information in https://w3id.org/okn/o/sdm#Theory-GuidedModel)"""
-    
+
     await FastAPICache.clear(namespace="Theory_GuidedModel")
     return query_manager.post_resource(
-        
+
         user=user,
         body=theory_guided_model,
         rdf_type_uri=THEORY_GUIDEDMODEL_TYPE_URI,
-        rdf_type_name=THEORY_GUIDEDMODEL_TYPE_NAME, 
+        rdf_type_name=THEORY_GUIDEDMODEL_TYPE_NAME,
         kls=TheoryGuidedModel
         )
-        
+

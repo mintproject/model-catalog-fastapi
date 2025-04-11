@@ -45,16 +45,16 @@ async def softwareconfigurations_get(
     per_page: int = Query(100, description="Items per page", ge=1, le=200),
 ) -> List[SoftwareConfiguration]:
     """Gets a list of all instances of SoftwareConfiguration (more information in https://w3id.org/okn/o/sd#SoftwareConfiguration)"""
-    
+
     return query_manager.get_resource(
-        
+
         username=username,label=label,page=page,per_page=per_page,
-        
+
         rdf_type_uri=SOFTWARECONFIGURATION_TYPE_URI,
-        rdf_type_name=SOFTWARECONFIGURATION_TYPE_NAME, 
+        rdf_type_name=SOFTWARECONFIGURATION_TYPE_NAME,
         kls=SoftwareConfiguration
         )
-        
+
 
 
 @router.delete(
@@ -68,24 +68,24 @@ async def softwareconfigurations_get(
     response_model_by_alias=True,
 )
 async def softwareconfigurations_id_delete(
-    id: str = Path(None, description="The ID of the SoftwareConfiguration to be retrieved"),
+    id: str = Path( description="The ID of the SoftwareConfiguration to be retrieved"),
     user: str = Query(None, description="Username"),
     token_BearerAuth: TokenModel = Security(
         get_token_BearerAuth
     ),
 ) -> None:
     """Delete an existing SoftwareConfiguration (more information in https://w3id.org/okn/o/sd#SoftwareConfiguration)"""
-    
+
     await FastAPICache.clear(namespace="SoftwareConfiguration")
     return query_manager.delete_resource(
         id=id,
         user=user,
-        
+
         rdf_type_uri=SOFTWARECONFIGURATION_TYPE_URI,
-        rdf_type_name=SOFTWARECONFIGURATION_TYPE_NAME, 
+        rdf_type_name=SOFTWARECONFIGURATION_TYPE_NAME,
         kls=SoftwareConfiguration
         )
-        
+
 
 
 @router.get(
@@ -99,20 +99,20 @@ async def softwareconfigurations_id_delete(
 )
 @cache(namespace="SoftwareConfiguration", expire=1800)
 async def softwareconfigurations_id_get(
-    id: str = Path(None, description="The ID of the SoftwareConfiguration to be retrieved"),
+    id: str = Path( description="The ID of the SoftwareConfiguration to be retrieved"),
     username: str = Query(None, description="Name of the user graph to query"),
 ) -> SoftwareConfiguration:
     """Gets the details of a given SoftwareConfiguration (more information in https://w3id.org/okn/o/sd#SoftwareConfiguration)"""
-    
+
     return query_manager.get_resource(
         id=id,
         username=username,
-        
+
         rdf_type_uri=SOFTWARECONFIGURATION_TYPE_URI,
-        rdf_type_name=SOFTWARECONFIGURATION_TYPE_NAME, 
+        rdf_type_name=SOFTWARECONFIGURATION_TYPE_NAME,
         kls=SoftwareConfiguration
         )
-        
+
 
 
 @router.put(
@@ -126,7 +126,7 @@ async def softwareconfigurations_id_get(
     response_model_by_alias=True,
 )
 async def softwareconfigurations_id_put(
-    id: str = Path(None, description="The ID of the SoftwareConfiguration to be retrieved"),
+    id: str = Path( description="The ID of the SoftwareConfiguration to be retrieved"),
     user: str = Query(None, description="Username"),
     software_configuration: SoftwareConfiguration = Body(None, description="An old SoftwareConfigurationto be updated"),
     token_BearerAuth: TokenModel = Security(
@@ -134,17 +134,17 @@ async def softwareconfigurations_id_put(
     ),
 ) -> SoftwareConfiguration:
     """Updates an existing SoftwareConfiguration (more information in https://w3id.org/okn/o/sd#SoftwareConfiguration)"""
-    
+
     await FastAPICache.clear(namespace="SoftwareConfiguration")
     return query_manager.put_resource(
         id=id,
         user=user,
         body=software_configuration,
         rdf_type_uri=SOFTWARECONFIGURATION_TYPE_URI,
-        rdf_type_name=SOFTWARECONFIGURATION_TYPE_NAME, 
+        rdf_type_name=SOFTWARECONFIGURATION_TYPE_NAME,
         kls=SoftwareConfiguration
         )
-        
+
 
 
 @router.post(
@@ -164,14 +164,14 @@ async def softwareconfigurations_post(
     ),
 ) -> SoftwareConfiguration:
     """Create a new instance of SoftwareConfiguration (more information in https://w3id.org/okn/o/sd#SoftwareConfiguration)"""
-    
+
     await FastAPICache.clear(namespace="SoftwareConfiguration")
     return query_manager.post_resource(
-        
+
         user=user,
         body=software_configuration,
         rdf_type_uri=SOFTWARECONFIGURATION_TYPE_URI,
-        rdf_type_name=SOFTWARECONFIGURATION_TYPE_NAME, 
+        rdf_type_name=SOFTWARECONFIGURATION_TYPE_NAME,
         kls=SoftwareConfiguration
         )
-        
+

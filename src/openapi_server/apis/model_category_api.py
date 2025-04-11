@@ -45,16 +45,16 @@ async def modelcategorys_get(
     per_page: int = Query(100, description="Items per page", ge=1, le=200),
 ) -> List[ModelCategory]:
     """Gets a list of all instances of ModelCategory (more information in https://w3id.org/okn/o/sdm#ModelCategory)"""
-    
+
     return query_manager.get_resource(
-        
+
         username=username,label=label,page=page,per_page=per_page,
-        
+
         rdf_type_uri=MODELCATEGORY_TYPE_URI,
-        rdf_type_name=MODELCATEGORY_TYPE_NAME, 
+        rdf_type_name=MODELCATEGORY_TYPE_NAME,
         kls=ModelCategory
         )
-        
+
 
 
 @router.delete(
@@ -68,24 +68,24 @@ async def modelcategorys_get(
     response_model_by_alias=True,
 )
 async def modelcategorys_id_delete(
-    id: str = Path(None, description="The ID of the ModelCategory to be retrieved"),
+    id: str = Path( description="The ID of the ModelCategory to be retrieved"),
     user: str = Query(None, description="Username"),
     token_BearerAuth: TokenModel = Security(
         get_token_BearerAuth
     ),
 ) -> None:
     """Delete an existing ModelCategory (more information in https://w3id.org/okn/o/sdm#ModelCategory)"""
-    
+
     await FastAPICache.clear(namespace="ModelCategory")
     return query_manager.delete_resource(
         id=id,
         user=user,
-        
+
         rdf_type_uri=MODELCATEGORY_TYPE_URI,
-        rdf_type_name=MODELCATEGORY_TYPE_NAME, 
+        rdf_type_name=MODELCATEGORY_TYPE_NAME,
         kls=ModelCategory
         )
-        
+
 
 
 @router.get(
@@ -99,20 +99,20 @@ async def modelcategorys_id_delete(
 )
 @cache(namespace="ModelCategory", expire=1800)
 async def modelcategorys_id_get(
-    id: str = Path(None, description="The ID of the ModelCategory to be retrieved"),
+    id: str = Path( description="The ID of the ModelCategory to be retrieved"),
     username: str = Query(None, description="Name of the user graph to query"),
 ) -> ModelCategory:
     """Gets the details of a given ModelCategory (more information in https://w3id.org/okn/o/sdm#ModelCategory)"""
-    
+
     return query_manager.get_resource(
         id=id,
         username=username,
-        
+
         rdf_type_uri=MODELCATEGORY_TYPE_URI,
-        rdf_type_name=MODELCATEGORY_TYPE_NAME, 
+        rdf_type_name=MODELCATEGORY_TYPE_NAME,
         kls=ModelCategory
         )
-        
+
 
 
 @router.put(
@@ -126,7 +126,7 @@ async def modelcategorys_id_get(
     response_model_by_alias=True,
 )
 async def modelcategorys_id_put(
-    id: str = Path(None, description="The ID of the ModelCategory to be retrieved"),
+    id: str = Path( description="The ID of the ModelCategory to be retrieved"),
     user: str = Query(None, description="Username"),
     model_category: ModelCategory = Body(None, description="An old ModelCategoryto be updated"),
     token_BearerAuth: TokenModel = Security(
@@ -134,17 +134,17 @@ async def modelcategorys_id_put(
     ),
 ) -> ModelCategory:
     """Updates an existing ModelCategory (more information in https://w3id.org/okn/o/sdm#ModelCategory)"""
-    
+
     await FastAPICache.clear(namespace="ModelCategory")
     return query_manager.put_resource(
         id=id,
         user=user,
         body=model_category,
         rdf_type_uri=MODELCATEGORY_TYPE_URI,
-        rdf_type_name=MODELCATEGORY_TYPE_NAME, 
+        rdf_type_name=MODELCATEGORY_TYPE_NAME,
         kls=ModelCategory
         )
-        
+
 
 
 @router.post(
@@ -164,14 +164,14 @@ async def modelcategorys_post(
     ),
 ) -> ModelCategory:
     """Create a new instance of ModelCategory (more information in https://w3id.org/okn/o/sdm#ModelCategory)"""
-    
+
     await FastAPICache.clear(namespace="ModelCategory")
     return query_manager.post_resource(
-        
+
         user=user,
         body=model_category,
         rdf_type_uri=MODELCATEGORY_TYPE_URI,
-        rdf_type_name=MODELCATEGORY_TYPE_NAME, 
+        rdf_type_name=MODELCATEGORY_TYPE_NAME,
         kls=ModelCategory
         )
-        
+

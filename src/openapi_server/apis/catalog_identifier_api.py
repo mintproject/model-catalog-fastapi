@@ -45,16 +45,16 @@ async def catalogidentifiers_get(
     per_page: int = Query(100, description="Items per page", ge=1, le=200),
 ) -> List[CatalogIdentifier]:
     """Gets a list of all instances of CatalogIdentifier (more information in https://w3id.org/okn/o/sd#CatalogIdentifier)"""
-    
+
     return query_manager.get_resource(
-        
+
         username=username,label=label,page=page,per_page=per_page,
-        
+
         rdf_type_uri=CATALOGIDENTIFIER_TYPE_URI,
-        rdf_type_name=CATALOGIDENTIFIER_TYPE_NAME, 
+        rdf_type_name=CATALOGIDENTIFIER_TYPE_NAME,
         kls=CatalogIdentifier
         )
-        
+
 
 
 @router.delete(
@@ -68,24 +68,24 @@ async def catalogidentifiers_get(
     response_model_by_alias=True,
 )
 async def catalogidentifiers_id_delete(
-    id: str = Path(None, description="The ID of the CatalogIdentifier to be retrieved"),
+    id: str = Path(description="The ID of the CatalogIdentifier to be retrieved"),
     user: str = Query(None, description="Username"),
     token_BearerAuth: TokenModel = Security(
         get_token_BearerAuth
     ),
 ) -> None:
     """Delete an existing CatalogIdentifier (more information in https://w3id.org/okn/o/sd#CatalogIdentifier)"""
-    
+
     await FastAPICache.clear(namespace="CatalogIdentifier")
     return query_manager.delete_resource(
         id=id,
         user=user,
-        
+
         rdf_type_uri=CATALOGIDENTIFIER_TYPE_URI,
-        rdf_type_name=CATALOGIDENTIFIER_TYPE_NAME, 
+        rdf_type_name=CATALOGIDENTIFIER_TYPE_NAME,
         kls=CatalogIdentifier
         )
-        
+
 
 
 @router.get(
@@ -99,20 +99,20 @@ async def catalogidentifiers_id_delete(
 )
 @cache(namespace="CatalogIdentifier", expire=1800)
 async def catalogidentifiers_id_get(
-    id: str = Path(None, description="The ID of the CatalogIdentifier to be retrieved"),
+    id: str = Path( description="The ID of the CatalogIdentifier to be retrieved"),
     username: str = Query(None, description="Name of the user graph to query"),
 ) -> CatalogIdentifier:
     """Gets the details of a given CatalogIdentifier (more information in https://w3id.org/okn/o/sd#CatalogIdentifier)"""
-    
+
     return query_manager.get_resource(
         id=id,
         username=username,
-        
+
         rdf_type_uri=CATALOGIDENTIFIER_TYPE_URI,
-        rdf_type_name=CATALOGIDENTIFIER_TYPE_NAME, 
+        rdf_type_name=CATALOGIDENTIFIER_TYPE_NAME,
         kls=CatalogIdentifier
         )
-        
+
 
 
 @router.put(
@@ -126,7 +126,7 @@ async def catalogidentifiers_id_get(
     response_model_by_alias=True,
 )
 async def catalogidentifiers_id_put(
-    id: str = Path(None, description="The ID of the CatalogIdentifier to be retrieved"),
+    id: str = Path( description="The ID of the CatalogIdentifier to be retrieved"),
     user: str = Query(None, description="Username"),
     catalog_identifier: CatalogIdentifier = Body(None, description="An old CatalogIdentifierto be updated"),
     token_BearerAuth: TokenModel = Security(
@@ -134,17 +134,17 @@ async def catalogidentifiers_id_put(
     ),
 ) -> CatalogIdentifier:
     """Updates an existing CatalogIdentifier (more information in https://w3id.org/okn/o/sd#CatalogIdentifier)"""
-    
+
     await FastAPICache.clear(namespace="CatalogIdentifier")
     return query_manager.put_resource(
         id=id,
         user=user,
         body=catalog_identifier,
         rdf_type_uri=CATALOGIDENTIFIER_TYPE_URI,
-        rdf_type_name=CATALOGIDENTIFIER_TYPE_NAME, 
+        rdf_type_name=CATALOGIDENTIFIER_TYPE_NAME,
         kls=CatalogIdentifier
         )
-        
+
 
 
 @router.post(
@@ -164,14 +164,14 @@ async def catalogidentifiers_post(
     ),
 ) -> CatalogIdentifier:
     """Create a new instance of CatalogIdentifier (more information in https://w3id.org/okn/o/sd#CatalogIdentifier)"""
-    
+
     await FastAPICache.clear(namespace="CatalogIdentifier")
     return query_manager.post_resource(
-        
+
         user=user,
         body=catalog_identifier,
         rdf_type_uri=CATALOGIDENTIFIER_TYPE_URI,
-        rdf_type_name=CATALOGIDENTIFIER_TYPE_NAME, 
+        rdf_type_name=CATALOGIDENTIFIER_TYPE_NAME,
         kls=CatalogIdentifier
         )
-        
+

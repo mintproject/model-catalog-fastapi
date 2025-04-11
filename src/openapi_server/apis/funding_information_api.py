@@ -45,16 +45,16 @@ async def fundinginformations_get(
     per_page: int = Query(100, description="Items per page", ge=1, le=200),
 ) -> List[FundingInformation]:
     """Gets a list of all instances of FundingInformation (more information in https://w3id.org/okn/o/sd#FundingInformation)"""
-    
+
     return query_manager.get_resource(
-        
+
         username=username,label=label,page=page,per_page=per_page,
-        
+
         rdf_type_uri=FUNDINGINFORMATION_TYPE_URI,
-        rdf_type_name=FUNDINGINFORMATION_TYPE_NAME, 
+        rdf_type_name=FUNDINGINFORMATION_TYPE_NAME,
         kls=FundingInformation
         )
-        
+
 
 
 @router.delete(
@@ -68,24 +68,24 @@ async def fundinginformations_get(
     response_model_by_alias=True,
 )
 async def fundinginformations_id_delete(
-    id: str = Path(None, description="The ID of the FundingInformation to be retrieved"),
+    id: str = Path( description="The ID of the FundingInformation to be retrieved"),
     user: str = Query(None, description="Username"),
     token_BearerAuth: TokenModel = Security(
         get_token_BearerAuth
     ),
 ) -> None:
     """Delete an existing FundingInformation (more information in https://w3id.org/okn/o/sd#FundingInformation)"""
-    
+
     await FastAPICache.clear(namespace="FundingInformation")
     return query_manager.delete_resource(
         id=id,
         user=user,
-        
+
         rdf_type_uri=FUNDINGINFORMATION_TYPE_URI,
-        rdf_type_name=FUNDINGINFORMATION_TYPE_NAME, 
+        rdf_type_name=FUNDINGINFORMATION_TYPE_NAME,
         kls=FundingInformation
         )
-        
+
 
 
 @router.get(
@@ -99,20 +99,20 @@ async def fundinginformations_id_delete(
 )
 @cache(namespace="FundingInformation", expire=1800)
 async def fundinginformations_id_get(
-    id: str = Path(None, description="The ID of the FundingInformation to be retrieved"),
+    id: str = Path( description="The ID of the FundingInformation to be retrieved"),
     username: str = Query(None, description="Name of the user graph to query"),
 ) -> FundingInformation:
     """Gets the details of a given FundingInformation (more information in https://w3id.org/okn/o/sd#FundingInformation)"""
-    
+
     return query_manager.get_resource(
         id=id,
         username=username,
-        
+
         rdf_type_uri=FUNDINGINFORMATION_TYPE_URI,
-        rdf_type_name=FUNDINGINFORMATION_TYPE_NAME, 
+        rdf_type_name=FUNDINGINFORMATION_TYPE_NAME,
         kls=FundingInformation
         )
-        
+
 
 
 @router.put(
@@ -126,7 +126,7 @@ async def fundinginformations_id_get(
     response_model_by_alias=True,
 )
 async def fundinginformations_id_put(
-    id: str = Path(None, description="The ID of the FundingInformation to be retrieved"),
+    id: str = Path( description="The ID of the FundingInformation to be retrieved"),
     user: str = Query(None, description="Username"),
     funding_information: FundingInformation = Body(None, description="An old FundingInformationto be updated"),
     token_BearerAuth: TokenModel = Security(
@@ -134,17 +134,17 @@ async def fundinginformations_id_put(
     ),
 ) -> FundingInformation:
     """Updates an existing FundingInformation (more information in https://w3id.org/okn/o/sd#FundingInformation)"""
-    
+
     await FastAPICache.clear(namespace="FundingInformation")
     return query_manager.put_resource(
         id=id,
         user=user,
         body=funding_information,
         rdf_type_uri=FUNDINGINFORMATION_TYPE_URI,
-        rdf_type_name=FUNDINGINFORMATION_TYPE_NAME, 
+        rdf_type_name=FUNDINGINFORMATION_TYPE_NAME,
         kls=FundingInformation
         )
-        
+
 
 
 @router.post(
@@ -164,14 +164,14 @@ async def fundinginformations_post(
     ),
 ) -> FundingInformation:
     """Create a new instance of FundingInformation (more information in https://w3id.org/okn/o/sd#FundingInformation)"""
-    
+
     await FastAPICache.clear(namespace="FundingInformation")
     return query_manager.post_resource(
-        
+
         user=user,
         body=funding_information,
         rdf_type_uri=FUNDINGINFORMATION_TYPE_URI,
-        rdf_type_name=FUNDINGINFORMATION_TYPE_NAME, 
+        rdf_type_name=FUNDINGINFORMATION_TYPE_NAME,
         kls=FundingInformation
         )
-        
+

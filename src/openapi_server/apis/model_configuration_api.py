@@ -39,21 +39,21 @@ router = APIRouter()
 )
 @cache(namespace="ModelConfiguration", expire=1800)
 async def custom_modelconfigurations_id_get(
-    id: str = Path(None, description="The ID of the resource"),
+    id: str = Path( description="The ID of the resource"),
     username: str = Query(None, description="Username to query"),
     custom_query_name: str = Query("custom_modelconfigurations", description="Name of the custom query"),
 ) -> ModelConfiguration:
     """Gets the details of a single instance of a ModelConfiguration"""
-    
+
     return query_manager.get_resource(
         id=id,
         username=username,custom_query_name=custom_query_name,
-        
+
         rdf_type_uri=MODELCONFIGURATION_TYPE_URI,
-        rdf_type_name=MODELCONFIGURATION_TYPE_NAME, 
+        rdf_type_name=MODELCONFIGURATION_TYPE_NAME,
         kls=ModelConfiguration
         )
-        
+
 
 
 @router.get(
@@ -73,16 +73,16 @@ async def modelconfigurations_get(
     per_page: int = Query(100, description="Items per page", ge=1, le=200),
 ) -> List[ModelConfiguration]:
     """Gets a list of all instances of ModelConfiguration (more information in https://w3id.org/okn/o/sdm#ModelConfiguration)"""
-    
+
     return query_manager.get_resource(
-        
+
         username=username,label=label,page=page,per_page=per_page,
-        
+
         rdf_type_uri=MODELCONFIGURATION_TYPE_URI,
-        rdf_type_name=MODELCONFIGURATION_TYPE_NAME, 
+        rdf_type_name=MODELCONFIGURATION_TYPE_NAME,
         kls=ModelConfiguration
         )
-        
+
 
 
 @router.delete(
@@ -96,24 +96,24 @@ async def modelconfigurations_get(
     response_model_by_alias=True,
 )
 async def modelconfigurations_id_delete(
-    id: str = Path(None, description="The ID of the ModelConfiguration to be retrieved"),
+    id: str = Path( description="The ID of the ModelConfiguration to be retrieved"),
     user: str = Query(None, description="Username"),
     token_BearerAuth: TokenModel = Security(
         get_token_BearerAuth
     ),
 ) -> None:
     """Delete an existing ModelConfiguration (more information in https://w3id.org/okn/o/sdm#ModelConfiguration)"""
-    
+
     await FastAPICache.clear(namespace="ModelConfiguration")
     return query_manager.delete_resource(
         id=id,
         user=user,
-        
+
         rdf_type_uri=MODELCONFIGURATION_TYPE_URI,
-        rdf_type_name=MODELCONFIGURATION_TYPE_NAME, 
+        rdf_type_name=MODELCONFIGURATION_TYPE_NAME,
         kls=ModelConfiguration
         )
-        
+
 
 
 @router.get(
@@ -127,20 +127,20 @@ async def modelconfigurations_id_delete(
 )
 @cache(namespace="ModelConfiguration", expire=1800)
 async def modelconfigurations_id_get(
-    id: str = Path(None, description="The ID of the ModelConfiguration to be retrieved"),
+    id: str = Path( description="The ID of the ModelConfiguration to be retrieved"),
     username: str = Query(None, description="Name of the user graph to query"),
 ) -> ModelConfiguration:
     """Gets the details of a given ModelConfiguration (more information in https://w3id.org/okn/o/sdm#ModelConfiguration)"""
-    
+
     return query_manager.get_resource(
         id=id,
         username=username,
-        
+
         rdf_type_uri=MODELCONFIGURATION_TYPE_URI,
-        rdf_type_name=MODELCONFIGURATION_TYPE_NAME, 
+        rdf_type_name=MODELCONFIGURATION_TYPE_NAME,
         kls=ModelConfiguration
         )
-        
+
 
 
 @router.put(
@@ -154,7 +154,7 @@ async def modelconfigurations_id_get(
     response_model_by_alias=True,
 )
 async def modelconfigurations_id_put(
-    id: str = Path(None, description="The ID of the ModelConfiguration to be retrieved"),
+    id: str = Path( description="The ID of the ModelConfiguration to be retrieved"),
     user: str = Query(None, description="Username"),
     model_configuration: ModelConfiguration = Body(None, description="An old ModelConfigurationto be updated"),
     token_BearerAuth: TokenModel = Security(
@@ -162,17 +162,17 @@ async def modelconfigurations_id_put(
     ),
 ) -> ModelConfiguration:
     """Updates an existing ModelConfiguration (more information in https://w3id.org/okn/o/sdm#ModelConfiguration)"""
-    
+
     await FastAPICache.clear(namespace="ModelConfiguration")
     return query_manager.put_resource(
         id=id,
         user=user,
         body=model_configuration,
         rdf_type_uri=MODELCONFIGURATION_TYPE_URI,
-        rdf_type_name=MODELCONFIGURATION_TYPE_NAME, 
+        rdf_type_name=MODELCONFIGURATION_TYPE_NAME,
         kls=ModelConfiguration
         )
-        
+
 
 
 @router.post(
@@ -192,14 +192,14 @@ async def modelconfigurations_post(
     ),
 ) -> ModelConfiguration:
     """Create a new instance of ModelConfiguration (more information in https://w3id.org/okn/o/sdm#ModelConfiguration)"""
-    
+
     await FastAPICache.clear(namespace="ModelConfiguration")
     return query_manager.post_resource(
-        
+
         user=user,
         body=model_configuration,
         rdf_type_uri=MODELCONFIGURATION_TYPE_URI,
-        rdf_type_name=MODELCONFIGURATION_TYPE_NAME, 
+        rdf_type_name=MODELCONFIGURATION_TYPE_NAME,
         kls=ModelConfiguration
         )
-        
+
