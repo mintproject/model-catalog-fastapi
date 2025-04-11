@@ -37,7 +37,6 @@ MarkupSafe==2.1.1
 mccabe==0.7.0
 mdurl==0.1.2
 obasparql==5.0.2
-orjson==3.8.0
 pendulum==2.1.2
 ply==3.11
 promise==2.3
