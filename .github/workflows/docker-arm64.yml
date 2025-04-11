@@ -3,10 +3,9 @@ name: Docker
 on:
   push:
     branches:
-      - '*'
+      - 'main'
     tags:
       - v*
-  pull_request:
 
 env:
   DOCKER_IMAGE_NAME: model-catalog-fastapi
@@ -16,7 +15,6 @@ env:
 jobs:
   build-arm64:
     runs-on: ubuntu-latest
-    if: github.event_name == 'push'
     steps:
       - uses: actions/checkout@v2
 
