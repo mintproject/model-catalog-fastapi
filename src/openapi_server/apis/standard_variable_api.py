@@ -17,7 +17,7 @@ from fastapi import (  # noqa: F401
     status,
 )
 
-from openapi_server.models.ckan_response import CKANItem, CKANResponse
+from openapi_server.models.ckan_response import Result, ResultSet, ResultItem
 from openapi_server.models.extra_models import TokenModel  # noqa: F401
 from openapi_server.settings import ENDPOINT_GRAPH_BASE
 from openapi_server.utils.vars import STANDARDVARIABLE_TYPE_NAME, STANDARDVARIABLE_TYPE_URI
@@ -46,7 +46,7 @@ async def standardvariables_get(
     page: int = Query(1, description="Page number"),
     per_page: int = Query(100, description="Items per page", ge=1, le=200),
     enable_ckan: bool = Query(False, description="Enable CKAN output"),
-) -> List[StandardVariable] | CKANResponse:
+) -> List[StandardVariable] | ResultSet:
     """Gets a list of all instances of StandardVariable (more information in https://w3id.org/okn/o/sd#StandardVariable)"""
 
     request_args = {
@@ -91,7 +91,7 @@ async def standardvariables_get(
     variables = query_manager.frame_results(sparql_response, STANDARDVARIABLE_TYPE_URI)
 
     if enable_ckan:
-        return CKANResponse(ResultSet=[CKANItem(Name=variable['label'][0]) for variable in variables])
+        return ResultSet(ResultSet=Result(Result=[ResultItem(Name=variable['label'][0]) for variable in variables]))
     else:
         return variables
 

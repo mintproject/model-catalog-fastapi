@@ -1,7 +1,11 @@
 from pydantic import BaseModel
 
-class CKANItem(BaseModel):
+class ResultItem(BaseModel):
   Name: str
 
-class CKANResponse(BaseModel):
-  ResultSet: list[CKANItem]
+class Result(BaseModel):
+  Result: list[ResultItem]
+
+class ResultSet(BaseModel):
+  ResultSet: Result
+
