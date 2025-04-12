@@ -49,6 +49,14 @@ async def standardvariables_get(
 ) -> List[StandardVariable] | CKANResponse:
     """Gets a list of all instances of StandardVariable (more information in https://w3id.org/okn/o/sd#StandardVariable)"""
 
+    request_args = {
+        'page': page,
+        'per_page': per_page,
+        'type': STANDARDVARIABLE_TYPE_URI,
+        'g': ENDPOINT_GRAPH_BASE + username,
+        'offset': (page - 1) * per_page,
+        'label': label
+    }
     query_template = """
         CONSTRUCT {
         ?item ?predicate ?prop .
@@ -60,7 +68,7 @@ async def standardvariables_get(
                 SELECT DISTINCT ?item where {
                     ?item a ?_type_iri .
                     ?item <http://www.w3.org/2000/01/rdf-schema#label> ?label .
-                    FILTER(CONTAINS(LCASE(?label), LCASE(?_label)))
+                    %s
                 }
                 LIMIT 100
                 OFFSET 0
@@ -74,24 +82,16 @@ async def standardvariables_get(
         }
     }
     """
-    request_args = {
-        'page': page,
-        'per_page': per_page,
-        'type': STANDARDVARIABLE_TYPE_URI,
-        'g': ENDPOINT_GRAPH_BASE + username,
-        'offset': (page - 1) * per_page,
-        'label': label
-    }
+
+    label_filter = "FILTER(CONTAINS(LCASE(?label), LCASE(?_label)))" if label else ""
+    query = query_template % label_filter
 
     sparql_response = query_manager.dispatch_sparql_query(
-        query_template, request_args)
+        query, request_args)
     variables = query_manager.frame_results(sparql_response, STANDARDVARIABLE_TYPE_URI)
 
     if enable_ckan:
-        if len(variables) > 0:
-            return CKANResponse(ResultSet=[CKANItem(Name=variable['label'][0]) for variable in variables])
-        else:
-            return CKANResponse(ResultSet=[])
+        return CKANResponse(ResultSet=[CKANItem(Name=variable['label'][0]) for variable in variables])
     else:
         return variables
 
