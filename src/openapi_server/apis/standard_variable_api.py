@@ -89,9 +89,11 @@ async def standardvariables_get(
     sparql_response = query_manager.dispatch_sparql_query(
         query, request_args)
     variables = query_manager.frame_results(sparql_response, STANDARDVARIABLE_TYPE_URI)
-
     if enable_ckan:
-        return ResultSet(ResultSet=Result(Result=[ResultItem(Name=variable['label'][0]) for variable in variables]))
+        if isinstance(variables, dict):
+            return ResultSet(ResultSet=Result(Result=[ResultItem(Name=variables['label'][0])]))
+        else:
+            return ResultSet(ResultSet=Result(Result=[ResultItem(Name=variable['label'][0]) for variable in variables]))
     else:
         return variables
 
