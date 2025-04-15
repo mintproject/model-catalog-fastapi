@@ -18,6 +18,7 @@ from fastapi import (  # noqa: F401
 )
 
 from openapi_server.models.extra_models import TokenModel  # noqa: F401
+from openapi_server.settings import ENDPOINT_GRAPH_BASE
 from openapi_server.utils.vars import VARIABLEPRESENTATION_TYPE_NAME, VARIABLEPRESENTATION_TYPE_URI
 from openapi_server.connector import query_manager
 from fastapi_cache.decorator import cache
@@ -46,14 +47,69 @@ async def variablepresentations_get(
 ) -> List[VariablePresentation]:
     """Gets a list of all instances of VariablePresentation (more information in https://w3id.org/okn/o/sd#VariablePresentation)"""
 
-    return query_manager.get_resource(
+    request_args = {
+        'page': page,
+        'per_page': per_page,
+        'type': VARIABLEPRESENTATION_TYPE_URI,
+        'g': ENDPOINT_GRAPH_BASE + username,
+        'offset': (page - 1) * per_page,
+        'label': label
+    }
+    query_template = """
+    CONSTRUCT {
+        ?item ?itemPredicate ?itemProp .
 
-        username=username,label=label,page=page,per_page=per_page,
+        # StandardVariable and its properties
+        ?standardVariable ?standardVariablePredicate ?standardVariableProp .
 
-        rdf_type_uri=VARIABLEPRESENTATION_TYPE_URI,
-        rdf_type_name=VARIABLEPRESENTATION_TYPE_NAME,
-        kls=VariablePresentation
-        )
+        # Connection between variable and standardVariable
+        ?item <https://w3id.org/okn/o/sd#hasStandardVariable> ?standardVariable .
+
+        # Unit and its properties
+        ?item <https://w3id.org/okn/o/sd#usesUnit> ?unit .
+        ?unit ?unitPredicate ?unitProp .
+    }
+    WHERE {
+        GRAPH ?_g_iri {
+            {
+                SELECT DISTINCT ?item ?standardVariable where {
+                    ?item a ?_type_iri .
+                    ?item <http://www.w3.org/2000/01/rdf-schema#label> ?label .
+                    ?item <https://w3id.org/okn/o/sd#hasStandardVariable> ?standardVariable .
+                    ?standardVariable <http://www.w3.org/2000/01/rdf-schema#label> ?standardVariableLabel .
+                    %s
+                }
+                LIMIT 100
+                OFFSET 0
+            }
+
+            # Get all properties of the variable
+            ?item ?itemPredicate ?itemProp .
+            FILTER (!isBlank(?itemProp))
+            FILTER NOT EXISTS { ?item <https://w3id.org/okn/o/sdm#influences> ?itemProp }
+
+            # Get all properties of the standardVariable
+            ?standardVariable ?standardVariablePredicate ?standardVariableProp .
+            FILTER (!isBlank(?standardVariableProp))
+
+            # Get all properties of the unit
+            OPTIONAL {
+                ?item <https://w3id.org/okn/o/sd#usesUnit> ?unit .
+                ?unit ?unitPredicate ?unitProp .
+                FILTER (!isBlank(?unitProp))
+            }
+        }
+    }
+    """
+
+    label_filter = "FILTER(CONTAINS(LCASE(?label), LCASE(?_label)))" if label else ""
+    query = query_template % label_filter
+
+    sparql_response = query_manager.dispatch_sparql_query(
+        query, request_args)
+
+    variable_presentations = query_manager.frame_results(sparql_response, VARIABLEPRESENTATION_TYPE_URI)
+    return variable_presentations
 
 
 
@@ -80,7 +136,6 @@ async def variablepresentations_id_delete(
     return query_manager.delete_resource(
         id=id,
         user=user,
-
         rdf_type_uri=VARIABLEPRESENTATION_TYPE_URI,
         rdf_type_name=VARIABLEPRESENTATION_TYPE_NAME,
         kls=VariablePresentation
