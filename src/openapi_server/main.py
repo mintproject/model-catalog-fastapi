@@ -58,6 +58,7 @@ from openapi_server.apis.unit_api import router as UnitApiRouter
 from openapi_server.apis.variable_api import router as VariableApiRouter
 from openapi_server.apis.variable_presentation_api import router as VariablePresentationApiRouter
 from openapi_server.apis.visualization_api import router as VisualizationApiRouter
+from openapi_server.apis.tapis_component_location import router as TapisComponentLocationApiRouter
 
 from fastapi_cache import FastAPICache
 from fastapi_cache.coder import JsonCoder, JsonEncoder
@@ -150,7 +151,7 @@ app.include_router(UnitApiRouter)
 app.include_router(VariableApiRouter)
 app.include_router(VariablePresentationApiRouter)
 app.include_router(VisualizationApiRouter)
-
+app.include_router(TapisComponentLocationApiRouter)
 class APIJSONCoder(JsonCoder):
     @classmethod
     def encode(cls, value):
@@ -160,7 +161,7 @@ class APIJSONCoder(JsonCoder):
         return json.dumps(value, cls=JSONDecoder)
 
 
-@cache() 
+@cache()
 async def get_cache():
     print("cache")
     return 1
