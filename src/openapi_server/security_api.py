@@ -32,5 +32,4 @@ def get_token_BearerAuth(credentials: HTTPAuthorizationCredentials = Depends(bea
     :rtype: TokenModel | None
     """
 
-    ...
-
+    return credentials.credentials

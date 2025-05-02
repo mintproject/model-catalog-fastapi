@@ -17,8 +17,11 @@ from fastapi import (  # noqa: F401
     status,
 )
 
+from openapi_server.models.dataset_specification import DatasetSpecification
 from openapi_server.models.extra_models import TokenModel  # noqa: F401
-from openapi_server.utils.vars import MODELCONFIGURATION_TYPE_NAME, MODELCONFIGURATION_TYPE_URI
+from openapi_server.models.parameter import Parameter
+from openapi_server.models.tapis_app import FileInput, ParameterSet, TapisApp
+from openapi_server.utils.vars import DATASETSPECIFICATION_TYPE_NAME, DATASETSPECIFICATION_TYPE_URI, MODELCONFIGURATION_TYPE_NAME, MODELCONFIGURATION_TYPE_URI, PARAMETER_TYPE_NAME, PARAMETER_TYPE_URI
 from openapi_server.connector import query_manager
 from fastapi_cache.decorator import cache
 
@@ -203,3 +206,106 @@ async def modelconfigurations_post(
         kls=ModelConfiguration
         )
 
+
+@router.post(
+    "/modelconfigurations/{id}/tapis/sync",
+    responses={
+        201: {"model": ModelConfiguration, "description": "Created"},
+    },
+    tags=["ModelConfiguration"],
+    summary="Create one ModelConfiguration",
+    response_model_by_alias=True,
+)
+async def modelconfigurations_tapis_sync_post(
+    id: str = Path( description="The ID of the ModelConfiguration to be retrieved"),
+    username: str = Query(None, description="Username"),
+    tapis_app: TapisApp = Body(None, description="Information about the ModelConfigurationto be created"),
+    token_BearerAuth: TokenModel = Security(
+        get_token_BearerAuth
+    ),
+) -> ModelConfiguration:
+    """Sync a ModelConfiguration with a Tapis App"""
+
+    tapis_parameters = tapis_app.jobAttributes.parameterSet
+    tapis_inputs = tapis_app.jobAttributes.fileInputs
+
+    await FastAPICache.clear(namespace="ModelConfiguration")
+    await FastAPICache.clear(namespace="DatasetSpecification")
+    await FastAPICache.clear(namespace="Parameter")
+
+    model_configuration = ModelConfiguration(**query_manager.get_resource(
+        id=id,
+        username=username,
+        rdf_type_uri=MODELCONFIGURATION_TYPE_URI,
+        rdf_type_name=MODELCONFIGURATION_TYPE_NAME,
+        kls=ModelConfiguration
+        ))
+
+    remove_inputs(model_configuration, username)
+    remove_parameters(model_configuration, username)
+
+    model_configuration.has_input = convert_inputs_from_tapis(tapis_inputs, username)
+    model_configuration.has_parameter = convert_parameters_from_tapis(tapis_parameters, username)
+    query_manager.put_resource(
+        id=id,
+        user=username,
+        body=model_configuration,
+        rdf_type_uri=MODELCONFIGURATION_TYPE_URI,
+        rdf_type_name=MODELCONFIGURATION_TYPE_NAME,
+        kls=ModelConfiguration
+        )
+
+
+def convert_inputs_from_tapis(tapis_inputs: List[FileInput], username: str) -> List[DatasetSpecification]:
+    inputs = []
+    for tapis_input in tapis_inputs:
+        mint_input = query_manager.post_resource(
+            user=username,
+            body=DatasetSpecification(
+                label=[tapis_input.name],
+                description=[tapis_input.description] if tapis_input.description else None
+            ),
+            rdf_type_uri=DATASETSPECIFICATION_TYPE_URI,
+            rdf_type_name=DATASETSPECIFICATION_TYPE_NAME,
+            kls=DatasetSpecification
+        )
+        inputs.append(mint_input)
+    return inputs
+
+def convert_parameters_from_tapis(tapis_parameters: ParameterSet, username: str) -> List[Parameter]:
+    parameters = []
+    for tapis_parameter in tapis_parameters.appArgs:
+        mint_parameter = query_manager.post_resource(
+            user=username,
+            body=Parameter(
+                label=[tapis_parameter.name],
+                description=[tapis_parameter.description] if tapis_parameter.description else None
+            ),
+            rdf_type_uri=PARAMETER_TYPE_URI,
+            rdf_type_name=PARAMETER_TYPE_NAME,
+            kls=Parameter
+        )
+        parameters.append(mint_parameter)
+    return parameters
+
+def remove_inputs(model_configuration: ModelConfiguration, username: str):
+    if model_configuration.has_input:
+        for mint_input in model_configuration.has_input:
+            query_manager.delete_resource(
+            id=mint_input.id,
+            user=username,
+            rdf_type_uri=DATASETSPECIFICATION_TYPE_URI,
+            rdf_type_name=DATASETSPECIFICATION_TYPE_NAME,
+            kls=DatasetSpecification
+            )
+
+def remove_parameters(model_configuration: ModelConfiguration, username: str):
+    if model_configuration.has_parameter:
+        for mint_parameter in model_configuration.has_parameter:
+            query_manager.delete_resource(
+            id=mint_parameter.id,
+            user=username,
+            rdf_type_uri=PARAMETER_TYPE_URI,
+            rdf_type_name=PARAMETER_TYPE_NAME,
+            kls=Parameter
+            )
