@@ -1,0 +1,28 @@
+{
+  // Use IntelliSense to learn about possible attributes.
+  // Hover to view descriptions of existing attributes.
+  // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Python Debugger: FastAPI",
+      "type": "debugpy",
+      "request": "launch",
+      "module": "uvicorn",
+      "args": ["openapi_server.main:app", "--reload"],
+      "jinja": true,
+      "cwd": "${workspaceFolder}/src",
+      "env": {
+        "CONTEXT_DIR": "contexts/",
+        "QUERIES_DIR": "queries/",
+        "REDIS_ADDRESS": "redis://redis:6379",
+        "ENDPOINT": "http://endpoint.models.mint.local/modelcatalog",
+        "ENDPOINT_PASSWORD": "CHANGEME",
+        "GRAPH_BASE": "http://endpoint.mint.isi.edu/modelCatalog-1.8.0/data/",
+        "PREFIX": "https://w3id.org/okn/i/mint/",
+        "AUTH_CLIENT_ID": "model_catalog",
+        "AUTH_SERVER": "https://auth.mint.isi.edu/"
+      }
+    }
+  ]
+}
