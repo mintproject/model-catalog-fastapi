@@ -254,6 +254,13 @@ async def modelconfigurations_tapis_sync_post(
         rdf_type_name=MODELCONFIGURATION_TYPE_NAME,
         kls=ModelConfiguration
         )
+    return query_manager.get_resource(
+        id=id,
+        username=username,
+        rdf_type_uri=MODELCONFIGURATION_TYPE_URI,
+        rdf_type_name=MODELCONFIGURATION_TYPE_NAME,
+        kls=ModelConfiguration
+        )
 
 
 def convert_inputs_from_tapis(tapis_inputs: List[FileInput], username: str) -> List[DatasetSpecification]:

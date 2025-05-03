@@ -8028,6 +8028,91 @@
         ]
       }
     },
+    "/modelconfigurations/{id}/tapis/sync": {
+      "post": {
+        "tags": [
+          "ModelConfiguration"
+        ],
+        "summary": "Create one ModelConfiguration",
+        "description": "Sync a ModelConfiguration with a Tapis App",
+        "operationId": "modelconfigurations_tapis_sync_post_modelconfigurations__id__tapis_sync_post",
+        "parameters": [
+          {
+            "description": "The ID of the ModelConfiguration to be retrieved",
+            "required": true,
+            "schema": {
+              "title": "Id",
+              "type": "string",
+              "description": "The ID of the ModelConfiguration to be retrieved"
+            },
+            "name": "id",
+            "in": "path"
+          },
+          {
+            "description": "Username",
+            "required": false,
+            "schema": {
+              "title": "Username",
+              "type": "string",
+              "description": "Username"
+            },
+            "name": "username",
+            "in": "query"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "title": "Tapis App",
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/TapisApp"
+                  }
+                ],
+                "description": "Information about the ModelConfigurationto be created"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "title": "Response 201 Modelconfigurations Tapis Sync Post Modelconfigurations  Id  Tapis Sync Post",
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ]
+      }
+    },
     "/custom/modelconfigurationsetups/{id}": {
       "get": {
         "tags": [
@@ -17000,6 +17085,88 @@
   },
   "components": {
     "schemas": {
+      "ArchiveFilter": {
+        "title": "ArchiveFilter",
+        "type": "object",
+        "properties": {
+          "includes": {
+            "title": "Includes",
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Files to include in archive"
+          },
+          "excludes": {
+            "title": "Excludes",
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Files to exclude from archive"
+          },
+          "includeLaunchFiles": {
+            "title": "Includelaunchfiles",
+            "type": "boolean",
+            "description": "Whether to include launch files in archive",
+            "default": true
+          }
+        },
+        "description": "Filter for archiving job files."
+      },
+      "Argument": {
+        "title": "Argument",
+        "required": [
+          "name"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "title": "Name",
+            "maxLength": 80,
+            "minLength": 1,
+            "type": "string",
+            "description": "Argument name"
+          },
+          "description": {
+            "title": "Description",
+            "maxLength": 8096,
+            "type": "string",
+            "description": "Argument description"
+          },
+          "inputMode": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/ArgumentInputModeEnum"
+              }
+            ],
+            "description": "Input mode for the argument",
+            "default": "INCLUDE_ON_DEMAND"
+          },
+          "value": {
+            "title": "Value",
+            "type": "string",
+            "description": "Argument value"
+          },
+          "order": {
+            "title": "Order",
+            "type": "integer",
+            "description": "Order of the argument in the command line"
+          }
+        },
+        "description": "Command line argument for job execution."
+      },
+      "ArgumentInputModeEnum": {
+        "title": "ArgumentInputModeEnum",
+        "enum": [
+          "REQUIRED",
+          "FIXED",
+          "INCLUDE_ON_DEMAND",
+          "INCLUDE_BY_DEFAULT"
+        ],
+        "type": "string",
+        "description": "An enumeration."
+      },
       "CatalogIdentifier": {
         "title": "CatalogIdentifier",
         "type": "object",
@@ -20135,6 +20302,27 @@
         },
         "description": "NOTE: This class is auto generated by OpenAPI Generator (https://openapi-generator.tech).\n\nDo not edit the class manually.\n\nEmulatorCopyrightHolderInner - a model defined in OpenAPI\n\n    identifier: The identifier of this EmulatorCopyrightHolderInner [Optional].\n    website: The website of this EmulatorCopyrightHolderInner [Optional].\n    description: The description of this EmulatorCopyrightHolderInner [Optional].\n    id: The id of this EmulatorCopyrightHolderInner [Optional].\n    label: The label of this EmulatorCopyrightHolderInner [Optional].\n    type: The type of this EmulatorCopyrightHolderInner [Optional].\n    email: The email of this EmulatorCopyrightHolderInner [Optional]."
       },
+      "EnvironmentVariable": {
+        "title": "EnvironmentVariable",
+        "required": [
+          "key",
+          "value"
+        ],
+        "type": "object",
+        "properties": {
+          "key": {
+            "title": "Key",
+            "type": "string",
+            "description": "Environment variable key"
+          },
+          "value": {
+            "title": "Value",
+            "type": "string",
+            "description": "Environment variable value"
+          }
+        },
+        "description": "Environment variable for job execution."
+      },
       "Equation": {
         "title": "Equation",
         "type": "object",
@@ -20166,6 +20354,64 @@
           }
         },
         "description": "NOTE: This class is auto generated by OpenAPI Generator (https://openapi-generator.tech).\n\nDo not edit the class manually.\n\nEquation - a model defined in OpenAPI\n\n    description: The description of this Equation [Optional].\n    id: The id of this Equation [Optional].\n    label: The label of this Equation [Optional].\n    type: The type of this Equation [Optional]."
+      },
+      "FileInput": {
+        "title": "FileInput",
+        "required": [
+          "name"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "title": "Name",
+            "maxLength": 80,
+            "minLength": 1,
+            "type": "string",
+            "description": "File input name"
+          },
+          "description": {
+            "title": "Description",
+            "maxLength": 8096,
+            "type": "string",
+            "description": "File input description"
+          },
+          "inputMode": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/InputModeEnum"
+              }
+            ],
+            "description": "Input mode for the file input",
+            "default": "REQUIRED"
+          },
+          "autoMountLocal": {
+            "title": "Automountlocal",
+            "type": "boolean",
+            "description": "Whether to automatically mount the file locally",
+            "default": true
+          },
+          "envKey": {
+            "title": "Envkey",
+            "type": "string",
+            "description": "Environment variable key for the file input"
+          },
+          "notes": {
+            "title": "Notes",
+            "type": "object",
+            "description": "Additional notes about the file input"
+          },
+          "sourceUrl": {
+            "title": "Sourceurl",
+            "type": "string",
+            "description": "Source URL for the file input"
+          },
+          "targetPath": {
+            "title": "Targetpath",
+            "type": "string",
+            "description": "Target path for the file input"
+          }
+        },
+        "description": "File input for job execution."
       },
       "FundingInformation": {
         "title": "FundingInformation",
@@ -21007,6 +21253,16 @@
         },
         "description": "NOTE: This class is auto generated by OpenAPI Generator (https://openapi-generator.tech).\n\nDo not edit the class manually.\n\nImage - a model defined in OpenAPI\n\n    has_dimensionality: The has_dimensionality of this Image [Optional].\n    has_format: The has_format of this Image [Optional].\n    path_location: The path_location of this Image [Optional].\n    has_file_structure: The has_file_structure of this Image [Optional].\n    description: The description of this Image [Optional].\n    has_data_transformation: The has_data_transformation of this Image [Optional].\n    has_presentation: The has_presentation of this Image [Optional].\n    label: The label of this Image [Optional].\n    type: The type of this Image [Optional].\n    has_fixed_resource: The has_fixed_resource of this Image [Optional].\n    is_transformed_from: The is_transformed_from of this Image [Optional].\n    had_primary_source: The had_primary_source of this Image [Optional].\n    has_data_transformation_setup: The has_data_transformation_setup of this Image [Optional].\n    position: The position of this Image [Optional].\n    id: The id of this Image [Optional].\n    value: The value of this Image [Optional]."
       },
+      "InputModeEnum": {
+        "title": "InputModeEnum",
+        "enum": [
+          "REQUIRED",
+          "OPTIONAL",
+          "FIXED"
+        ],
+        "type": "string",
+        "description": "An enumeration."
+      },
       "Intervention": {
         "title": "Intervention",
         "type": "object",
@@ -21038,6 +21294,182 @@
           }
         },
         "description": "NOTE: This class is auto generated by OpenAPI Generator (https://openapi-generator.tech).\n\nDo not edit the class manually.\n\nIntervention - a model defined in OpenAPI\n\n    description: The description of this Intervention [Optional].\n    id: The id of this Intervention [Optional].\n    label: The label of this Intervention [Optional].\n    type: The type of this Intervention [Optional]."
+      },
+      "JobAttributes": {
+        "title": "JobAttributes",
+        "required": [
+          "execSystemId",
+          "execSystemExecDir",
+          "execSystemInputDir",
+          "execSystemOutputDir"
+        ],
+        "type": "object",
+        "properties": {
+          "description": {
+            "title": "Description",
+            "type": "string",
+            "description": "Job description"
+          },
+          "dynamicExecSystem": {
+            "title": "Dynamicexecsystem",
+            "type": "boolean",
+            "description": "Whether to use dynamic execution system",
+            "default": false
+          },
+          "execSystemConstraints": {
+            "title": "Execsystemconstraints",
+            "type": "object",
+            "description": "Execution system constraints"
+          },
+          "execSystemId": {
+            "title": "Execsystemid",
+            "type": "string",
+            "description": "Execution system identifier"
+          },
+          "execSystemExecDir": {
+            "title": "Execsystemexecdir",
+            "type": "string",
+            "description": "Execution directory on the system"
+          },
+          "execSystemInputDir": {
+            "title": "Execsysteminputdir",
+            "type": "string",
+            "description": "Input directory on the system"
+          },
+          "execSystemOutputDir": {
+            "title": "Execsystemoutputdir",
+            "type": "string",
+            "description": "Output directory on the system"
+          },
+          "dtnSystemInputDir": {
+            "title": "Dtnsysteminputdir",
+            "type": "string",
+            "description": "DTN input directory"
+          },
+          "dtnSystemOutputDir": {
+            "title": "Dtnsystemoutputdir",
+            "type": "string",
+            "description": "DTN output directory"
+          },
+          "execSystemLogicalQueue": {
+            "title": "Execsystemlogicalqueue",
+            "type": "string",
+            "description": "Logical queue for execution"
+          },
+          "archiveSystemId": {
+            "title": "Archivesystemid",
+            "type": "string",
+            "description": "Archive system identifier"
+          },
+          "archiveSystemDir": {
+            "title": "Archivesystemdir",
+            "type": "string",
+            "description": "Archive directory on the system"
+          },
+          "archiveOnAppError": {
+            "title": "Archiveonapperror",
+            "type": "boolean",
+            "description": "Whether to archive on application error",
+            "default": true
+          },
+          "isMpi": {
+            "title": "Ismpi",
+            "type": "boolean",
+            "description": "Whether the job uses MPI",
+            "default": false
+          },
+          "mpiCmd": {
+            "title": "Mpicmd",
+            "type": "string",
+            "description": "MPI command"
+          },
+          "cmdPrefix": {
+            "title": "Cmdprefix",
+            "type": "string",
+            "description": "Command prefix"
+          },
+          "parameterSet": {
+            "title": "Parameterset",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/ParameterSet"
+              }
+            ],
+            "description": "Parameter set for the job"
+          },
+          "fileInputs": {
+            "title": "Fileinputs",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/FileInput"
+            },
+            "description": "File inputs for the job"
+          },
+          "fileInputArrays": {
+            "title": "Fileinputarrays",
+            "type": "array",
+            "items": {},
+            "description": "File input arrays"
+          },
+          "nodeCount": {
+            "title": "Nodecount",
+            "type": "integer",
+            "description": "Number of nodes to use",
+            "default": 1
+          },
+          "coresPerNode": {
+            "title": "Corespernode",
+            "type": "integer",
+            "description": "Cores per node",
+            "default": 1
+          },
+          "memoryMB": {
+            "title": "Memorymb",
+            "type": "integer",
+            "description": "Memory in MB",
+            "default": 1000
+          },
+          "maxMinutes": {
+            "title": "Maxminutes",
+            "type": "integer",
+            "description": "Maximum runtime in minutes",
+            "default": 10
+          },
+          "subscriptions": {
+            "title": "Subscriptions",
+            "type": "array",
+            "items": {},
+            "description": "Job subscriptions"
+          },
+          "tags": {
+            "title": "Tags",
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Job tags"
+          }
+        },
+        "description": "Job attributes for Tapis applications."
+      },
+      "LogConfig": {
+        "title": "LogConfig",
+        "type": "object",
+        "properties": {
+          "stdoutFilename": {
+            "title": "Stdoutfilename",
+            "type": "string",
+            "description": "Filename for stdout",
+            "default": ""
+          },
+          "stderrFilename": {
+            "title": "Stderrfilename",
+            "type": "string",
+            "description": "Filename for stderr",
+            "default": ""
+          }
+        },
+        "description": "Configuration for job logging."
       },
       "Model": {
         "title": "Model",
@@ -22891,6 +23323,63 @@
           }
         },
         "description": "NOTE: This class is auto generated by OpenAPI Generator (https://openapi-generator.tech).\n\nDo not edit the class manually.\n\nParameter - a model defined in OpenAPI\n\n    has_default_value: The has_default_value of this Parameter [Optional].\n    has_maximum_accepted_value: The has_maximum_accepted_value of this Parameter [Optional].\n    description: The description of this Parameter [Optional].\n    has_data_type: The has_data_type of this Parameter [Optional].\n    has_fixed_value: The has_fixed_value of this Parameter [Optional].\n    has_presentation: The has_presentation of this Parameter [Optional].\n    label: The label of this Parameter [Optional].\n    recommended_increment: The recommended_increment of this Parameter [Optional].\n    type: The type of this Parameter [Optional].\n    has_minimum_accepted_value: The has_minimum_accepted_value of this Parameter [Optional].\n    has_accepted_values: The has_accepted_values of this Parameter [Optional].\n    adjusts_variable: The adjusts_variable of this Parameter [Optional].\n    relevant_for_intervention: The relevant_for_intervention of this Parameter [Optional].\n    position: The position of this Parameter [Optional].\n    id: The id of this Parameter [Optional].\n    uses_unit: The uses_unit of this Parameter [Optional].\n    has_step_size: The has_step_size of this Parameter [Optional]."
+      },
+      "ParameterSet": {
+        "title": "ParameterSet",
+        "type": "object",
+        "properties": {
+          "appArgs": {
+            "title": "Appargs",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Argument"
+            },
+            "description": "Application arguments"
+          },
+          "containerArgs": {
+            "title": "Containerargs",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Argument"
+            },
+            "description": "Container arguments"
+          },
+          "schedulerOptions": {
+            "title": "Scheduleroptions",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Argument"
+            },
+            "description": "Scheduler options"
+          },
+          "envVariables": {
+            "title": "Envvariables",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/EnvironmentVariable"
+            },
+            "description": "Environment variables"
+          },
+          "archiveFilter": {
+            "title": "Archivefilter",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/ArchiveFilter"
+              }
+            ],
+            "description": "Archive filter configuration"
+          },
+          "logConfig": {
+            "title": "Logconfig",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/LogConfig"
+              }
+            ],
+            "description": "Log configuration"
+          }
+        },
+        "description": "Set of parameters for job execution."
       },
       "Person": {
         "title": "Person",
@@ -25107,139 +25596,279 @@
       },
       "TapisApp": {
         "title": "TapisApp",
+        "required": [
+          "tenant",
+          "id",
+          "version",
+          "owner",
+          "runtime",
+          "containerImage",
+          "jobType",
+          "jobAttributes"
+        ],
         "type": "object",
         "properties": {
-          "tenant": {
-            "title": "Tenant",
-            "type": "string"
-          },
-          "id": {
-            "title": "Id",
-            "maxLength": 80,
-            "minLength": 1,
-            "type": "string"
-          },
-          "version": {
-            "title": "Version",
-            "maxLength": 64,
-            "minLength": 1,
-            "type": "string"
-          },
-          "description": {
-            "title": "Description",
-            "maxLength": 2048,
-            "type": "string"
-          },
-          "owner": {
-            "title": "Owner",
+          "sharedAppCtx": {
+            "title": "Sharedappctx",
             "maxLength": 60,
             "minLength": 1,
-            "type": "string"
-          },
-          "enabled": {
-            "title": "Enabled",
-            "type": "boolean",
-            "default": true
-          },
-          "versionEnabled": {
-            "title": "Versionenabled",
-            "type": "boolean",
-            "default": true
-          },
-          "locked": {
-            "title": "Locked",
-            "type": "boolean",
-            "default": false
+            "type": "string",
+            "description": "Shared application context"
           },
           "isPublic": {
             "title": "Ispublic",
-            "type": "boolean"
+            "type": "boolean",
+            "description": "Whether the application is public",
+            "default": false
           },
           "sharedWithUsers": {
             "title": "Sharedwithusers",
             "type": "array",
             "items": {
               "type": "string"
-            }
+            },
+            "description": "List of users the application is shared with"
+          },
+          "tenant": {
+            "title": "Tenant",
+            "type": "string",
+            "description": "Tenant identifier"
+          },
+          "id": {
+            "title": "Id",
+            "maxLength": 80,
+            "minLength": 1,
+            "type": "string",
+            "description": "Application identifier"
+          },
+          "version": {
+            "title": "Version",
+            "maxLength": 64,
+            "minLength": 1,
+            "type": "string",
+            "description": "Application version"
+          },
+          "description": {
+            "title": "Description",
+            "maxLength": 2048,
+            "type": "string",
+            "description": "Application description"
+          },
+          "owner": {
+            "title": "Owner",
+            "maxLength": 60,
+            "minLength": 1,
+            "type": "string",
+            "description": "Application owner"
+          },
+          "enabled": {
+            "title": "Enabled",
+            "type": "boolean",
+            "description": "Whether the application is enabled",
+            "default": true
+          },
+          "versionEnabled": {
+            "title": "Versionenabled",
+            "type": "boolean",
+            "description": "Whether this version is enabled",
+            "default": true
+          },
+          "locked": {
+            "title": "Locked",
+            "type": "boolean",
+            "description": "Whether the application is locked",
+            "default": false
           },
           "runtime": {
             "title": "Runtime",
-            "type": "string"
+            "type": "string",
+            "description": "Runtime environment (SINGULARITY, DOCKER, ZIP)"
           },
           "runtimeVersion": {
             "title": "Runtimeversion",
-            "type": "string"
+            "type": "string",
+            "description": "Runtime version"
           },
           "runtimeOptions": {
             "title": "Runtimeoptions",
             "type": "array",
             "items": {
               "type": "string"
-            }
+            },
+            "description": "Runtime options"
           },
           "containerImage": {
             "title": "Containerimage",
-            "type": "string"
+            "type": "string",
+            "description": "Container image for the application"
           },
           "jobType": {
             "title": "Jobtype",
-            "type": "string"
+            "type": "string",
+            "description": "Job type (BATCH, FORK)"
           },
           "maxJobs": {
             "title": "Maxjobs",
             "type": "integer",
-            "default": -1
+            "description": "Maximum number of concurrent jobs",
+            "default": 2147483647
           },
           "maxJobsPerUser": {
             "title": "Maxjobsperuser",
             "type": "integer",
-            "default": -1
+            "description": "Maximum number of concurrent jobs per user",
+            "default": 2147483647
           },
           "strictFileInputs": {
             "title": "Strictfileinputs",
             "type": "boolean",
+            "description": "Whether file inputs are strictly enforced",
             "default": false
           },
           "jobAttributes": {
             "title": "Jobattributes",
-            "type": "object"
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/JobAttributes"
+              }
+            ],
+            "description": "Job attributes"
           },
           "tags": {
             "title": "Tags",
             "type": "array",
             "items": {
               "type": "string"
-            }
+            },
+            "description": "Application tags"
           },
           "notes": {
             "title": "Notes",
-            "type": "object"
-          },
-          "sharedAppCtx": {
-            "title": "Sharedappctx",
-            "maxLength": 60,
-            "minLength": 1,
-            "type": "string"
+            "type": "object",
+            "description": "Application notes"
           },
           "uuid": {
             "title": "Uuid",
             "type": "string",
+            "description": "Application UUID",
             "format": "uuid"
           },
           "deleted": {
             "title": "Deleted",
-            "type": "boolean"
+            "type": "boolean",
+            "description": "Whether the application is deleted",
+            "default": false
           },
           "created": {
             "title": "Created",
             "type": "string",
+            "description": "Creation timestamp",
             "format": "date-time"
           },
           "updated": {
             "title": "Updated",
             "type": "string",
+            "description": "Last update timestamp",
             "format": "date-time"
           }
+        },
+        "description": "Tapis Application model based on OpenAPI v3 spec.",
+        "example": {
+          "sharedAppCtx": "mosorio",
+          "isPublic": false,
+          "sharedWithUsers": [
+            "user1",
+            "user2"
+          ],
+          "tenant": "portals",
+          "id": "modflow-2005",
+          "version": "0.0.6",
+          "description": "Run an non-interactive script on TACC using docker.",
+          "owner": "mosorio",
+          "enabled": true,
+          "versionEnabled": true,
+          "locked": false,
+          "runtime": "SINGULARITY",
+          "runtimeOptions": [
+            "SINGULARITY_RUN"
+          ],
+          "containerImage": "docker://ghcr.io/mosoriob/cookbook-modflow:0.0.4",
+          "jobType": "BATCH",
+          "maxJobs": 2147483647,
+          "maxJobsPerUser": 2147483647,
+          "strictFileInputs": false,
+          "jobAttributes": {
+            "dynamicExecSystem": false,
+            "execSystemId": "ls6",
+            "execSystemExecDir": "${JobWorkingDir}",
+            "execSystemInputDir": "${JobWorkingDir}",
+            "execSystemOutputDir": "${JobWorkingDir}/output",
+            "archiveSystemId": "cloud.data",
+            "archiveSystemDir": "HOST_EVAL($HOME)/tapis-jobs-archive/${JobCreateDate}/${JobName}-${JobUUID}",
+            "archiveOnAppError": true,
+            "isMpi": false,
+            "parameterSet": {
+              "appArgs": [],
+              "containerArgs": [],
+              "schedulerOptions": [
+                {
+                  "arg": "--tapis-profile tacc-apptainer",
+                  "name": "TACC Scheduler Profile",
+                  "description": "Scheduler profile for HPC clusters at TACC",
+                  "inputMode": "FIXED",
+                  "notes": {
+                    "isHidden": true
+                  }
+                }
+              ],
+              "envVariables": [],
+              "archiveFilter": {
+                "includes": [],
+                "excludes": [],
+                "includeLaunchFiles": true
+              },
+              "logConfig": {
+                "stdoutFilename": "",
+                "stderrFilename": ""
+              }
+            },
+            "fileInputs": [
+              {
+                "name": "bas6",
+                "description": "Basic Package Input for the Groundwater Flow Process",
+                "inputMode": "REQUIRED",
+                "autoMountLocal": true,
+                "targetPath": "input.ba6"
+              }
+            ],
+            "fileInputArrays": [],
+            "nodeCount": 1,
+            "coresPerNode": 1,
+            "memoryMB": 1000,
+            "maxMinutes": 10,
+            "subscriptions": [],
+            "tags": []
+          },
+          "tags": [
+            "portalName: ALL"
+          ],
+          "notes": {
+            "icon": "jupyter",
+            "label": "MODFLOW 2005",
+            "helpUrl": "https://github.com/In-For-Disaster-Analytics/cookbook-conda-template",
+            "category": "Data Processing",
+            "helpText": "Modflow is a popular open-source groundwater flow model distributed by the U.S. Geological survey",
+            "queueFilter": [
+              "development",
+              "normal"
+            ],
+            "isInteractive": false,
+            "hideNodeCountAndCoresPerNode": true
+          },
+          "uuid": "1c6721eb-7f02-412e-a877-906c2e2e3526",
+          "deleted": false,
+          "created": "2024-06-08T18:56:30.737674Z",
+          "updated": "2024-06-08T18:56:30.737674Z"
         }
       },
       "TheoryGuidedModel": {
