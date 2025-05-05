@@ -25597,43 +25597,12 @@
       "TapisApp": {
         "title": "TapisApp",
         "required": [
-          "tenant",
           "id",
           "version",
-          "owner",
-          "runtime",
-          "containerImage",
-          "jobType",
-          "jobAttributes"
+          "tenant"
         ],
         "type": "object",
         "properties": {
-          "sharedAppCtx": {
-            "title": "Sharedappctx",
-            "maxLength": 60,
-            "minLength": 1,
-            "type": "string",
-            "description": "Shared application context"
-          },
-          "isPublic": {
-            "title": "Ispublic",
-            "type": "boolean",
-            "description": "Whether the application is public",
-            "default": false
-          },
-          "sharedWithUsers": {
-            "title": "Sharedwithusers",
-            "type": "array",
-            "items": {
-              "type": "string"
-            },
-            "description": "List of users the application is shared with"
-          },
-          "tenant": {
-            "title": "Tenant",
-            "type": "string",
-            "description": "Tenant identifier"
-          },
           "id": {
             "title": "Id",
             "maxLength": 80,
@@ -25647,6 +25616,31 @@
             "minLength": 1,
             "type": "string",
             "description": "Application version"
+          },
+          "tenant": {
+            "title": "Tenant",
+            "type": "string",
+            "description": "Tenant identifier"
+          },
+          "sharedAppCtx": {
+            "title": "Sharedappctx",
+            "maxLength": 60,
+            "minLength": 1,
+            "type": "string",
+            "description": "Shared application context"
+          },
+          "isPublic": {
+            "title": "Ispublic",
+            "type": "boolean",
+            "description": "Whether the application is public"
+          },
+          "sharedWithUsers": {
+            "title": "Sharedwithusers",
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "List of users the application is shared with"
           },
           "description": {
             "title": "Description",
@@ -25664,20 +25658,17 @@
           "enabled": {
             "title": "Enabled",
             "type": "boolean",
-            "description": "Whether the application is enabled",
-            "default": true
+            "description": "Whether the application is enabled"
           },
           "versionEnabled": {
             "title": "Versionenabled",
             "type": "boolean",
-            "description": "Whether this version is enabled",
-            "default": true
+            "description": "Whether this version is enabled"
           },
           "locked": {
             "title": "Locked",
             "type": "boolean",
-            "description": "Whether the application is locked",
-            "default": false
+            "description": "Whether the application is locked"
           },
           "runtime": {
             "title": "Runtime",
@@ -25710,20 +25701,17 @@
           "maxJobs": {
             "title": "Maxjobs",
             "type": "integer",
-            "description": "Maximum number of concurrent jobs",
-            "default": 2147483647
+            "description": "Maximum number of concurrent jobs"
           },
           "maxJobsPerUser": {
             "title": "Maxjobsperuser",
             "type": "integer",
-            "description": "Maximum number of concurrent jobs per user",
-            "default": 2147483647
+            "description": "Maximum number of concurrent jobs per user"
           },
           "strictFileInputs": {
             "title": "Strictfileinputs",
             "type": "boolean",
-            "description": "Whether file inputs are strictly enforced",
-            "default": false
+            "description": "Whether file inputs are strictly enforced"
           },
           "jobAttributes": {
             "title": "Jobattributes",
